@@ -236,4 +236,4 @@ _Pvt_Extensions
 .fake/
 
 # Get dll back
-!.dll
+!*.dll
