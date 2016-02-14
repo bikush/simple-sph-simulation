@@ -26,6 +26,8 @@ protected:
 
 	void setProjection( double width, double height );
 	
+	void handleCameraMove(sf::Keyboard::Key key, bool pressed);
+
 private:	
 	std::vector<Scene*> scenes;
 	Camera camera;

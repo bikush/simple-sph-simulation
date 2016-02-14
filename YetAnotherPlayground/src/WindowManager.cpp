@@ -94,6 +94,7 @@ void WindowManager::run()
 {
 	windowWillRun();
 	window->setVerticalSyncEnabled(true);
+	window->setKeyRepeatEnabled(false);
 
 	sf::Clock windowClock;
 	sf::Time lastDrawTime = windowClock.getElapsedTime();

@@ -1,10 +1,11 @@
 #include "Camera.h"
+#include "Utility.h"
 #include <GL\glew.h>
 #include <glm\gtc\matrix_transform.hpp>
 
 Camera::Camera( glm::vec2 windowSize, ProjectionType type, glm::vec2 zLimits) :
 	windowSize( windowSize ), projectionType( type ), projectionZLimit( zLimits ),
-	position({ 5.0f, 5.0f, 50.0f }), forward({ 0.0f, 0.0f, -1.0f }), up({ 0.0f, 1.0f, 0.0f })
+	position({ 0.0f, 0.0f, 1.0f }), forward({ 0.0f, 0.0f, -1.0f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up))
 {
 	setupView();
 	refreshProjection();
@@ -27,6 +28,36 @@ void Camera::applyOffset(glm::vec3 offset)
 {
 	position += offset;
 	setupView();
+}
+
+void Camera::setMoveForward(bool movement) {
+	moveForward = movement;
+}
+
+void Camera::setMoveBackward(bool movement) {
+	moveBackward = movement;
+}
+
+void Camera::setMoveLeft(bool movement) {
+	moveLeft = movement;
+}
+
+void Camera::setMoveRight(bool movement) {
+	moveRight = movement;
+}
+
+void Camera::update(float dt)
+{
+	int forwardMovement = (moveForward ? 1 : 0) + (moveBackward ? -1 : 0);
+	if (forwardMovement != 0) {
+		position += forward * (forwardMovement * dt * 10.0f);
+		setupView();
+	}
+	int sideMovement = (moveLeft ? 1 : 0) + (moveRight ? -1 : 0);
+	if (sideMovement != 0) {
+		position += axis * (sideMovement * dt * 10.0f);
+		setupView();
+	}
 }
 
 // PROJECTION

@@ -19,15 +19,26 @@ public:
 
 // VIEW
 protected:
+	bool moveForward;
+	bool moveBackward;
+	bool moveLeft;
+	bool moveRight;
 	glm::vec3 position;
 	glm::vec3 forward;
 	glm::vec3 up;
+	glm::vec3 axis;
 	glm::mat4 view;
 	void setupView();
 
 public:
 	void applyOffset( glm::vec3 offset );
 	const glm::vec3& getPosition() const { return position; }
+	void setMoveForward(bool movement);
+	void setMoveBackward(bool movement);
+	void setMoveLeft(bool movement);
+	void setMoveRight(bool movement);
+
+	void update(float dt);
 	
 // PROJECTION
 protected:

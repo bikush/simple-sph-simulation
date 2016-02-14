@@ -67,6 +67,8 @@ void LearningWindowManager::eventKeyboardDown( sf::Keyboard::Key keyPressed )
 	{
 		scenes[i]->eventKeyboardDown( keyPressed );
 	}
+
+	handleCameraMove(keyPressed, true);
 }
 
 void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
@@ -97,7 +99,7 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 			scenes.erase( lastOne );
 		}
 	}
-	if (keyPressed == sf::Keyboard::Left) {
+/*	if (keyPressed == sf::Keyboard::Left) {
 		camera.applyOffset({ -3.0f,0.0f,0.0f });
 	}
 	if (keyPressed == sf::Keyboard::Right) {
@@ -108,7 +110,8 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 	}
 	if (keyPressed == sf::Keyboard::Down) {
 		camera.applyOffset({ 0.0f,-3.0f,0.0f });
-	}
+	}*/
+	
 	if (keyPressed == sf::Keyboard::Numpad8) {
 		camera.applyOffset({ 0.0f,0.0f,3.0f });
 	}
@@ -116,7 +119,22 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 		camera.applyOffset({ 0.0f,0.0f,-3.0f });
 	}
 
+	handleCameraMove(keyPressed, false);
+}
 
+void LearningWindowManager::handleCameraMove(sf::Keyboard::Key key, bool pressed) {
+	if (key == sf::Keyboard::Left) {
+		camera.setMoveLeft(pressed);
+	}
+	if (key == sf::Keyboard::Right) {
+		camera.setMoveRight(pressed);
+	}
+	if (key == sf::Keyboard::Up) {
+		camera.setMoveForward(pressed);
+	}
+	if (key == sf::Keyboard::Down) {
+		camera.setMoveBackward(pressed);
+	}
 }
 
 void LearningWindowManager::setProjection( double width, double height )
@@ -149,6 +167,7 @@ void LearningWindowManager::updateScene( double dt )
 {
 	averageFrameTime.addValue(1,dt);
 	double perFrame = averageFrameTime.currentAverage();
+	camera.update(dt);
 
 	std::stringstream titleStream;
 	titleStream << "Time: " << perFrame << " FPS: " << 1.0/perFrame;
