@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{53AC9A9C-060E-463C-A050-9A6CA45CB876}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>YetAnotherPlayground</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>YetAnotherPlayground</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\DevIl\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)LibsWin\SFML-2.3.2\lib;$(SolutionDir)LibsWin\glew-1.13.0\lib;$(SolutionDir)LibsWin\DevIl\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(ProjectDir)src;$(ProjectDir)src\Shaders;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\DevIl\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)LibsWin\SFML-2.3.2\lib;$(SolutionDir)LibsWin\glew-1.13.0\lib;$(SolutionDir)LibsWin\DevIl\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(ProjectDir)src;$(ProjectDir)src\Shaders;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;Release\Win32\glew32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;Release\Win32\glew32.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AverageValue.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Cube.cpp" />
+    <ClCompile Include="src\DataLine.cpp" />
+    <ClCompile Include="src\DataLineSet.cpp" />
+    <ClCompile Include="src\DistributedShapesScene.cpp" />
+    <ClCompile Include="src\Frustum.cpp" />
+    <ClCompile Include="src\LearningWindowManager.cpp" />
+    <ClCompile Include="src\LyingShapesScene.cpp" />
+    <ClCompile Include="src\MappedData.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingCubes.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingCubesBasic.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingCubesFactory.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingCubesShaded.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingSmoothSquares.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingSquares.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingSquaresBase.cpp" />
+    <ClCompile Include="src\MarchingCubes\MarchingSquaresFactory.cpp" />
+    <ClCompile Include="src\Matrix.cpp" />
+    <ClCompile Include="src\Playground.cpp" />
+    <ClCompile Include="src\PointDataVisualiser.cpp" />
+    <ClCompile Include="src\PongScene.cpp" />
+    <ClCompile Include="src\Shaders\ShaderBase.cpp" />
+    <ClCompile Include="src\Shaders\ShaderProgram.cpp" />
+    <ClCompile Include="src\Shaders\ShaderUtility.cpp" />
+    <ClCompile Include="src\Shape.cpp" />
+    <ClCompile Include="src\SPH\SmoothingKernels.cpp" />
+    <ClCompile Include="src\SPH\SPHAABBInteractor3d.cpp" />
+    <ClCompile Include="src\SPH\SPHLineInteractor2d.cpp" />
+    <ClCompile Include="src\SPH\SPHParticle2d.cpp" />
+    <ClCompile Include="src\SPH\SPHParticle3d.cpp" />
+    <ClCompile Include="src\SPH\SPHPlaneInteractor2d.cpp" />
+    <ClCompile Include="src\SPH\SPHPlaneInteractor3d.cpp" />
+    <ClCompile Include="src\SPH\SPHSystem2d.cpp" />
+    <ClCompile Include="src\SPH\SPHSystem3d.cpp" />
+    <ClCompile Include="src\SPH\SPHSystem3dClean.cpp" />
+    <ClCompile Include="src\SPH\SPHWindowManager.cpp" />
+    <ClCompile Include="src\Stage.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\Utility.cpp" />
+    <ClCompile Include="src\Vector2D.cpp" />
+    <ClCompile Include="src\Vector3D.cpp" />
+    <ClCompile Include="src\WindowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AverageValue.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Cube.h" />
+    <ClInclude Include="src\DataLine.h" />
+    <ClInclude Include="src\DataLineSet.h" />
+    <ClInclude Include="src\DistributedShapesScene.h" />
+    <ClInclude Include="src\Frustum.h" />
+    <ClInclude Include="src\IntervalAverageTimer.h" />
+    <ClInclude Include="src\LearningWindowManager.h" />
+    <ClInclude Include="src\LyingShapesScene.h" />
+    <ClInclude Include="src\MappedData.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingCubes.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingCubesBasic.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingCubesFactory.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingCubesShaded.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingSmoothSquares.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingSquares.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingSquaresBase.h" />
+    <ClInclude Include="src\MarchingCubes\MarchingSquaresFactory.h" />
+    <ClInclude Include="src\Matrix.h" />
+    <ClInclude Include="src\PointDataVisualiser.h" />
+    <ClInclude Include="src\PongScene.h" />
+    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\Shaders\ShaderBase.h" />
+    <ClInclude Include="src\Shaders\ShaderProgram.h" />
+    <ClInclude Include="src\Shaders\ShaderUtility.h" />
+    <ClInclude Include="src\Shape.h" />
+    <ClInclude Include="src\SPH\SmoothingKernels.h" />
+    <ClInclude Include="src\SPH\SPHAABBInteractor3d.h" />
+    <ClInclude Include="src\SPH\SPHInteractor2d.h" />
+    <ClInclude Include="src\SPH\SPHInteractor2dFactory.h" />
+    <ClInclude Include="src\SPH\SPHInteractor3d.h" />
+    <ClInclude Include="src\SPH\SPHInteractor3dFactory.h" />
+    <ClInclude Include="src\SPH\SPHLineInteractor2d.h" />
+    <ClInclude Include="src\SPH\SPHParticle2d.h" />
+    <ClInclude Include="src\SPH\SPHParticle3d.h" />
+    <ClInclude Include="src\SPH\SPHPlaneInteractor2d.h" />
+    <ClInclude Include="src\SPH\SPHPlaneInteractor3d.h" />
+    <ClInclude Include="src\SPH\SPHSystem2d.h" />
+    <ClInclude Include="src\SPH\SPHSystem3d.h" />
+    <ClInclude Include="src\SPH\SPHSystem3dClean.h" />
+    <ClInclude Include="src\SPH\SPHWindowManager.h" />
+    <ClInclude Include="src\Stage.h" />
+    <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\Utility.h" />
+    <ClInclude Include="src\Vector2D.h" />
+    <ClInclude Include="src\Vector3D.h" />
+    <ClInclude Include="src\WindowManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\mCubesShaded.txt" />
+    <Text Include="data\settings.txt" />
+    <Text Include="data\sph3d.txt" />
+    <Text Include="data\windowSettings.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\baseShader.frag" />
+    <None Include="data\shaders\baseShader.vert" />
+    <None Include="data\shaders\baseShader3D.frag" />
+    <None Include="data\shaders\baseShader3D.vert" />
+    <None Include="data\shaders\basicTexture.frag" />
+    <None Include="data\shaders\basicTexture.vert" />
+    <None Include="data\shaders\mc.frag" />
+    <None Include="data\shaders\mc.geom" />
+    <None Include="data\shaders\mc.vert" />
+    <None Include="data\shaders\testBasicShader.frag" />
+    <None Include="data\shaders\testBasicShader.geom" />
+    <None Include="data\shaders\testBasicShader.vert" />
+    <None Include="data\shaders\testPS.frag" />
+    <None Include="data\shaders\testPS.geom" />
+    <None Include="data\shaders\testPS.vert" />
+    <None Include="data\shaders\testWave.frag" />
+    <None Include="data\shaders\testWave.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

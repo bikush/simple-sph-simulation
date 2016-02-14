@@ -1,0 +1,13 @@
+[base]
+position 0 0 0
+span 10 10 10
+dataWidth 32
+dataHeight 32
+dataDepth 32
+maxValue 2
+treshold 0.1
+
+[shaders]
+v data/shaders/mc.vert
+g data/shaders/mc.geom
+f data/shaders/mc.frag

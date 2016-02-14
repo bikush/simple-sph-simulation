@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{7579fcb5-f807-4120-9e21-43b91fcdcef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{cf4453ba-a358-468e-9b3a-8e6700bae5dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SPH">
+      <UniqueIdentifier>{1c281dbf-199f-4051-b06a-f85f47cba061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SPH">
+      <UniqueIdentifier>{789fbe1b-5536-41a4-9fa2-36ae91089848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MarchingCubes">
+      <UniqueIdentifier>{4fe37a6f-2f86-4833-ac9a-22710e2ed543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MarchingCubes">
+      <UniqueIdentifier>{452b64b5-54d7-45a0-8ac7-806d1d92a03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SHADERS">
+      <UniqueIdentifier>{23da3346-b4f7-445c-b0c1-7cea49478c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Learning">
+      <UniqueIdentifier>{04e374ff-8d3c-48f7-b7e5-0e4d6ab49cd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Learning">
+      <UniqueIdentifier>{4cdf73cc-27e8-459b-8063-efed89462b7b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AverageValue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataLineSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MappedData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Playground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shaders\ShaderBase.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shaders\ShaderProgram.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shaders\ShaderUtility.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SmoothingKernels.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHAABBInteractor3d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHLineInteractor2d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHParticle2d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHParticle3d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHPlaneInteractor2d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHPlaneInteractor3d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHSystem2d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHSystem3d.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHSystem3dClean.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHWindowManager.cpp">
+      <Filter>Source Files\SPH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingCubes.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingCubesBasic.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingCubesFactory.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingCubesShaded.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingSmoothSquares.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingSquares.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingSquaresBase.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MarchingCubes\MarchingSquaresFactory.cpp">
+      <Filter>Source Files\MarchingCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frustum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PointDataVisualiser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DistributedShapesScene.cpp">
+      <Filter>Source Files\Learning</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LyingShapesScene.cpp">
+      <Filter>Source Files\Learning</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LearningWindowManager.cpp">
+      <Filter>Source Files\Learning</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PongScene.cpp">
+      <Filter>Source Files\Learning</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AverageValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataLineSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MappedData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WindowManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\ShaderBase.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\ShaderProgram.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\ShaderUtility.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SmoothingKernels.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHAABBInteractor3d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHInteractor2d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHInteractor2dFactory.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHInteractor3d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHInteractor3dFactory.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHLineInteractor2d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHParticle2d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHParticle3d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHPlaneInteractor2d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHPlaneInteractor3d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHSystem2d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHSystem3d.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHSystem3dClean.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHWindowManager.h">
+      <Filter>Header Files\SPH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingCubes.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingCubesBasic.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingCubesFactory.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingCubesShaded.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingSmoothSquares.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingSquares.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingSquaresBase.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MarchingCubes\MarchingSquaresFactory.h">
+      <Filter>Header Files\MarchingCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Frustum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PointDataVisualiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IntervalAverageTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Stage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DistributedShapesScene.h">
+      <Filter>Header Files\Learning</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LearningWindowManager.h">
+      <Filter>Header Files\Learning</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PongScene.h">
+      <Filter>Header Files\Learning</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LyingShapesScene.h">
+      <Filter>Header Files\Learning</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\windowSettings.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="data\mCubesShaded.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="data\settings.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="data\sph3d.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\baseShader.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\baseShader.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\basicTexture.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\basicTexture.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\mc.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\mc.geom">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\mc.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testBasicShader.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testBasicShader.geom">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testBasicShader.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testPS.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testPS.geom">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testPS.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testWave.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\testWave.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\baseShader3D.frag">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+    <None Include="data\shaders\baseShader3D.vert">
+      <Filter>Resource Files\SHADERS</Filter>
+    </None>
+  </ItemGroup>
+</Project>

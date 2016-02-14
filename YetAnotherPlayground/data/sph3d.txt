@@ -1,0 +1,61 @@
+[grid]
+width 10.1
+height 10.1
+depth 10.1
+surfaces box planeTilt
+
+[fluid]
+density 0.06
+k 0.8314
+viscosity 0.0894
+unitMass 0.05
+gravity 0 -1.981 0
+surfaceTension 0.015
+colorFieldTreshold 0.27
+
+[kernel]
+base KernelPoly6
+pressure KernelSpiky
+viscous KernelViscosity
+smoothingLength 1.5
+
+[box]
+type AABB
+min 0 0 0
+max 10 10 10
+dampen 0.7
+
+[planeTilt]
+type plane
+start 7 5 0
+up 1 0 0
+
+[planeDown]
+type plane
+start 0 0 0
+up 0 1 0
+
+[planeUp]
+type plane
+start 0 10 0
+up 0 -1 0
+
+[planeRight]
+type plane
+start 10 0 0
+up -1 0 0
+
+[planeLeft]
+type plane
+start 0 0 0
+up 1 0 0
+
+[planeBack]
+type plane
+start 0 0 10
+up 0 0 -1
+
+[planeFront]
+type plane
+start 0 0 0
+up 0 0 1
