@@ -38,6 +38,8 @@ public:
 	void setMoveLeft(bool movement);
 	void setMoveRight(bool movement);
 
+	void rotate(int dx, int dy);
+
 	void update(float dt);
 	
 // PROJECTION

@@ -99,9 +99,20 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 			scenes.erase( lastOne );
 		}
 	}
+	handleCameraMove(keyPressed, false);
+}
+
+void LearningWindowManager::eventMouseMotion(sf::Event::MouseMoveEvent mEvent)
+{
+	int dx = mEvent.x - mouseLastX;
+	int dy = mEvent.y - mouseLastY;
+	//std::cout << dx << "  " << dy << std::endl;
+
+	if (mouseLeft) {
+		camera.rotate(dx, dy);
 	}
 
-	handleCameraMove(keyPressed, false);
+	WindowManager::eventMouseMotion(mEvent);
 }
 
 void LearningWindowManager::handleCameraMove(sf::Keyboard::Key key, bool pressed) {

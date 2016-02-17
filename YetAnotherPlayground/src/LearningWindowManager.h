@@ -23,6 +23,7 @@ protected:
 	void eventReshape( int width, int height );
 	void eventKeyboardDown( sf::Keyboard::Key keyPressed );
 	void eventKeyboardUp( sf::Keyboard::Key keyPressed );
+	void eventMouseMotion(sf::Event::MouseMoveEvent mEvent);
 
 	void setProjection( double width, double height );
 	

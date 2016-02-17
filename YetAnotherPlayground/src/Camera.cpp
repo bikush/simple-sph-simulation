@@ -2,10 +2,13 @@
 #include "Utility.h"
 #include <GL\glew.h>
 #include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\quaternion.hpp>
+#include <glm\gtx\transform.hpp>
+#include <glm\gtx\quaternion.hpp>
 
 Camera::Camera( glm::vec2 windowSize, ProjectionType type, glm::vec2 zLimits) :
 	windowSize( windowSize ), projectionType( type ), projectionZLimit( zLimits ),
-	position({ 0.0f, 0.0f, 1.0f }), forward({ 0.0f, 0.0f, -1.0f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up))
+	position({ 0.0f, 5.0f, 0.0f }), forward({ 0.0f, 0.0f, -1.0f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up))
 {
 	setupView();
 	refreshProjection();
@@ -20,7 +23,7 @@ Camera::~Camera(void)
 // VIEW
 void Camera::setupView()
 {
-	view = glm::lookAt(position, position + forward, up);
+	view = glm::lookAt(position, position + forward, -glm::cross(forward,axis));
 	refreshViewProjection();
 }
 
@@ -46,17 +49,34 @@ void Camera::setMoveRight(bool movement) {
 	moveRight = movement;
 }
 
+void Camera::rotate(int idx, int idy)
+{
+	float dx = -100.f * idx / windowSize.x;
+	float dy = -100.f * idy / windowSize.y;
+
+	auto pitch = glm::angleAxis(dy, axis);
+	auto heading = glm::angleAxis(dx, up);
+
+	glm::quat temp = glm::cross(pitch, heading);
+	temp = glm::normalize(temp);
+	//update the direction from the quaternion
+	forward = glm::rotate(temp, forward);
+	axis = glm::rotate(heading, axis);
+	// if up changes, camera becomes too free
+	//up = glm::rotate(pitch, up);
+
+	setupView();
+}
+
 void Camera::update(float dt)
 {
 	int forwardMovement = (moveForward ? 1 : 0) + (moveBackward ? -1 : 0);
 	if (forwardMovement != 0) {
-		position += forward * (forwardMovement * dt * 10.0f);
-		setupView();
+		applyOffset( forward * (forwardMovement * dt * 10.0f) );
 	}
-	int sideMovement = (moveLeft ? 1 : 0) + (moveRight ? -1 : 0);
+	int sideMovement = (moveLeft ? -1 : 0) + (moveRight ? 1 : 0);
 	if (sideMovement != 0) {
-		position += axis * (sideMovement * dt * 10.0f);
-		setupView();
+		applyOffset( axis * (sideMovement * dt * 10.0f) );
 	}
 }
 
