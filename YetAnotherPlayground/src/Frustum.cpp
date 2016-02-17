@@ -149,6 +149,7 @@ void Frustum::NormalizePlane(float frustum[6][4], int side)
 	frustum[side][D] /= magnitude; 
 }
 
+// TODO: implement with actual matrices from th camera
 void Frustum::CalculateFrustum()
 {    
 	float   proj[16];						
