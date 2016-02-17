@@ -99,24 +99,6 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 			scenes.erase( lastOne );
 		}
 	}
-/*	if (keyPressed == sf::Keyboard::Left) {
-		camera.applyOffset({ -3.0f,0.0f,0.0f });
-	}
-	if (keyPressed == sf::Keyboard::Right) {
-		camera.applyOffset({ 3.0f,0.0f,0.0f });
-	}
-	if (keyPressed == sf::Keyboard::Up) {
-		camera.applyOffset({ 0.0f,3.0f,0.0f });
-	}
-	if (keyPressed == sf::Keyboard::Down) {
-		camera.applyOffset({ 0.0f,-3.0f,0.0f });
-	}*/
-	
-	if (keyPressed == sf::Keyboard::Numpad8) {
-		camera.applyOffset({ 0.0f,0.0f,3.0f });
-	}
-	if (keyPressed == sf::Keyboard::Numpad2) {
-		camera.applyOffset({ 0.0f,0.0f,-3.0f });
 	}
 
 	handleCameraMove(keyPressed, false);

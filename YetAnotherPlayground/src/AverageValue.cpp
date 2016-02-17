@@ -12,7 +12,7 @@ void AverageValue::addValue( int aCount, double value )
 		double difference = (total - total * count / (count + period));
 		total -= difference;
 		average = difference / period;
-		std::cout <<"Total:" << total << " Average:" << average << std::endl;
+	//	std::cout <<"Total:" << total << " Average:" << average << std::endl;
 	}
 }
 
