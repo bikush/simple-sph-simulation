@@ -210,10 +210,10 @@ void SPHWindowManager::draw(const Camera & camera)
 		sph3->draw( pdv );			
 		if( drawPDVWithShader )
 		{
-			pdv->draw( );
+			pdv->draw( camera );
 		}else{
 			ShaderProgram::turnOff();
-			pdv->draw( true );
+			pdv->draw( camera, true );
 		}	
 		
 	}

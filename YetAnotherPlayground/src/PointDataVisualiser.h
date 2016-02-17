@@ -5,7 +5,7 @@
 #include "Vector3D.h"
 #include <GL\glew.h>
 class ShaderProgram;
-class Frustum;
+class Camera;
 
 class PointDataVisualiser
 {
@@ -28,8 +28,8 @@ class PointDataVisualiser
 
 	float size;
 
-	void drawPipeline();	
-	void drawShaded();
+	void drawPipeline(const Camera& camera);
+	void drawShaded(const Camera& camera);
 	
 public:
 	PointDataVisualiser( const char* texturePath = 0, bool useShader = false );
@@ -44,10 +44,9 @@ public:
 	void pushPoint( vec3f point );
 	void pushPoint( float x, float y, float z );
 
-	void draw( bool forcePipeline = false );
-	void drawPoints();
-	
-	void drawArray();	
+	void draw( const Camera& camera, bool forcePipeline = false );
+	void drawPoints();	
+	void drawArray();
 
 	void setPointSize( float size );
 	float getPointSize();

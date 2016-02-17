@@ -1,8 +1,9 @@
 #include "PointDataVisualiser.h"
 #include "TextureManager.h"
 #include "ShaderProgram.h"
-#include "Frustum.h"
+#include "Camera.h"
 #include <iostream>
+#include <glm\gtc\type_ptr.hpp>
 
 #define BUFFER_SIZE_INC 64
 
@@ -132,18 +133,16 @@ void PointDataVisualiser::drawArray()
 	glDrawArrays(GL_POINTS, 0, bufferElements );/**/
 }
 
-void PointDataVisualiser::drawShaded()
+void PointDataVisualiser::drawShaded(const Camera& camera)
 {
 	glDisable(GL_CULL_FACE);
 	
-	float proj[16];
-	float modl[16];
-	glGetFloatv( GL_PROJECTION_MATRIX, proj );
-	glGetFloatv( GL_MODELVIEW_MATRIX, modl );	
+	auto proj = camera.getProjection();
+	auto modl = camera.getView();
 	
 	shader->turnOn();
-	shader->setUniformM4( "ModelViewMatrix", modl );
-	shader->setUniformM4( "ProjectionMatrix", proj );	
+	shader->setUniformM4( "ModelViewMatrix", glm::value_ptr(modl) );
+	shader->setUniformM4( "ProjectionMatrix", glm::value_ptr(proj) );
 	shader->setUniformF("Size2", 1 );
 	shader->setUniformI("SpriteTex", 0 );
 	shader->setUniformV3("Color", color.x, color.y, color.z );
@@ -156,7 +155,7 @@ void PointDataVisualiser::drawShaded()
 	glEnable(GL_CULL_FACE);	
 }
 
-void PointDataVisualiser::drawPipeline()
+void PointDataVisualiser::drawPipeline(const Camera& camera)
 {
 /*	float quadratic[] =  { 0.4, 0.01f, 0.0f };
 	glPointParameterfv( GL_POINT_DISTANCE_ATTENUATION_ARB, quadratic );
@@ -198,7 +197,7 @@ void PointDataVisualiser::drawPipeline()
 	glDisable( GL_POINT_SPRITE );
 }
 
-void PointDataVisualiser::draw( bool forcePipeline )
+void PointDataVisualiser::draw(const Camera& camera, bool forcePipeline )
 {	
 	ShaderProgram::turnOff();
 	glEnable(GL_TEXTURE_2D);
@@ -211,9 +210,9 @@ void PointDataVisualiser::draw( bool forcePipeline )
 		glDepthMask(GL_FALSE);
 			
 			if( useShader && !forcePipeline )
-				drawShaded();
+				drawShaded(camera);
 			else
-				drawPipeline();
+				drawPipeline(camera);
 
 		glDepthMask(GL_TRUE);
 		if( !blendEnabled ) glDisable( GL_BLEND );
