@@ -41,6 +41,8 @@ public:
 	void rotate(int dx, int dy);
 
 	void update(float dt);
+
+	const glm::mat4& getView() const;
 	
 // PROJECTION
 protected:
@@ -54,6 +56,8 @@ protected:
 public:
 	void setupOtrhographicProjection( glm::vec2 projectionStart, glm::vec2 projectionSize, float zNear, float zFar );
 	void setupPerspectiveProjection( float fovy, float aspectRatio, float zNear, float zFar );
+
+	const glm::mat4& getProjection() const;
 	
 // VIEW PROJECTION
 protected:

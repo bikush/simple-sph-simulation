@@ -80,6 +80,11 @@ void Camera::update(float dt)
 	}
 }
 
+const glm::mat4 & Camera::getView() const
+{
+	return view;
+}
+
 // PROJECTION
 
 void Camera::refreshProjection()
@@ -111,6 +116,11 @@ void Camera::setupPerspectiveProjection(float fovy, float aspectRatio, float zNe
 	projectionType = ProjectionType::PERSPECTIVE;
 	projection = glm::perspective(fovy, aspectRatio, zNear, zFar);
 	refreshViewProjection();
+}
+
+const glm::mat4 & Camera::getProjection() const
+{
+	return projection;
 }
 
 // VIEW PROJECTION
