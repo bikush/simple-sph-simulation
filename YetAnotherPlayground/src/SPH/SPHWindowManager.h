@@ -1,36 +1,27 @@
 #pragma once
-#include "WindowManager.h"
+#include "Scene.h"
+#include "IntervalAverageTimer.h"
 #include <gl\glew.h>
-#include "Camera.h"
 
 class SPHSystem3d;
 class PointDataVisualiser;
 class MarchingCubesShaded;
-class IntervalAverageTimer;
 
 class SPHWindowManager :
-	public WindowManager
+	public Scene
 {
 public:
-	SPHWindowManager(void) : WindowManager("windowSettings.txt"), 
-		camera( {1024.0f,768.0f}, Camera::ProjectionType::PERSPECTIVE, {1.0f,10000.0f} )
-	{}
+	SPHWindowManager(void);
 	virtual ~SPHWindowManager(void);
-
-	static void open();
-
-protected:
-	virtual void windowWillRun();
-	virtual void windowWillClose();
-	virtual void drawScene();
-	virtual void eventKeyboardDown(sf::Keyboard::Key keyPressed);
+	
+	void draw(const Camera& camera);
+	void update(float dt);
 	virtual void eventKeyboardUp(sf::Keyboard::Key keyPressed);
 
 private:
 	SPHSystem3d* sph3;
 	PointDataVisualiser* pdv;
 	MarchingCubesShaded *mcs;
-	Camera camera;
 
 	// Light data
 	GLfloat lightPosition[4];
@@ -38,12 +29,13 @@ private:
 	GLfloat lightAmbient[4];
 	GLfloat lightSpecular[4];
 
-	IntervalAverageTimer* sac;
-	IntervalAverageTimer* mac;
-	IntervalAverageTimer* rac;
+	IntervalAverageTimer sphTimer;
+	IntervalAverageTimer marchingTimer;
 	bool drawWithMC;
 	bool drawPDVWithShader;
 	float treshold;
+
+	bool paused;
 
 	void initData();
 	void initLight();

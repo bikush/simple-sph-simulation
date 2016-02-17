@@ -5,6 +5,7 @@
 #include "DistributedShapesScene.h"
 #include "PongScene.h"
 #include "LyingShapesScene.h"
+#include "SPHWindowManager.h"
 
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp>
@@ -90,6 +91,10 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 	{
 		addScene(new LyingShapesScene());
 	}
+	if (keyPressed == sf::Keyboard::Num4)
+	{
+		addScene(new SPHWindowManager());
+	}
 	if( keyPressed == sf::Keyboard::Num0 )
 	{
 		if( scenes.size() > 0 )
@@ -154,14 +159,22 @@ void LearningWindowManager::drawScene()
 	{
 		scenes[i]->draw( camera );
 	}
+
+	WindowManager::drawScene();
 }
 
 void LearningWindowManager::updateScene( double dt )
-{
-	averageFrameTime.addValue(1,dt);
-	double perFrame = averageFrameTime.currentAverage();
+{	
 	camera.update(dt);
+	camera.updateCamera();
 
+	for (unsigned int i = 0; i < scenes.size(); i++)
+	{
+		scenes[i]->update(dt);
+	}
+
+	averageFrameTime.addValue(1, dt);
+	double perFrame = averageFrameTime.currentAverage();
 	std::stringstream titleStream;
 	titleStream << "Time: " << perFrame << " FPS: " << 1.0/perFrame;
 	std::string title = titleStream.str();

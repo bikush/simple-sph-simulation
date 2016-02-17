@@ -5,40 +5,21 @@
 #include "SPHSystem3d.h"
 #include "MarchingCubesShaded.h"
 #include "ShaderProgram.h"
-#include "IntervalAverageTimer.h"
+#include "Camera.h"
 
 using namespace std;
 
-SPHWindowManager::~SPHWindowManager(void)
-{
-	if( pdv )
-		delete pdv;
-	if( sph3 )
-		delete sph3;
-	if( mcs )
-		delete mcs;
-	if( sac )
-	{
-		delete sac;
-		delete mac;
-		delete rac;
-	}
-}
-
-void SPHWindowManager::open()
-{
-	SPHWindowManager window{};
-	window.run();
-}
-
-void SPHWindowManager::windowWillClose()
-{
-}
-
-void SPHWindowManager::windowWillRun()
+SPHWindowManager::SPHWindowManager(void) : Scene(),
+	paused(false),
+	sphTimer(3), marchingTimer(3),
+	drawWithMC(false), drawPDVWithShader(true)
 {
 	initData();
 	initLight();
+}
+
+SPHWindowManager::~SPHWindowManager(void)
+{	
 }
 
 void SPHWindowManager::initData()
@@ -90,11 +71,6 @@ void SPHWindowManager::initLight(){
 	glDisable(GL_LIGHTING);
 }
 
-void SPHWindowManager::eventKeyboardDown(sf::Keyboard::Key keyPressed)
-{
-	WindowManager::eventKeyboardDown(keyPressed);
-}
-
 void SPHWindowManager::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 {
 	switch (keyPressed)
@@ -109,32 +85,9 @@ void SPHWindowManager::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 					mcs->setTreshold( treshold );
 					break;
 
-		case sf::Keyboard::Left:
-					camera.applyOffset(vec3f( 1.0f, 0.0f, 0.0f ));
-					break;
-
-		case sf::Keyboard::Right:
-					camera.applyOffset(vec3f( -1.0f, 0.0f, 0.0f ));
-					break;
-					
-		case sf::Keyboard::Down:
-					camera.applyOffset(vec3f(0.0f, -1.0f, 0.0f));
-					break;
-
-		case sf::Keyboard::Up:
-					camera.applyOffset(vec3f(0.0f, 1.0f, 0.0f ));
-					break;
-
-		case sf::Keyboard::Numpad8:
-			camera.applyOffset(vec3f(0.0f, 0.0f, -10.0f));
-			break;
-
-		case sf::Keyboard::Numpad2:
-			camera.applyOffset(vec3f(0.0f, 0.0f, 10.0f));
-			break;
-
 		case sf::Keyboard::P:
-					Timer::pauseToggle();
+					paused = true;
+					Timer::pauseToggle();	// TODO: Timer class is wtf?
 					break;
 
 		case sf::Keyboard::O:
@@ -222,46 +175,31 @@ void SPHWindowManager::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 					glDisable(GL_NORMALIZE);
 					break;
 
-		case sf::Keyboard::Escape:	
-					window->close();
-					break;
-
 		default:
-			WindowManager::eventKeyboardUp(keyPressed);
+			Scene::eventKeyboardUp(keyPressed);
 			break;
 	}
 }
 
-void SPHWindowManager::drawScene(){
+void SPHWindowManager::update(float dt)
+{
+	if (!paused)
+	{
+		sphTimer.resume();
+		sph3->animate(0.0125f);
+		sphTimer.pause();
+	}
+}
+
+void SPHWindowManager::draw(const Camera & camera)
+{
 
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
-
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClearDepth(1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	Timer::calcTimeFlow();
-	camera.updateCamera();
-
-	if( sac == NULL )
-	{
-		sac = new IntervalAverageTimer(3);
-		mac = new IntervalAverageTimer(3);
-		rac = new IntervalAverageTimer(3);
-	}
-	rac->pause();
-	
-	if( !Timer::isPaused() )
-	{		
-		sac->resume();
-		sph3->animate( 0.0125f );		
-		sac->pause();
-	}
-		
-	mac->resume();	
+			
+	marchingTimer.resume();	
 	if(drawWithMC)
 	{
 		mcs->clear();
@@ -279,11 +217,11 @@ void SPHWindowManager::drawScene(){
 		}	
 		
 	}
-	mac->pause();
+	marchingTimer.pause();
 	
-	static char title[256];	
-	sprintf_s(title,256, "Time: %.2f, Fps: %d, Particles: %d, SPH time: %1.8f, Draw time: %1.8f, Rest time: %1.8f", Timer::getTime(), Timer::getFPS(), sph3->getParticleCount(), sac->getAverage(), mac->getAverage(), rac->getAverage());
-	window->setTitle( title );	
+	// TODO: print this info somewhere
+	//static char title[256];	
+	//sprintf_s(title,256, "Time: %.2f, Fps: %d, Particles: %d, SPH time: %1.8f, Draw time: %1.8f, Rest time: %1.8f", Timer::getTime(), Timer::getFPS(), sph3->getParticleCount(), sphTimer->getAverage(), marchingTimer->getAverage(), restTimer->getAverage());
+	//window->setTitle( title );	
 
-	rac->resume();
 }

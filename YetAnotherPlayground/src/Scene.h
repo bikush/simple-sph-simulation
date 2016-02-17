@@ -19,5 +19,6 @@ public:
 	virtual void eventKeyboardUp	( sf::Keyboard::Key keyPressed ){}
 
 	virtual void draw( const Camera& camera ){}
+	virtual void update(float dt) {}
 };
 
