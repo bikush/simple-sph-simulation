@@ -7,12 +7,12 @@ class SPHSystem3d;
 class PointDataVisualiser;
 class MarchingCubesShaded;
 
-class SPHWindowManager :
+class SPHScene :
 	public Scene
 {
 public:
-	SPHWindowManager(void);
-	virtual ~SPHWindowManager(void);
+	SPHScene(void);
+	virtual ~SPHScene(void);
 	
 	void draw(const Camera& camera);
 	void update(float dt);

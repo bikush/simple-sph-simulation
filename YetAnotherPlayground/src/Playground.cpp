@@ -3,7 +3,6 @@
 
 #include "WindowManager.h"
 #include "LearningWindowManager.h"
-#include "SPHWindowManager.h"
 
 using namespace std;
 

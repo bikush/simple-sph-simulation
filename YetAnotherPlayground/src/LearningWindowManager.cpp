@@ -5,7 +5,7 @@
 #include "DistributedShapesScene.h"
 #include "PongScene.h"
 #include "LyingShapesScene.h"
-#include "SPHWindowManager.h"
+#include "SPHScene.h"
 
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp>
@@ -93,7 +93,7 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 	}
 	if (keyPressed == sf::Keyboard::Num4)
 	{
-		addScene(new SPHWindowManager());
+		addScene(new SPHScene());
 	}
 	if( keyPressed == sf::Keyboard::Num0 )
 	{

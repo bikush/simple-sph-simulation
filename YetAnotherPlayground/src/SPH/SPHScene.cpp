@@ -1,4 +1,4 @@
-#include "SPHWindowManager.h"
+#include "SPHScene.h"
 #include "MappedData.h"
 
 #include "PointDataVisualiser.h"
@@ -9,7 +9,7 @@
 
 using namespace std;
 
-SPHWindowManager::SPHWindowManager(void) : Scene(),
+SPHScene::SPHScene(void) : Scene(),
 	paused(false),
 	sphTimer(3), marchingTimer(3),
 	drawWithMC(false), drawPDVWithShader(true)
@@ -18,11 +18,11 @@ SPHWindowManager::SPHWindowManager(void) : Scene(),
 	initLight();
 }
 
-SPHWindowManager::~SPHWindowManager(void)
+SPHScene::~SPHScene(void)
 {	
 }
 
-void SPHWindowManager::initData()
+void SPHScene::initData()
 {
 	// TODO: shared global settings
 	MappedData settings("data/settings.txt");
@@ -39,7 +39,7 @@ void SPHWindowManager::initData()
 	pdv->setColor(0.03f,0.2f,0.5f);
 }
 
-void SPHWindowManager::initLight(){
+void SPHScene::initLight(){
 	// TODO: Lights are part of the scene
 	MappedData lightConf("lights.txt");
 
@@ -71,7 +71,7 @@ void SPHWindowManager::initLight(){
 	glDisable(GL_LIGHTING);
 }
 
-void SPHWindowManager::eventKeyboardUp(sf::Keyboard::Key keyPressed)
+void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 {
 	switch (keyPressed)
 	{
@@ -181,7 +181,7 @@ void SPHWindowManager::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 	}
 }
 
-void SPHWindowManager::update(float dt)
+void SPHScene::update(float dt)
 {
 	if (!paused)
 	{
@@ -191,7 +191,7 @@ void SPHWindowManager::update(float dt)
 	}
 }
 
-void SPHWindowManager::draw(const Camera & camera)
+void SPHScene::draw(const Camera & camera)
 {
 
 	glEnable(GL_NORMALIZE);

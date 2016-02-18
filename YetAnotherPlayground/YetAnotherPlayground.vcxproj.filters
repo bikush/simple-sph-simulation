@@ -114,9 +114,6 @@
     <ClCompile Include="src\SPH\SPHSystem3dClean.cpp">
       <Filter>Source Files\SPH</Filter>
     </ClCompile>
-    <ClCompile Include="src\SPH\SPHWindowManager.cpp">
-      <Filter>Source Files\SPH</Filter>
-    </ClCompile>
     <ClCompile Include="src\MarchingCubes\MarchingCubes.cpp">
       <Filter>Source Files\MarchingCubes</Filter>
     </ClCompile>
@@ -173,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="src\PongScene.cpp">
       <Filter>Source Files\Learning</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SPH\SPHScene.cpp">
+      <Filter>Source Files\SPH</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +260,6 @@
     <ClInclude Include="src\SPH\SPHSystem3dClean.h">
       <Filter>Header Files\SPH</Filter>
     </ClInclude>
-    <ClInclude Include="src\SPH\SPHWindowManager.h">
-      <Filter>Header Files\SPH</Filter>
-    </ClInclude>
     <ClInclude Include="src\MarchingCubes\MarchingCubes.h">
       <Filter>Header Files\MarchingCubes</Filter>
     </ClInclude>
@@ -322,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="src\LyingShapesScene.h">
       <Filter>Header Files\Learning</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SPH\SPHScene.h">
+      <Filter>Header Files\SPH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
