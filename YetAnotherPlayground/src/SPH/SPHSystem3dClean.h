@@ -12,6 +12,9 @@ enum SPHKernelUse;
 enum KernelType;
 class PointDataVisualiser;
 
+// This is the first and basic implementation. It has many weak and slow points.
+// Replaced by SPHSystem3d.
+// At least I hope so.
 class SPHSystem3dClean
 {
 	std::vector<SPHParticle3d> particles;
