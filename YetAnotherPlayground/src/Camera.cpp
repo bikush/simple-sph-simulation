@@ -70,13 +70,14 @@ void Camera::rotate(int idx, int idy)
 
 void Camera::update(float dt)
 {
+	float speed = 30.0f;
 	int forwardMovement = (moveForward ? 1 : 0) + (moveBackward ? -1 : 0);
 	if (forwardMovement != 0) {
-		applyOffset( forward * (forwardMovement * dt * 10.0f) );
+		applyOffset( forward * (forwardMovement * dt * speed) );
 	}
 	int sideMovement = (moveLeft ? -1 : 0) + (moveRight ? 1 : 0);
 	if (sideMovement != 0) {
-		applyOffset( axis * (sideMovement * dt * 10.0f) );
+		applyOffset( axis * (sideMovement * dt * speed) );
 	}
 }
 
