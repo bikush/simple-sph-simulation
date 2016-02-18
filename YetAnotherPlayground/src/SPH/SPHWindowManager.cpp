@@ -25,10 +25,10 @@ SPHWindowManager::~SPHWindowManager(void)
 void SPHWindowManager::initData()
 {
 	// TODO: shared global settings
-	MappedData settings("settings.txt");
+	MappedData settings("data/settings.txt");
 	string imagesPath = settings.getData("folders", "images").getStringData();
 
-	sph3 = new SPHSystem3d( "sph3d.txt" );
+	sph3 = new SPHSystem3d( "data/sph3d.txt" );
 	cout << "SPH particle size: " << sizeof( SPHParticle3d ) << endl;
 
 	mcs = new MarchingCubesShaded( "data/mCubesShaded.txt" );

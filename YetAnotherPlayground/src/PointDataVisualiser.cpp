@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include <iostream>
 #include <glm\gtc\type_ptr.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 #define BUFFER_SIZE_INC 64
 
@@ -139,6 +140,7 @@ void PointDataVisualiser::drawShaded(const Camera& camera)
 	
 	auto proj = camera.getProjection();
 	auto modl = camera.getView();
+	//modl = glm::scale(modl, {5.0f,5.0f,5.0f});
 	
 	shader->turnOn();
 	shader->setUniformM4( "ModelViewMatrix", glm::value_ptr(modl) );
