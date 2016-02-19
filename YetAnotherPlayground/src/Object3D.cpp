@@ -42,8 +42,9 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 
 Object3D::~Object3D()
 {
+	// TODO: could some objects have a single verticeAttribute and element buffer?
 	glDeleteBuffers(1, &vbo_triangle);
-	// TODO: delete elements buffer?
+	glDeleteBuffers(1, &vbo_elements);
 }
 
 
