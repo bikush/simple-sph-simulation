@@ -107,6 +107,12 @@ void Object3D::setScale(const float newScale)
 	setScale({ newScale, newScale, newScale });
 }
 
+void Object3D::setAngles(const float xAxis, const float yAxis, const float zAxis)
+{
+	axisAngles = { xAxis, yAxis, zAxis };
+	recalculate = true;
+}
+
 glm::vec3 Object3D::getPosition()
 {
 	return position;
@@ -117,8 +123,20 @@ glm::vec3 Object3D::getScale()
 	return scale;
 }
 
+glm::vec3 Object3D::getAxisAngles()
+{
+	return axisAngles;
+}
+
 void Object3D::setupModelMatrix()
 {
-	modelMatrix = glm::scale(glm::translate(glm::mat4(1.0f), position), scale);
+	modelMatrix = 
+		glm::rotate(
+			glm::rotate(
+				glm::rotate(
+					glm::scale(glm::translate(glm::mat4(1.0f), position), scale),
+					axisAngles.x, {1.0f,0.0f,0.0f}),
+			axisAngles.y, { 0.0f,1.0f,0.0f }),
+		axisAngles.z, { 0.0f,0.0f,1.0f });
 	recalculate = false;
 }

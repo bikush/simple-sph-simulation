@@ -15,9 +15,11 @@ public:
 	void setPosition(const glm::vec3& newPosition);
 	void setScale(const glm::vec3& newScale);
 	void setScale(const float newScale);
+	void setAngles(const float xAxis, const float yAxis, const float zAxis);
 
 	glm::vec3 getPosition();
 	glm::vec3 getScale();
+	glm::vec3 getAxisAngles();
 
 protected:
 	void initializeVBO(const float* triangleAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode);
@@ -33,6 +35,7 @@ private:
 
 	glm::vec3 position;
 	glm::vec3 scale;
+	glm::vec3 axisAngles;
 	bool recalculate;
 	glm::mat4 modelMatrix;
 
