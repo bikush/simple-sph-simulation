@@ -1,6 +1,7 @@
 #include "LyingShapesScene.h"
 #include "Cube.h"
 #include "Camera.h"
+#include "LineGrid.h"
 
 LyingShapesScene::LyingShapesScene()
 {
@@ -19,6 +20,10 @@ LyingShapesScene::LyingShapesScene()
 			i++;
 		}
 	}
+
+	grid = new LineGrid(20,10.0f,10.0f,20,10.0f,10.0f);
+	grid->setPosition({ -100.0f,0.0f,-100.0f });
+	grid->setAngles(90.0f, 0.f, 0.0f);
 }
 
 
@@ -29,6 +34,8 @@ LyingShapesScene::~LyingShapesScene()
 		delete (*shapeIt);
 	}
 	cubes.clear();
+
+	delete grid;
 }
 
 void LyingShapesScene::eventReshape(int width, int height)
@@ -43,4 +50,5 @@ void LyingShapesScene::draw(const Camera & camera)
 	{
 		cubes[i]->draw(viewProjection);
 	}
+	grid->draw(viewProjection);
 }

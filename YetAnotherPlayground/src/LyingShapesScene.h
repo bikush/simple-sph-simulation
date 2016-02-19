@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class Cube;
+class LineGrid;
 
 class LyingShapesScene :
 	public Scene
@@ -15,5 +16,6 @@ public:
 
 private:
 	std::vector<Cube*> cubes;
+	LineGrid* grid;
 };
 

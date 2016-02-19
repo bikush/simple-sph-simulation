@@ -163,6 +163,7 @@
     <ClCompile Include="src\DistributedShapesScene.cpp" />
     <ClCompile Include="src\Frustum.cpp" />
     <ClCompile Include="src\LearningWindowManager.cpp" />
+    <ClCompile Include="src\LineGrid.cpp" />
     <ClCompile Include="src\LyingShapesScene.cpp" />
     <ClCompile Include="src\MappedData.cpp" />
     <ClCompile Include="src\MarchingCubes\MarchingCubes.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="src\Frustum.h" />
     <ClInclude Include="src\IntervalAverageTimer.h" />
     <ClInclude Include="src\LearningWindowManager.h" />
+    <ClInclude Include="src\LineGrid.h" />
     <ClInclude Include="src\LyingShapesScene.h" />
     <ClInclude Include="src\MappedData.h" />
     <ClInclude Include="src\MarchingCubes\MarchingCubes.h" />
