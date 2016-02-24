@@ -6,6 +6,7 @@
 class SPHSystem3d;
 class PointDataVisualiser;
 class MarchingCubesShaded;
+class LineGrid;
 
 class SPHScene :
 	public Scene
@@ -20,8 +21,9 @@ public:
 
 private:
 	SPHSystem3d* sph3;
-	PointDataVisualiser* pdv;
-	MarchingCubesShaded *mcs;
+	PointDataVisualiser* pointVisualizer;
+	MarchingCubesShaded *marchingCubes;
+	LineGrid* grid;
 
 	// Light data
 	GLfloat lightPosition[4];

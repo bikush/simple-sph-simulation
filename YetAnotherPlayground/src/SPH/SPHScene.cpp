@@ -6,6 +6,7 @@
 #include "MarchingCubesShaded.h"
 #include "ShaderProgram.h"
 #include "Camera.h"
+#include "LineGrid.h"
 
 using namespace std;
 
@@ -31,12 +32,18 @@ void SPHScene::initData()
 	sph3 = new SPHSystem3d( "data/sph3d.txt" );
 	cout << "SPH particle size: " << sizeof( SPHParticle3d ) << endl;
 
-	mcs = new MarchingCubesShaded( "data/mCubesShaded.txt" );
+	grid = new LineGrid(20, 10.0f, 10.0f, 20, 10.0f, 10.0f);
+	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
+	grid->transform.setAngles(90.0f, 0.f, 0.0f);
 
-	pdv = new PointDataVisualiser( (imagesPath+"point.jpg").c_str(), true );	
-	pdv->setPosition(-5,-5,0);
-	pdv->setScale( 2, 2, 2 );
-	pdv->setColor(0.03f,0.2f,0.5f);
+	marchingCubes = new MarchingCubesShaded( "data/mCubesShaded.txt" );
+	marchingCubes->transform.setPosition({ -5.0f,0.0f,-20.0f });
+	marchingCubes->transform.setScale(marchingCubes->getScale());
+
+	pointVisualizer = new PointDataVisualiser( (imagesPath+"point.jpg").c_str(), true );	
+	pointVisualizer->setPosition(-5,-5,0);
+	pointVisualizer->setScale( 2, 2, 2 );
+	pointVisualizer->setColor(0.03f,0.2f,0.5f);
 }
 
 void SPHScene::initLight(){
@@ -77,12 +84,12 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 	{
 		case sf::Keyboard::Add: 
 					treshold = contain<float>( treshold+0.01, 0, 2 );
-					mcs->setTreshold( treshold );
+					marchingCubes->setTreshold( treshold );
 					break;
 
 		case sf::Keyboard::Subtract: 	
 					treshold = contain<float>( treshold-0.01, 0, 2 );
-					mcs->setTreshold( treshold );
+					marchingCubes->setTreshold( treshold );
 					break;
 
 		case sf::Keyboard::P:
@@ -198,22 +205,24 @@ void SPHScene::draw(const Camera & camera)
 	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
+
+	grid->draw(camera.getViewProjection());
 			
 	marchingTimer.resume();	
 	if(drawWithMC)
 	{
-		mcs->clear();
-		sph3->draw( mcs );		
-		mcs->draw( camera );		
+		marchingCubes->clear();
+		sph3->draw( marchingCubes );		
+		marchingCubes->draw( camera );		
 	}else
 	{	
-		sph3->draw( pdv );			
+		sph3->draw( pointVisualizer );			
 		if( drawPDVWithShader )
 		{
-			pdv->draw( camera );
+			pointVisualizer->draw( camera );
 		}else{
 			ShaderProgram::turnOff();
-			pdv->draw( camera, true );
+			pointVisualizer->draw( camera, true );
 		}	
 		
 	}
