@@ -18,13 +18,14 @@ LyingShapesScene::LyingShapesScene()
 	{
 		for (float z = -halfSize; z < halfSize + deltaX * 0.5f; z += deltaX)
 		{
-			for (float y = -halfSize; y < halfSize + deltaX * 0.5f; y += deltaX)
-			{
+			//for (float y = -halfSize; y < halfSize + deltaX * 0.5f; y += deltaX)
+			//{
+				float y = 0.0f;
 				cubes.push_back(new Cube());
 				cubes[i]->transform.setPosition({ x, y, z });
 				cubes[i]->transform.setScale(scale);
 				i++;
-			}
+			//}
 		}
 	}
 	std::cout << "Number of cubes: " << i << std::endl;
@@ -37,6 +38,7 @@ LyingShapesScene::LyingShapesScene()
 
 	mCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
 	mCubes->putSphere(5.0f, 5.0f, 5.0f, 3.0f);
+	mCubes->putSphere(0.0f, 5.0f, 5.0f, 7.0f);
 	mCubes->transform.setPosition({ -5.0f,0.0f,-20.0f });
 	mCubes->transform.setScale(mCubes->getScale());
 }
