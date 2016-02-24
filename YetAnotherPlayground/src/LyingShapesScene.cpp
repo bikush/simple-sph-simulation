@@ -4,6 +4,7 @@
 #include "LineGrid.h"
 #include "Utility.h"
 #include "MarchingCubesShaded.h"
+#include <iostream>
 
 LyingShapesScene::LyingShapesScene()
 {
@@ -16,12 +17,18 @@ LyingShapesScene::LyingShapesScene()
 	{
 		for (float z = -halfSize; z < halfSize + deltaX * 0.5f; z += deltaX)
 		{
+			for (float y = -halfSize; y < halfSize + deltaX * 0.5f; y += deltaX)
+			{
 				cubes.push_back(new Cube());
 				cubes[i]->transform.setPosition({ x, y, z });
 				cubes[i]->transform.setScale(scale);
 				i++;
+			}
 		}
 	}
+	std::cout << "Number of cubes: " << i << std::endl;
+	std::cout << "Number of triangles: " << i * 12 << std::endl;
+	std::cout << "Size of data: " << i * 8 * 6 * sizeof(float) << " bytes" << std::endl;
 
 	grid = new LineGrid(20,10.0f,10.0f,20,10.0f,10.0f);
 	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });

@@ -58,12 +58,14 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 		(GLvoid*)(3 * sizeof(GLfloat))  // offset of first element
 		);
 
-	glBindVertexArray(0);
-
 	// Element index buffer
 	glGenBuffers(1, &vbo_elements);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementCount, elements, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 }
 
@@ -89,8 +91,8 @@ void Object3D::draw(const glm::mat4 & viewProjection)
 	program->setUniformM4("mvp", glm::value_ptr(MVP));
 	
 	glBindVertexArray(vao);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
 	glDrawElements(draw_mode, elementCount, GL_UNSIGNED_INT, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
