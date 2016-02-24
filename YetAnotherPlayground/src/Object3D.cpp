@@ -1,19 +1,16 @@
 #include "Object3D.h"
 
 #include "ShaderProgram.h"
+
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
 
 
-Object3D::Object3D()
+Object3D::Object3D() : transform()
 {
 	program = ShaderProgram::CreateBase3DShader();
 	attribute_v_color = program->getAttribute("v_color");
 	attribute_position = program->getAttribute("position");
-
-	position = glm::vec3(0, 0, 0);
-	scale = glm::vec3(1, 1, 1);
-	setupModelMatrix();
 
 	vbo_triangle = GL_ZERO;
 	vbo_elements = GL_ZERO;
@@ -85,12 +82,8 @@ void Object3D::draw(const glm::mat4 & viewProjection)
 	{
 		return;
 	}
-	if (recalculate)
-	{
-		setupModelMatrix();
-	}
-
-	glm::mat4 MVP = viewProjection * modelMatrix;
+	
+	glm::mat4 MVP = viewProjection * transform.getTransformMatrix();
 
 	program->turnOn();
 	program->setUniformM4("mvp", glm::value_ptr(MVP));
@@ -100,55 +93,4 @@ void Object3D::draw(const glm::mat4 & viewProjection)
 	glDrawElements(draw_mode, elementCount, GL_UNSIGNED_INT, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-}
-
-void Object3D::setPosition(const glm::vec3 & newPosition)
-{
-	position = newPosition;
-	recalculate = true;
-}
-
-void Object3D::setScale(const glm::vec3 & newScale)
-{
-	scale = newScale;
-	recalculate = true;
-}
-
-void Object3D::setScale(const float newScale)
-{
-	setScale({ newScale, newScale, newScale });
-}
-
-void Object3D::setAngles(const float xAxis, const float yAxis, const float zAxis)
-{
-	axisAngles = { xAxis, yAxis, zAxis };
-	recalculate = true;
-}
-
-glm::vec3 Object3D::getPosition()
-{
-	return position;
-}
-
-glm::vec3 Object3D::getScale()
-{
-	return scale;
-}
-
-glm::vec3 Object3D::getAxisAngles()
-{
-	return axisAngles;
-}
-
-void Object3D::setupModelMatrix()
-{
-	modelMatrix = 
-		glm::rotate(
-			glm::rotate(
-				glm::rotate(
-					glm::scale(glm::translate(glm::mat4(1.0f), position), scale),
-					axisAngles.x, {1.0f,0.0f,0.0f}),
-			axisAngles.y, { 0.0f,1.0f,0.0f }),
-		axisAngles.z, { 0.0f,0.0f,1.0f });
-	recalculate = false;
 }

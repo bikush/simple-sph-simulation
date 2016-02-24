@@ -7,7 +7,7 @@
 
 LyingShapesScene::LyingShapesScene()
 {
-	/*float size = 100.0f;
+	float size = 100.0f;
 	float halfSize = size * 0.5f;
 	float deltaX = size / 10.0f;
 	float scale = deltaX / 3.0f;
@@ -16,16 +16,16 @@ LyingShapesScene::LyingShapesScene()
 	{
 		for (float z = -halfSize; z < halfSize + deltaX * 0.5f; z += deltaX)
 		{
-			cubes.push_back(new Cube());
-			cubes[i]->setPosition({ x, 0.0f, z });
-			cubes[i]->setScale(scale);
-			i++;
+				cubes.push_back(new Cube());
+				cubes[i]->transform.setPosition({ x, y, z });
+				cubes[i]->transform.setScale(scale);
+				i++;
 		}
-	}*/
+	}
 
 	grid = new LineGrid(20,10.0f,10.0f,20,10.0f,10.0f);
-	grid->setPosition({ -100.0f,0.0f,-100.0f });
-	grid->setAngles(90.0f, 0.f, 0.0f);
+	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
+	grid->transform.setAngles(90.0f, 0.f, 0.0f);
 
 	mCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
 	mCubes->putSphere(5.0f, 5.0f, 5.0f, 3.0f);

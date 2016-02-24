@@ -3,6 +3,8 @@
 #include <glm\mat4x4.hpp>
 #include <GL\glew.h>
 
+#include "Transform.h"
+
 class ShaderProgram;
 
 class Object3D
@@ -12,14 +14,8 @@ public:
 	virtual ~Object3D();
 
 	void draw(const glm::mat4& viewProjection);
-	void setPosition(const glm::vec3& newPosition);
-	void setScale(const glm::vec3& newScale);
-	void setScale(const float newScale);
-	void setAngles(const float xAxis, const float yAxis, const float zAxis);
-
-	glm::vec3 getPosition();
-	glm::vec3 getScale();
-	glm::vec3 getAxisAngles();
+	
+	Transform transform;
 
 protected:
 	void initializeVBO(const float* triangleAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode);
@@ -33,12 +29,4 @@ private:
 	GLint attribute_v_color;
 	GLenum draw_mode;
 	int elementCount;
-
-	glm::vec3 position;
-	glm::vec3 scale;
-	glm::vec3 axisAngles;
-	bool recalculate;
-	glm::mat4 modelMatrix;
-
-	void setupModelMatrix();
 };

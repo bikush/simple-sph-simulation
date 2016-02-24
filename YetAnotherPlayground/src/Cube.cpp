@@ -45,8 +45,8 @@ Cube::~Cube()
 Cube * Cube::CreateCube(const glm::vec3 & startPosition, const glm::vec3 & startScale)
 {
 	Cube* cube = new Cube();
-	cube->setPosition(startPosition);
-	cube->setScale(startScale);
+	cube->transform.setPosition(startPosition);
+	cube->transform.setScale(startScale);
 	return cube;
 }
 
