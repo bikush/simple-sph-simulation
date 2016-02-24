@@ -26,7 +26,7 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 	dataDepth = dataDepth<DATA_MIN ? DATA_MIN : dataDepth;
 	
 	dataMax = paramFile.getData("base","maxValue").getInt();
-	treshold = paramFile.getData("base","treshold").getInt();
+	treshold = paramFile.getData("base","treshold").getFloat( 0.5f );
 
 	string vertex = paramFile.getData("shaders", "v").getStringData();
 	string geometry = paramFile.getData("shaders", "g").getStringData();
@@ -56,8 +56,6 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 		mcShader->setUniformV3( "DataStep", 1.0f/dataWidth, 1.0f/dataHeight, 1.0f/dataDepth );
 	mcShader->turnOff();
 
-	treshold = 0.5f;
-
 	clear();
 }
 
@@ -75,8 +73,10 @@ MarchingCubesShaded::~MarchingCubesShaded( )
 void MarchingCubesShaded::initGridBuffer( )
 {
 	gridStep = vec3f(1,1,1) / (vec3f(dataWidth, dataHeight, dataDepth)-vec3f(1,1,1));
-	gridSize =  (dataWidth+1)*(dataHeight+1)*(dataDepth+1)*3;
-	float* grid = new float[ gridSize ];
+	gridElementCount = (dataWidth + 1)*(dataHeight + 1)*(dataDepth + 1);
+
+	int gridTotalSize =  gridElementCount*3;
+	float* grid = new float[gridTotalSize];
 	int index = 0;
 	for( float x = -gridStep.x; x <= 1.0f; x+=gridStep.x )
 	{
@@ -94,18 +94,17 @@ void MarchingCubesShaded::initGridBuffer( )
 	
 	glGenBuffers(1, &gridHandle);
 	glBindBuffer( GL_ARRAY_BUFFER, gridHandle );
-	glBufferData( GL_ARRAY_BUFFER, gridSize * sizeof(float), grid, GL_STATIC_DRAW );
+	glBufferData( GL_ARRAY_BUFFER, gridTotalSize * sizeof(float), grid, GL_STATIC_DRAW );
+	delete[] grid;
 	
 	glGenVertexArrays( 1, &gridVao );
 	glBindVertexArray( gridVao );
 	glEnableVertexAttribArray(0);
-	glBindBuffer( GL_ARRAY_BUFFER, gridHandle );
 	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL );
 
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(0);
-
-	delete[] grid;
 }
 
 void MarchingCubesShaded::initDataField( )
@@ -121,19 +120,21 @@ void MarchingCubesShaded::initDataField( )
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glDisable(GL_TEXTURE_3D);
 
 	dataSize = dataWidth * dataHeight * dataDepth;
 	deltaSpan = vSpan / vec3f( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ]();
-		
-	glTexImage3D( GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
-	glDisable(GL_TEXTURE_3D);
+	dataChanged = true;
+//	glTexImage3D( GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
+	
 }
 
 void MarchingCubesShaded::setUnchecked( int x, int y, int z, float value )
 {
 	float &data = dataField[ x*dataHeight*dataDepth + y*dataDepth + z ];
 	data = contain(value+data, 0.0f, dataMax);
+	dataChanged = true;
 }
 
 void MarchingCubesShaded::set( int x, int y, int z, float value )
@@ -141,17 +142,20 @@ void MarchingCubesShaded::set( int x, int y, int z, float value )
 	if( x<1 || y<1  || z<1 || x>=dataWidth-1 || y>=dataHeight-1 || z>=dataDepth-1 ) return;	
 	float &data = dataField[ x*dataHeight*dataDepth + y*dataDepth + z ];
 	data = contain(value+data, 0.0f, dataMax);
+	dataChanged = true;
 }
 
 void MarchingCubesShaded::set( int position, float value )
 {
 	if( position<0 || position>dataSize ) return;	
 	dataField[ position ] = contain(value, 0.0f, dataMax);
+	dataChanged = true;
 }
 
 void MarchingCubesShaded::clear()
 {
 	memset( dataField, 0, dataSize*sizeof(float) );
+	dataChanged = true;
 }
 
 vec3f MarchingCubesShaded::getScale()
@@ -197,50 +201,28 @@ void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 			for(int k=start.z; k<end.z; k++)
 			{
 				value = r-glm::length(center-vec3f(i,j,k))+1;
-				if( value > 0 )
-					set( i, j, k, value );
-				
+				if (value > 0)
+				{
+					set(i, j, k, value);
+				}
 			}
 		}
 	}
-
-	dataChanged = true;
 }
 
 void MarchingCubesShaded::draw(const Camera& camera)
 {
 	glm::mat4 mvp = camera.getViewProjection() * transform.getTransformMatrix();
-
-	/*float mvp[16];
-	float modl[16];	
-
-	glMatrixMode( GL_MODELVIEW );
-	glPushMatrix();
-		glTranslatef( -position.x, -position.y, -position.z );
-		glScalef( -span.x, span.y, span.z );	
-		glRotatef(-90.0f, 0,1,0);
-		glGetFloatv( GL_MODELVIEW_MATRIX, modl );
-	glPopMatrix();
-
-	glMatrixMode( GL_PROJECTION );
-	glPushMatrix();
-		glMultMatrixf(modl);
-		glGetFloatv( GL_PROJECTION_MATRIX, mvp );
-	glPopMatrix();*/
-	
+	glm::vec3 eye = camera.getPosition();
+		
 	glDisable( GL_CULL_FACE );
 	mcShader->turnOn();
 		mcShader->setUniformF( "Treshold", this->treshold );
-		/*mcShader->setUniformV3( "Diffuse", lightDifuse[0], lightDifuse[1], lightDifuse[2] );
-		mcShader->setUniformV3( "Specular", lightSpecular[0], lightSpecular[1], lightSpecular[2] );
-		mcShader->setUniformV3( "Ambient", lightAmbient[0], lightAmbient[1], lightAmbient[2] );
-		mcShader->setUniformV3( "LightPosition", lightPosition[0], lightPosition[1], lightPosition[2] );*/
 		mcShader->setUniformV3( "Color", 0.0f, 0.3f, 1.0f );
 		mcShader->setUniformV3( "Diffuse", 0.4f, 0.9f, 0.0f );
 		mcShader->setUniformV3( "Specular", 1.0f, 1.0f, 1.0f );
 		mcShader->setUniformV3( "Ambient", 0.3f, 0.8f, 0.6f );
 		mcShader->setUniformV3( "LightPosition", 20.f, -15.0f, 5.0f );
-		vec3f eye = camera.getPosition();
 		mcShader->setUniformV3( "Eye", eye.x, eye.y, eye.z );
 		mcShader->setUniformM4( "MVP", glm::value_ptr(mvp) );
 	
@@ -249,7 +231,10 @@ void MarchingCubesShaded::draw(const Camera& camera)
 		glEnable( GL_TEXTURE_3D );
 		glActiveTexture( GL_TEXTURE0 );
 		glBindTexture( GL_TEXTURE_3D, dataTexID );
-		glTexImage3D( GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
+		if (dataChanged)
+		{
+			glTexImage3D(GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
+		}
 
 		// !
 		GLboolean blendEnabled = glIsEnabled( GL_BLEND );
@@ -257,7 +242,7 @@ void MarchingCubesShaded::draw(const Camera& camera)
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(GL_FALSE);
 			glBindVertexArray(gridVao);
-			glDrawArrays(GL_POINTS, 0, gridSize/3 );
+			glDrawArrays(GL_POINTS, 0, gridElementCount );
 			glBindVertexArray(0);
 		glDepthMask(GL_TRUE);
 		if( !blendEnabled ) glDisable( GL_BLEND );	

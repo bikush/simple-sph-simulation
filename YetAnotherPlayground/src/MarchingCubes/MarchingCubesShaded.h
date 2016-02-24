@@ -23,6 +23,8 @@ private:
 	int dataHeight;
 	int dataDepth;
 	int dataSize;
+
+	GLuint dataTexID;
 	bool dataChanged;
 	
 	vec3f vPosition;	// Origin of the virtual space where MarchingCubes are generated.
@@ -37,9 +39,8 @@ private:
 	GLuint gridVao;
 	GLuint gridHandle;
 	vec3f gridStep;
-	GLint gridSize;
+	GLint gridElementCount;
 
-	GLuint dataTexID;
 		
 	void setUnchecked( int x, int y, int z, float value );
 

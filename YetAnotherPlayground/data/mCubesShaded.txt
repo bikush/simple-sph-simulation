@@ -5,7 +5,7 @@ dataWidth 32
 dataHeight 32
 dataDepth 32
 maxValue 2
-treshold 0.1
+treshold 0.5
 
 [shaders]
 v data/shaders/mc.vert
