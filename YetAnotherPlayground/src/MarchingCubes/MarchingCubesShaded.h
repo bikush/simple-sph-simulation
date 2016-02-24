@@ -3,6 +3,7 @@
 #define MARCHING_CUBES_SHADED_H
 
 #include "Vector3D.h"
+#include "Transform.h"
 #include <GL\glew.h>
 
 class ShaderProgram;
@@ -26,7 +27,7 @@ class MarchingCubesShaded{
 	
 	void initGridBuffer();
 	void initDataField();
-
+	
 	ShaderProgram* mcShader;
 
 	GLuint gridVao;
@@ -45,6 +46,8 @@ class MarchingCubesShaded{
 public:
 	MarchingCubesShaded( const char* filePath );
 	~MarchingCubesShaded( );
+
+	Transform transform;
 	
 	void set( int x, int y, int z, float value );
 	void set( int position, float value );

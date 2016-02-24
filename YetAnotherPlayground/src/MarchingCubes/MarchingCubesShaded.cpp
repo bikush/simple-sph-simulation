@@ -208,9 +208,7 @@ void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 
 void MarchingCubesShaded::draw(const Camera& camera)
 {
-	glm::mat4 vp = camera.getViewProjection();
-	glm::mat4 model = glm::rotate(glm::scale(glm::translate(glm::mat4(1.0f), position), span), -90.0f, {0.0f,1.0f,0.0f});
-	glm::mat4 mvp = vp * model;
+	glm::mat4 mvp = camera.getViewProjection() * transform.getTransformMatrix();
 
 	/*float mvp[16];
 	float modl[16];	

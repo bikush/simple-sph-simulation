@@ -4,6 +4,7 @@
 #include "LineGrid.h"
 #include "Utility.h"
 #include "MarchingCubesShaded.h"
+
 #include <iostream>
 
 LyingShapesScene::LyingShapesScene()
@@ -36,6 +37,8 @@ LyingShapesScene::LyingShapesScene()
 
 	mCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
 	mCubes->putSphere(5.0f, 5.0f, 5.0f, 3.0f);
+	mCubes->transform.setPosition({ -5.0f,0.0f,-20.0f });
+	mCubes->transform.setScale(mCubes->getScale());
 }
 
 
