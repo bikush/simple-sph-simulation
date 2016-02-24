@@ -32,7 +32,7 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 	string geometry = paramFile.getData("shaders", "g").getStringData();
 	string fragment = paramFile.getData("shaders", "f").getStringData();
 
-	mcShader = ShaderProgram::CreateShader( vertex.c_str(), geometry.c_str(), fragment.c_str() );
+	mcShader = ShaderProgram::CreateShader( vertex, geometry, fragment );
 
 	GLuint programHandle = mcShader->getProgramID();
 
@@ -70,6 +70,9 @@ MarchingCubesShaded::~MarchingCubesShaded( )
 	glDeleteVertexArrays(1,&gridVao);
 }
 
+// Create a 3D grid of points in the span od 0,0,0 - 1,1,1
+// This will be bound to the VAO and sent to the shader as vertices
+// Actual data that generates the marching cube mesh is sent as a 3D texture
 void MarchingCubesShaded::initGridBuffer( )
 {
 	gridStep = vec3f(1,1,1) / (vec3f(dataWidth, dataHeight, dataDepth)-vec3f(1,1,1));

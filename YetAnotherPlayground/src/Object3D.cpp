@@ -67,6 +67,8 @@ void Object3D::draw(const glm::mat4 & viewProjection)
 	glEnableVertexAttribArray(attribute_position);
 	glEnableVertexAttribArray(attribute_v_color);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+	
+	// TODO: implement VAO in Object3D
 	glVertexAttribPointer(
 		attribute_position,  // attribute
 		3,                   // number of elements per vertex, here (x,y,z)
