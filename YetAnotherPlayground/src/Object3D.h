@@ -7,6 +7,9 @@
 
 class ShaderProgram;
 
+// TODO: Instanced objects
+// TODO: Shared vao for the same object, eg. a cube, to reduce mem. footprint
+
 class Object3D
 {
 public:
