@@ -64,7 +64,6 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 MarchingCubesShaded::~MarchingCubesShaded( )
 {
 	delete [] dataField;
-	delete [] grid;
 	// delete buffer and vao
 	glDeleteBuffers(1,&gridHandle);
 	glDeleteVertexArrays(1,&gridVao);
@@ -77,7 +76,7 @@ void MarchingCubesShaded::initGridBuffer( )
 {
 	gridStep = vec3f(1,1,1) / (vec3f(dataWidth, dataHeight, dataDepth)-vec3f(1,1,1));
 	gridSize =  (dataWidth+1)*(dataHeight+1)*(dataDepth+1)*3;
-	grid = new float[ gridSize ];
+	float* grid = new float[ gridSize ];
 	int index = 0;
 	for( float x = -gridStep.x; x <= 1.0f; x+=gridStep.x )
 	{
@@ -105,6 +104,8 @@ void MarchingCubesShaded::initGridBuffer( )
 
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
+
+	delete[] grid;
 }
 
 void MarchingCubesShaded::initDataField( )

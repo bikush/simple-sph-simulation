@@ -9,7 +9,11 @@
 class ShaderProgram;
 class Camera;
 
+// Draws a mesh dynamically from a grid of discrete weights.
+// Utilizes the power of the geometry shader.
+// Far from optimal, but usable.
 class MarchingCubesShaded{
+private:
 	static const int DATA_MIN = 8;
 	
 	float* dataField;
@@ -31,15 +35,11 @@ class MarchingCubesShaded{
 	ShaderProgram* mcShader;
 
 	GLuint gridVao;
-	float* grid;
 	GLuint gridHandle;
 	vec3f gridStep;
 	GLint gridSize;
 
 	GLuint dataTexID;
-
-	GLfloat testMC_treshold;
-	GLint testMC_dim;
 		
 	void setUnchecked( int x, int y, int z, float value );
 
