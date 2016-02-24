@@ -3,6 +3,7 @@
 
 class Cube;
 class LineGrid;
+class MarchingCubesShaded;
 
 class LyingShapesScene :
 	public Scene
@@ -17,5 +18,6 @@ public:
 private:
 	std::vector<Cube*> cubes;
 	LineGrid* grid;
+	MarchingCubesShaded* mCubes;
 };
 

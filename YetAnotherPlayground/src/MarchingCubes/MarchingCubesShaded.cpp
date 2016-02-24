@@ -100,6 +100,8 @@ void MarchingCubesShaded::initGridBuffer( )
 	glBindBuffer( GL_ARRAY_BUFFER, gridHandle );
 	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL );
 
+	glBindVertexArray(0);
+	glDisableVertexAttribArray(0);
 }
 
 void MarchingCubesShaded::initDataField( )
@@ -253,7 +255,8 @@ void MarchingCubesShaded::draw(const Camera& camera)
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(GL_FALSE);
 			glBindVertexArray(gridVao);
-			glDrawArrays(GL_POINTS, 0, gridSize/3 );	
+			glDrawArrays(GL_POINTS, 0, gridSize/3 );
+			glBindVertexArray(0);
 		glDepthMask(GL_TRUE);
 		if( !blendEnabled ) glDisable( GL_BLEND );	
 
