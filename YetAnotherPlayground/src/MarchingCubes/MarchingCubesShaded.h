@@ -21,9 +21,9 @@ class MarchingCubesShaded{
 	int dataSize;
 	bool dataChanged;
 	
-	vec3f position;
-	vec3f span;
-	vec3f dSpan;
+	vec3f vPosition;	// Origin of the virtual space where MarchingCubes are generated.
+	vec3f vSpan;		// Dimensions of the virtual space where MarchingCubes are generated.
+	vec3f deltaSpan;	// Per data virtual grid size.
 	
 	void initGridBuffer();
 	void initDataField();

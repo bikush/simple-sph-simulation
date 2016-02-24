@@ -15,8 +15,8 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 {
 	MappedData paramFile( filePath );
 
-	position = paramFile.getData("base","position").getVec3f();	
-	span = paramFile.getData("base","span").getVec3f();	
+	vPosition = paramFile.getData("base","position").getVec3f();	
+	vSpan = paramFile.getData("base","span").getVec3f();	
 		
 	dataWidth = paramFile.getData("base","dataWidth").getInt();
 	dataHeight = paramFile.getData("base","dataHeight").getInt();
@@ -122,7 +122,7 @@ void MarchingCubesShaded::initDataField( )
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
 	dataSize = dataWidth * dataHeight * dataDepth;
-	dSpan = span / vec3f( dataWidth, dataHeight, dataDepth );
+	deltaSpan = vSpan / vec3f( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ]();
 		
 	glTexImage3D( GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
@@ -155,12 +155,12 @@ void MarchingCubesShaded::clear()
 
 vec3f MarchingCubesShaded::getScale()
 {
-	return span;
+	return vSpan;
 }
 
 vec3f MarchingCubesShaded::getPosition()
 {
-	return position;
+	return vPosition;
 }
 
 float MarchingCubesShaded::getTreshold()
@@ -177,17 +177,17 @@ void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 {
 	float value;
 	vec3f start = vec3f( x-r, y-r, z-r );
-	glm::clamp( start, position, position+span );
-	start -= position;
-	start /= dSpan;
+	glm::clamp( start, vPosition, vPosition+vSpan );
+	start -= vPosition;
+	start /= deltaSpan;
 
 	vec3f end = vec3f( x+r, y+r, z+r );
-	glm::clamp( end, position, position+span );
-	end -= position;
-	end /= dSpan;
+	glm::clamp( end, vPosition, vPosition+vSpan );
+	end -= vPosition;
+	end /= deltaSpan;
 
-	vec3f center = (vec3f( x,y,z ) - position) / dSpan;
-	r /= glm::length( dSpan );
+	vec3f center = (vec3f( x,y,z ) - vPosition) / deltaSpan;
+	r /= glm::length( deltaSpan );
 
 	for(int i=start.x; i<end.x; i++)
 	{
