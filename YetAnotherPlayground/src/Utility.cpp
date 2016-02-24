@@ -1,6 +1,7 @@
 #include "Utility.h"
 #include <iostream>
 #include <stdlib.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -111,4 +112,12 @@ void loadFile( std::string& output, const char* filePath )
 	output.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
 	file.close();
+}
+
+void print(const glm::mat4& m)
+{
+	for (int i = 0; i < 4; i++ )
+	{
+		cout << setw(10) << setprecision(2) << fixed << "\t" << m[i][0] << "\t" << m[i][1] << "\t" << m[i][2] << "\t" << m[i][3] << endl;
+	}	
 }

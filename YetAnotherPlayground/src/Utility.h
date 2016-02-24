@@ -7,6 +7,8 @@
 #include <string>
 #include <sstream>
 
+#include <glm\mat4x4.hpp>
+
 #define PI 3.1415926f
 #define HALFCIRCLE 180
 
@@ -51,6 +53,8 @@ void inline safeDelete(T** pointer)
 		*pointer = nullptr;
 	}
 }
+
+void print(const glm::mat4& m);
 
 std::vector<std::string> split( const char* line, char splitter );
 std::vector<std::string> split( std::string line, char splitter );
