@@ -53,6 +53,12 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 		mcShader->setUniformV3( "VerticeOffsets[6]", gridStep.x,	gridStep.y, gridStep.z	); 
 		mcShader->setUniformV3( "VerticeOffsets[7]", 0.0f,			gridStep.y, gridStep.z	);
 
+		mcShader->setUniformV3("Color", 0.0f, 0.3f, 1.0f);
+		mcShader->setUniformV3("Diffuse", 0.4f, 0.9f, 0.0f);
+		mcShader->setUniformV3("Specular", 1.0f, 1.0f, 1.0f);
+		mcShader->setUniformV3("Ambient", 0.3f, 0.8f, 0.6f);
+		mcShader->setUniformV3("LightPosition", 20.f, -15.0f, 5.0f);
+
 		mcShader->setUniformV3( "DataStep", 1.0f/dataWidth, 1.0f/dataHeight, 1.0f/dataDepth );
 	mcShader->turnOff();
 
@@ -126,6 +132,7 @@ void MarchingCubesShaded::initDataField( )
 	deltaSpan = vSpan / vec3f( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ]();
 	dataChanged = true;
+	// data is updated when changed
 //	glTexImage3D( GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
 	
 }
@@ -217,12 +224,7 @@ void MarchingCubesShaded::draw(const Camera& camera)
 		
 	glDisable( GL_CULL_FACE );
 	mcShader->turnOn();
-		mcShader->setUniformF( "Treshold", this->treshold );
-		mcShader->setUniformV3( "Color", 0.0f, 0.3f, 1.0f );
-		mcShader->setUniformV3( "Diffuse", 0.4f, 0.9f, 0.0f );
-		mcShader->setUniformV3( "Specular", 1.0f, 1.0f, 1.0f );
-		mcShader->setUniformV3( "Ambient", 0.3f, 0.8f, 0.6f );
-		mcShader->setUniformV3( "LightPosition", 20.f, -15.0f, 5.0f );
+		mcShader->setUniformF( "Treshold", this->treshold );		
 		mcShader->setUniformV3( "Eye", eye.x, eye.y, eye.z );
 		mcShader->setUniformM4( "MVP", glm::value_ptr(mvp) );
 	
@@ -234,6 +236,7 @@ void MarchingCubesShaded::draw(const Camera& camera)
 		if (dataChanged)
 		{
 			glTexImage3D(GL_TEXTURE_3D, 0, GL_ALPHA32F_ARB, dataWidth, dataHeight, dataDepth, 0, GL_ALPHA, GL_FLOAT, dataField);
+			dataChanged = false;
 		}
 
 		// !
