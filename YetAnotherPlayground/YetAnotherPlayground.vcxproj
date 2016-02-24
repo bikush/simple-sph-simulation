@@ -197,6 +197,7 @@
     <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
     <ClCompile Include="src\Vector3D.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Utility.h" />
     <ClInclude Include="src\Vector2D.h" />
     <ClInclude Include="src\Vector3D.h" />

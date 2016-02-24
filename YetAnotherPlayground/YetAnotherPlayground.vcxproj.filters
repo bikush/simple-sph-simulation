@@ -180,6 +180,9 @@
     <ClCompile Include="src\Object3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AverageValue.h">
@@ -333,6 +336,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Object3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
