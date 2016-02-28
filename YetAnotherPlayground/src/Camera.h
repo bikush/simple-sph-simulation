@@ -33,6 +33,7 @@ protected:
 public:
 	void applyOffset( glm::vec3 offset );
 	const glm::vec3& getPosition() const { return position; }
+	const glm::vec3& getUp() const { return up;	}
 	void setMoveForward(bool movement);
 	void setMoveBackward(bool movement);
 	void setMoveLeft(bool movement);

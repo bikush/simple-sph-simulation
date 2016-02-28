@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "ShaderProgram.h"
 #include "Camera.h"
+#include "Utility.h"
 #include <iostream>
 #include <glm\gtc\type_ptr.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -28,14 +29,12 @@ PointDataVisualiser::PointDataVisualiser( const char* texturePath,bool useShader
 	if( useShader && GLEW_ARB_geometry_shader4 == GL_TRUE )
 	{
 		this->useShader = true;
-		std::cout << std::endl << "---- PDV Shader ----" << std::endl;
 		shader = ShaderProgram::CreateShader(
 			"data/shaders/testPS.vert",
 			"data/shaders/testPS.geom",
 			"data/shaders/testPS.frag",
 			true );
-	//	shader->attach();	
-	//	shader->link();
+
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		// NULL => do not copy the buffer
@@ -47,9 +46,7 @@ PointDataVisualiser::PointDataVisualiser( const char* texturePath,bool useShader
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL );
 
-		setPointSize(5.0);
-			
-		std::cout << "--- PDV Done ---" << std::endl;
+		setPointSize(5.0);			
 		shader->turnOff();
 	}else{
 		this->useShader = false;
@@ -101,25 +98,21 @@ void PointDataVisualiser::pushPoint( float x, float y, float z )
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		// NULL => do not copy the buffer
 		glBufferData(GL_ARRAY_BUFFER, bufferSize * sizeof(float) * 3, NULL, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	buffer[ bufferElements ] = vec3f( x, y, z );
 	bufferElements++;
 }
 
 void PointDataVisualiser::drawArray()
-{
-	/*glEnableClientState( GL_VERTEX_ARRAY );
-	glVertexPointer( 3, GL_FLOAT, 0, buffer );
-	glDrawArrays(GL_POINTS, 0, bufferElements);
-	glDisableClientState( GL_VERTEX_ARRAY );/**/
-	/*glBegin( GL_POINTS );
-	for(int i = 0; i<bufferElements; i++) glVertex3f( buffer[i].x, buffer[i].y, buffer[i].z );
-	glEnd();/**/
-	
+{	
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize * sizeof(float) * 3, buffer );
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	glBindVertexArray(vao);
 	glDrawArrays(GL_POINTS, 0, bufferElements );/**/
+	glBindVertexArray(0);
 }
 
 void PointDataVisualiser::drawShaded(const Camera& camera)
@@ -129,45 +122,27 @@ void PointDataVisualiser::drawShaded(const Camera& camera)
 	auto projection = camera.getProjection();
 	auto modelView = camera.getView() * transform.getTransformMatrix();
 	auto MVP = projection * modelView;
-	//modl = glm::scale(modl, {5.0f,5.0f,5.0f});
+
+	auto up = camera.getUp();
 	
 	shader->turnOn();
 	shader->setUniformM4( "ModelViewMatrix", glm::value_ptr(modelView) );
 	shader->setUniformM4( "ProjectionMatrix", glm::value_ptr(projection) );
-	shader->setUniformM4("MVP", glm::value_ptr(MVP));
+	shader->setUniformM4("mvp", glm::value_ptr(MVP));
+	shader->setUniformV3("up", up.x, up.y, up.z);
 	shader->setUniformF("Size2", 1 );
 	shader->setUniformI("SpriteTex", 0 );
 	shader->setUniformV3("Color", color.x, color.y, color.z );
 	
-	//glBindVertexArray(vao);
-	//glDrawArrays(GL_POINTS, 0, bufferElements );
 	drawArray();
 	shader->turnOff();	
 
 	glEnable(GL_CULL_FACE);	
 }
 
+// TODO: remove or fix pipeline draw
 void PointDataVisualiser::drawPipeline(const Camera& camera)
 {
-/*	float quadratic[] =  { 0.4, 0.01f, 0.0f };
-	glPointParameterfv( GL_POINT_DISTANCE_ATTENUATION_ARB, quadratic );
-
-	float maxSize = 0.0f;
-	glGetFloatv( GL_POINT_SIZE_MAX_ARB, &maxSize );
-	if( maxSize > 100 )
-		maxSize = 100;
-	glPointSize( size*10 > maxSize ? maxSize : size*10 );
-
-	glPointParameterf( GL_POINT_FADE_THRESHOLD_SIZE_ARB, 60.0f );
-	glPointParameterf( GL_POINT_SIZE_MIN_ARB, 1.0f );
-	glPointParameterf( GL_POINT_SIZE_MAX_ARB, maxSize );
-
-	glColor3f( color.x, color.y, color.z );
-	glTexEnvf( GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE );
-	
-	glEnable( GL_POINT_SPRITE_ARB );		
-		drawArray();
-	glDisable( GL_POINT_SPRITE_ARB );	*/
 	float quadratic[] =  { 0.4, 0.01f, 0.0f };
 	glPointParameterfv( GL_POINT_DISTANCE_ATTENUATION, quadratic );
 
