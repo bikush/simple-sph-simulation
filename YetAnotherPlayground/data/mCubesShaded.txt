@@ -1,9 +1,9 @@
 [base]
-position -2 -2 -2
-span 14 14 14
-dataWidth 64
-dataHeight 64
-dataDepth 64
+position 0 0 0
+span 10 10 10
+dataWidth 32
+dataHeight 32
+dataDepth 32
 maxValue 2
 treshold 0.25
 

@@ -21,6 +21,11 @@ SPHScene::SPHScene(void) : Scene(),
 
 SPHScene::~SPHScene(void)
 {	
+	delete grid;
+	delete coords;
+	delete marchingCubes;
+	delete pointVisualizer;
+	delete sph3;
 }
 
 void SPHScene::initData()
@@ -36,14 +41,16 @@ void SPHScene::initData()
 	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
 	grid->transform.setAngles(90.0f, 0.f, 0.0f);
 
+	coords = new LineGrid(25.0f, 3.0f);
+
 	marchingCubes = new MarchingCubesShaded( "data/mCubesShaded.txt" );
-	marchingCubes->transform.setPosition({ -5.0f,0.0f,-20.0f });
+	marchingCubes->transform.setPosition({ 0.0f,0.0f,0.0f });
 	marchingCubes->transform.setScale(marchingCubes->getScale());
 
 	pointVisualizer = new PointDataVisualiser( (imagesPath+"point.jpg").c_str(), true );	
-	pointVisualizer->transform.setPosition({ -5.0f,0.0f,-20.0f });
-	pointVisualizer->transform.setScale( 2.0f );
-	pointVisualizer->transform.setAngles({ 0.0, -270.0f, 0.0f });
+	pointVisualizer->transform.setPosition({ 0.0f,0.5f,0.0f });
+	pointVisualizer->transform.setScale({ 1.0f, 1.0f, -1.0f });
+	pointVisualizer->transform.setAngles({ 0.0, 90.0f, 0.0f });
 	pointVisualizer->setColor(0.03f,0.2f,0.5f);
 }
 
@@ -208,6 +215,7 @@ void SPHScene::draw(const Camera & camera)
 	glEnable(GL_DEPTH_TEST);
 
 	grid->draw(camera.getViewProjection());
+	coords->draw(camera.getViewProjection());
 			
 	marchingTimer.resume();	
 	if(drawWithMC)

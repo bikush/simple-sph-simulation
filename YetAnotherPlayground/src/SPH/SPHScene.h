@@ -24,6 +24,7 @@ private:
 	PointDataVisualiser* pointVisualizer;
 	MarchingCubesShaded *marchingCubes;
 	LineGrid* grid;
+	LineGrid* coords;
 
 	// Light data
 	GLfloat lightPosition[4];

@@ -32,9 +32,11 @@ LyingShapesScene::LyingShapesScene()
 	std::cout << "Number of triangles: " << i * 12 << std::endl;
 	std::cout << "Size of data: " << i * 8 * 6 * sizeof(float) << " bytes" << std::endl;
 
-	grid = new LineGrid(20,10.0f,10.0f,20,10.0f,10.0f);
+	/*grid = new LineGrid(20,10.0f,10.0f,20,10.0f,10.0f);
 	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
-	grid->transform.setAngles(90.0f, 0.f, 0.0f);
+	grid->transform.setAngles(90.0f, 0.f, 0.0f);*/
+
+	grid = new LineGrid(25.0f, 3.0f);
 
 	mCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
 	mCubes->putSphere(5.0f, 5.0f, 5.0f, 3.0f);
