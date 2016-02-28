@@ -189,12 +189,12 @@ void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 {
 	float value;
 	vec3f start = vec3f( x-r, y-r, z-r );
-	glm::clamp( start, vPosition, vPosition+vSpan );
+	//start = glm::clamp( start, vPosition, vPosition+vSpan );
 	start -= vPosition;
 	start /= deltaSpan;
 
 	vec3f end = vec3f( x+r, y+r, z+r );
-	glm::clamp( end, vPosition, vPosition+vSpan );
+	//glm::clamp( end, vPosition, vPosition+vSpan );
 	end -= vPosition;
 	end /= deltaSpan;
 
