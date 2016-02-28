@@ -28,15 +28,15 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 	this->elementCount = elementCount;
 	draw_mode = mode;
 
-	// Vertex data buffer
-	glGenBuffers(1, &vbo_triangle);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
-	glBufferData(GL_ARRAY_BUFFER, attributeCount, triangleAttributes, GL_STATIC_DRAW);
-
 	// Vertex attribute setup
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 	//glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle); // already bound
+
+	// Vertex data buffer
+	glGenBuffers(1, &vbo_triangle);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+	glBufferData(GL_ARRAY_BUFFER, attributeCount, triangleAttributes, GL_STATIC_DRAW);
 
 	glEnableVertexArrayAttrib(vao, attribute_position);
 	glVertexAttribPointer(
