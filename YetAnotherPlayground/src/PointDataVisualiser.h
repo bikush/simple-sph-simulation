@@ -3,7 +3,9 @@
 #define POINT_DATA_VISUALISER_H
 
 #include "Vector3D.h"
+#include "Transform.h"
 #include <GL\glew.h>
+
 class ShaderProgram;
 class Camera;
 
@@ -22,8 +24,6 @@ class PointDataVisualiser
 
 	GLuint textureID;
 
-	vec3f position;
-	vec3f scale;
 	vec3f color;
 
 	float size;
@@ -36,8 +36,6 @@ public:
 	~PointDataVisualiser();
 
 	void setImage( const char* texturePath );
-	void setPosition( float x, float y, float z );
-	void setScale( float sx, float sy, float sz );
 	void setColor( float r, float g, float b );
 
 	void clearBuffer();
@@ -50,6 +48,8 @@ public:
 
 	void setPointSize( float size );
 	float getPointSize();
+
+	Transform transform;
 };
 
 #endif

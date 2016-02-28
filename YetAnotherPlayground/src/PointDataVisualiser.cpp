@@ -20,8 +20,6 @@ PointDataVisualiser::PointDataVisualiser( const char* texturePath,bool useShader
 	shader = 0;
 	bufferID = 0;
 	
-	position = vec3f(0,0,0);
-	scale = vec3f(1,1,1);
 	color = vec3f(1,1,1);
 
 	// Setup vao and vbo connections
@@ -71,16 +69,6 @@ void PointDataVisualiser::setImage( const char* texturePath )
 		return;
 	}
 	textureID = TextureManager::getInstance()->loadTexture( texturePath );
-}
-
-void PointDataVisualiser::setPosition( float x, float y, float z )
-{
-	position = vec3f( x, y, z );
-}
-
-void PointDataVisualiser::setScale( float sx, float sy, float sz )
-{
-	scale = vec3f( sx, sy, sz );
 }
 
 void PointDataVisualiser::setColor( float r, float g, float b )
@@ -138,13 +126,15 @@ void PointDataVisualiser::drawShaded(const Camera& camera)
 {
 	glDisable(GL_CULL_FACE);
 	
-	auto proj = camera.getProjection();
-	auto modl = camera.getView();
+	auto projection = camera.getProjection();
+	auto modelView = camera.getView() * transform.getTransformMatrix();
+	auto MVP = projection * modelView;
 	//modl = glm::scale(modl, {5.0f,5.0f,5.0f});
 	
 	shader->turnOn();
-	shader->setUniformM4( "ModelViewMatrix", glm::value_ptr(modl) );
-	shader->setUniformM4( "ProjectionMatrix", glm::value_ptr(proj) );
+	shader->setUniformM4( "ModelViewMatrix", glm::value_ptr(modelView) );
+	shader->setUniformM4( "ProjectionMatrix", glm::value_ptr(projection) );
+	shader->setUniformM4("MVP", glm::value_ptr(MVP));
 	shader->setUniformF("Size2", 1 );
 	shader->setUniformI("SpriteTex", 0 );
 	shader->setUniformV3("Color", color.x, color.y, color.z );

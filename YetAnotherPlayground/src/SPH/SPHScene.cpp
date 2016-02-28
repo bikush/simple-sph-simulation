@@ -41,8 +41,9 @@ void SPHScene::initData()
 	marchingCubes->transform.setScale(marchingCubes->getScale());
 
 	pointVisualizer = new PointDataVisualiser( (imagesPath+"point.jpg").c_str(), true );	
-	pointVisualizer->setPosition(-5,-5,0);
-	pointVisualizer->setScale( 2, 2, 2 );
+	pointVisualizer->transform.setPosition({ -5.0f,0.0f,-20.0f });
+	pointVisualizer->transform.setScale( 2.0f );
+	pointVisualizer->transform.setAngles({ 0.0, -270.0f, 0.0f });
 	pointVisualizer->setColor(0.03f,0.2f,0.5f);
 }
 

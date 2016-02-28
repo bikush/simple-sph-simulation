@@ -9,5 +9,6 @@ uniform mat4 ProjectionMatrix;
 
 void main()
 {
-    vPosition = ModelViewMatrix * vec4(VertexPosition,1.0);
+   // vPosition = ModelViewMatrix * vec4(VertexPosition,1.0);
+    vPosition = vec4(VertexPosition,1.0);
 }
