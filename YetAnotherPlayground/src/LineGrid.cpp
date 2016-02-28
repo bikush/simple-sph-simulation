@@ -14,7 +14,8 @@ void fillElement(GLuint* elements, int index) {
 	elements[index] = index;
 }
 
-LineGrid::LineGrid(int xCount, float deltaX, float offsetX, int yCount, float deltaY, float offsetY) : Object3D()
+LineGrid::LineGrid(int xCount, float deltaX, float offsetX, int yCount, float deltaY, float offsetY) : 
+	Object3D(), lineWidth(1.0f)
 {
 	int elementCount = (xCount + yCount) * 2;
 	int vertexCount = elementCount * 6;
@@ -49,4 +50,11 @@ LineGrid::LineGrid(int xCount, float deltaX, float offsetX, int yCount, float de
 
 LineGrid::~LineGrid()
 {
+}
+
+void LineGrid::draw(const glm::mat4 & viewProjection)
+{
+	glLineWidth(lineWidth);
+	Object3D::draw(viewProjection);
+	glLineWidth(1.0f);
 }

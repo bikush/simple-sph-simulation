@@ -16,7 +16,7 @@ public:
 	Object3D();
 	virtual ~Object3D();
 
-	void draw(const glm::mat4& viewProjection);
+	virtual void draw(const glm::mat4& viewProjection);
 	
 	Transform transform;
 
