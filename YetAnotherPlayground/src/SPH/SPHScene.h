@@ -34,5 +34,10 @@ private:
 	float treshold;
 
 	bool paused;
+
+	// GUI
+	bool fontLoaded;
+	sf::Font anonPro;
+	sf::Text status;
 };
 

@@ -37,6 +37,15 @@ SPHScene::SPHScene(void) : Scene(),
 	pointVisualizer->transform.setScale({ 1.0f, 1.0f, -1.0f });
 	pointVisualizer->transform.setAngles({ 0.0, 90.0f, 0.0f });
 	pointVisualizer->setColor(0.03f, 0.2f, 0.5f);
+
+	fontLoaded = anonPro.loadFromFile("data/fonts/anonymous-pro/AnonymousPro-Regular.ttf");	
+	if(fontLoaded)
+	{
+		status.setFont(anonPro);
+		status.setCharacterSize(18);
+		status.setColor(sf::Color::White);
+		status.setPosition(0, 0);
+	}
 }
 
 SPHScene::~SPHScene(void)
@@ -166,6 +175,12 @@ void SPHScene::update(float dt)
 		sph3->animate(0.0125f);
 		sphTimer.pause();
 	}
+
+	static char title[256];	
+	sprintf_s(title,256, "Time: %.2f, Fps: %d, Particles: %d, SPH time: %1.8f, Draw time: %1.8f", 
+		Timer::getTime(), Timer::getFPS(), sph3->getParticleCount(), 
+		sphTimer.getAverage(), marchingTimer.getAverage());
+	status.setString( title );	
 }
 
 void SPHScene::draw(const Camera & camera)
@@ -195,12 +210,13 @@ void SPHScene::draw(const Camera & camera)
 		
 	}
 	marchingTimer.pause();
-	
-	// TODO: print this info somewhere
-	//static char title[256];	
-	//sprintf_s(title,256, "Time: %.2f, Fps: %d, Particles: %d, SPH time: %1.8f, Draw time: %1.8f, Rest time: %1.8f", Timer::getTime(), Timer::getFPS(), sph3->getParticleCount(), sphTimer->getAverage(), marchingTimer->getAverage(), restTimer->getAverage());
-	//window->setTitle( title );	
+}
 
-}void SPHScene::drawSFML(sf::RenderWindow & window)
+void SPHScene::drawSFML(sf::RenderWindow & window)
 {
+	if (!fontLoaded) {
+		return;
+	}
+
+	window.draw(status);
 }
