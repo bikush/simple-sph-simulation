@@ -72,8 +72,8 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 					break;
 
 		case sf::Keyboard::P:
-					paused = true;
 					Timer::pauseToggle();	// TODO: Timer class is wtf?
+					paused = Timer::isPaused();
 					break;
 
 		case sf::Keyboard::O:
@@ -179,11 +179,32 @@ void SPHScene::update(float dt)
 		sphTimer.pause();
 	}
 
-	static char title[256];	
-	sprintf_s(title,256, "Time: %.2f, Fps: %d, Particles: %d, SPH time: %1.8f, Draw time: %1.8f", 
-		Timer::getTime(), Timer::getFPS(), sph3->getParticleCount(), 
-		sphTimer.getAverage(), marchingTimer.getAverage());
-	status.setString( title );	
+	stringstream infoText;
+
+	infoText.precision(2);
+	infoText << "Time: " << fixed << Timer::getTime();
+
+	infoText.precision(8);
+	infoText << ", Fps: " << Timer::getFPS() <<	", Draw time: " << marchingTimer.getAverage() << endl;
+
+	infoText << "[SPH]" << endl;
+	infoText.precision(8);
+	infoText << "  Time: " << sphTimer.getAverage() << endl;
+	infoText.precision(4);
+	infoText << "  Particles (O/L): " << sph3->getParticleCount() << endl;
+	infoText << "  Rest Density (E/D): " << sph3->getRestDensity() << endl;
+	infoText << "  K (R/F): " << sph3->getK() << endl;
+	infoText << "  Viscosity (T/G): " << sph3->getViscosity() << endl;
+	infoText << "  Smoothing Length (Z/H): " << sph3->getSmoothingLength() << endl;
+	infoText << "  Color Field treshold (U/J): " << sph3->getColorFieldTreshold() << endl;
+	infoText << "  Surface Tension (I/K): " << sph3->getSurfaceTension() << endl;
+	infoText << "  Gravity (1): " << (sph3->usesGravity() ? "ON" : "OFF") << endl;
+	if (drawWithMC)
+	{
+		infoText << "[MarchingCubes]" << endl << "  Treshold (+/-): " << marchingCubes->getTreshold() << endl;
+	}
+	
+	status.setString( infoText.str() );	
 }
 
 void SPHScene::draw(const Camera & camera)
