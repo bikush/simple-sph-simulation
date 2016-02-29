@@ -27,6 +27,7 @@ private:
 	ShaderProgram* program;
 	GLuint vbo_triangle;
 	GLuint vbo_elements;
+	GLuint vao;
 	GLint attribute_coord2d;
 	GLint attribute_v_color;
 

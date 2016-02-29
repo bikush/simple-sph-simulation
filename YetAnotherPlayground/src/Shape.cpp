@@ -6,6 +6,13 @@
 
 Shape::Shape()
 {
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	program = ShaderProgram::CreateBaseShader();
+	attribute_v_color = program->getAttribute("v_color");
+	attribute_coord2d = program->getAttribute("coord2d");
+
 	/*GLfloat triangle_attributes[] = {
 	-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
      0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
@@ -22,6 +29,28 @@ Shape::Shape()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
 
+	glEnableVertexArrayAttrib(vao, attribute_coord2d);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+	glVertexAttribPointer(
+		attribute_coord2d,   // attribute
+		2,                   // number of elements per vertex, here (x,y)
+		GL_FLOAT,            // the type of each element
+		GL_FALSE,            // take our values as-is
+		5 * sizeof(GLfloat), // next coord2d appears every 5 floats
+		0                    // offset of the first element
+		);
+	
+	glEnableVertexArrayAttrib(vao, attribute_v_color);
+	glVertexAttribPointer(
+		attribute_v_color,      // attribute
+		3,                      // number of elements per vertex, here (r,g,b)
+		GL_FLOAT,               // the type of each element
+		GL_FALSE,               // take our values as-is
+		5 * sizeof(GLfloat),    // next color appears every 5 floats
+		(GLvoid*)(2 * sizeof(GLfloat))  // offset of first element
+		);
+
+	
 	GLuint elements[] = {
 		0, 1, 2,
 		2, 3, 0
@@ -30,9 +59,9 @@ Shape::Shape()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);	
 
-	program = ShaderProgram::CreateBaseShader();
-	attribute_v_color = program->getAttribute("v_color");
-	attribute_coord2d = program->getAttribute("coord2d");
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	position = glm::vec3(0,0,0);
 	scale = glm::vec3(1,1,1);
@@ -46,6 +75,8 @@ Shape::~Shape()
 		//delete program;
 	}
 	glDeleteBuffers(1, &vbo_triangle);
+	glDeleteBuffers(1, &vbo_elements);
+	glDeleteVertexArrays(1, &vao);
 }
 
 Shape* Shape::CreateShape( const glm::vec2& startPosition, const glm::vec2& startScale )
@@ -111,30 +142,8 @@ void Shape::draw( const glm::mat4& viewProjection )
 
 	program->turnOn();
 	program->setUniformM4("mvp", glm::value_ptr(MVP));
-
-	glEnableVertexAttribArray(attribute_coord2d);
-	glEnableVertexAttribArray(attribute_v_color);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
-	glVertexAttribPointer(
-		attribute_coord2d,   // attribute
-		2,                   // number of elements per vertex, here (x,y)
-		GL_FLOAT,            // the type of each element
-		GL_FALSE,            // take our values as-is
-		5 * sizeof(GLfloat), // next coord2d appears every 5 floats
-		0                    // offset of the first element
-	);
-	glVertexAttribPointer(
-		attribute_v_color,      // attribute
-		3,                      // number of elements per vertex, here (r,g,b)
-		GL_FLOAT,               // the type of each element
-		GL_FALSE,               // take our values as-is
-		5 * sizeof(GLfloat),    // next color appears every 5 floats
-		(GLvoid*) (2 * sizeof(GLfloat))  // offset of first element
-	);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
+	
+	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES,6, GL_UNSIGNED_INT, 0);
-
-	glDisableVertexAttribArray(attribute_coord2d);
-	glDisableVertexAttribArray(attribute_v_color);
+	glBindVertexArray(0);
 }
