@@ -15,27 +15,12 @@ SPHScene::SPHScene(void) : Scene(),
 	sphTimer(3), marchingTimer(3),
 	drawWithMC(false), drawPDVWithShader(true)
 {
-	initData();
-	initLight();
-}
-
-SPHScene::~SPHScene(void)
-{	
-	delete grid;
-	delete coords;
-	delete marchingCubes;
-	delete pointVisualizer;
-	delete sph3;
-}
-
-void SPHScene::initData()
-{
 	// TODO: shared global settings
 	MappedData settings("data/settings.txt");
 	string imagesPath = settings.getData("folders", "images").getStringData();
 
-	sph3 = new SPHSystem3d( "data/sph3d.txt" );
-	cout << "SPH particle size: " << sizeof( SPHParticle3d ) << endl;
+	sph3 = new SPHSystem3d("data/sph3d.txt");
+	cout << "SPH particle size: " << sizeof(SPHParticle3d) << endl;
 
 	grid = new LineGrid(20, 10.0f, 10.0f, 20, 10.0f, 10.0f);
 	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
@@ -43,47 +28,24 @@ void SPHScene::initData()
 
 	coords = new LineGrid(25.0f, 3.0f);
 
-	marchingCubes = new MarchingCubesShaded( "data/mCubesShaded.txt" );
+	marchingCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
 	marchingCubes->transform.setPosition({ 0.0f,0.0f,0.0f });
 	marchingCubes->transform.setScale(marchingCubes->getScale());
 
-	pointVisualizer = new PointDataVisualiser( (imagesPath+"point.jpg").c_str(), true );	
+	pointVisualizer = new PointDataVisualiser((imagesPath + "point.jpg").c_str(), true);
 	pointVisualizer->transform.setPosition({ 0.0f,0.5f,0.0f });
 	pointVisualizer->transform.setScale({ 1.0f, 1.0f, -1.0f });
 	pointVisualizer->transform.setAngles({ 0.0, 90.0f, 0.0f });
-	pointVisualizer->setColor(0.03f,0.2f,0.5f);
+	pointVisualizer->setColor(0.03f, 0.2f, 0.5f);
 }
 
-void SPHScene::initLight(){
-	// TODO: Lights are part of the scene
-	MappedData lightConf("lights.txt");
-
-	lightConf.getData( "light1", "position" ).fillFloatArray( lightPosition, 3 );
-	lightConf.getData( "light1", "ambient" ).fillFloatArray( lightAmbient, 4 );
-	lightConf.getData( "light1", "difuse" ).fillFloatArray( lightDifuse, 4 );
-	lightConf.getData( "light1", "specular" ).fillFloatArray( lightSpecular, 4 );
-	float ca = lightConf.getData( "light1", "constAttenuation" ).getFloat();
-	float la = lightConf.getData( "light1", "linearAttenuation" ).getFloat();
-	float qa = lightConf.getData( "light1", "quadraticAttenuation" ).getFloat();	
-
-	/*lightAmbient = light_Ambient;
-	lightDifuse = light_Difuse;
-	lightPosition = light_Position;
-	lightSpecular = light_Specular;*/
-
-	glEnable(GL_LIGHTING);
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDifuse);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);	
-	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
-	
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, ca);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, la);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, qa);
-		
-    glEnable(GL_LIGHT0);
-	glDisable(GL_LIGHTING);
+SPHScene::~SPHScene(void)
+{	
+	safeDelete(&grid);
+	safeDelete(&coords);
+	safeDelete(&marchingCubes);
+	safeDelete(&pointVisualizer);
+	safeDelete(&sph3);
 }
 
 void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
@@ -208,9 +170,6 @@ void SPHScene::update(float dt)
 
 void SPHScene::draw(const Camera & camera)
 {
-
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 

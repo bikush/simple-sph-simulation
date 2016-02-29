@@ -25,13 +25,7 @@ private:
 	MarchingCubesShaded *marchingCubes;
 	LineGrid* grid;
 	LineGrid* coords;
-
-	// Light data
-	GLfloat lightPosition[4];
-	GLfloat lightDifuse[4];
-	GLfloat lightAmbient[4];
-	GLfloat lightSpecular[4];
-
+	
 	IntervalAverageTimer sphTimer;
 	IntervalAverageTimer marchingTimer;
 	bool drawWithMC;
@@ -39,8 +33,5 @@ private:
 	float treshold;
 
 	bool paused;
-
-	void initData();
-	void initLight();
 };
 
