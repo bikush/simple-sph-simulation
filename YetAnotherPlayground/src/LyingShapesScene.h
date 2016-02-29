@@ -18,6 +18,7 @@ public:
 private:
 	std::vector<Cube*> cubes;
 	LineGrid* grid;
+	LineGrid* coords;
 	MarchingCubesShaded* mCubes;
 };
 

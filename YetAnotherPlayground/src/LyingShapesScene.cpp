@@ -20,11 +20,11 @@ LyingShapesScene::LyingShapesScene()
 		{
 			//for (float y = -halfSize; y < halfSize + deltaX * 0.5f; y += deltaX)
 			//{
-				float y = 0.0f;
+				/*float y = 0.0f;
 				cubes.push_back(new Cube());
 				cubes[i]->transform.setPosition({ x, y, z });
 				cubes[i]->transform.setScale(scale);
-				i++;
+				i++;*/
 			//}
 		}
 	}
@@ -32,17 +32,17 @@ LyingShapesScene::LyingShapesScene()
 	std::cout << "Number of triangles: " << i * 12 << std::endl;
 	std::cout << "Size of data: " << i * 8 * 6 * sizeof(float) << " bytes" << std::endl;
 
-	/*grid = new LineGrid(20,10.0f,10.0f,20,10.0f,10.0f);
+	grid = new LineGrid(10,10.0f,10.0f,10,10.0f,10.0f);
 	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
-	grid->transform.setAngles(90.0f, 0.f, 0.0f);*/
+	grid->transform.setAngles(90.0f, 0.f, 0.0f);
 
-	grid = new LineGrid(25.0f, 3.0f);
+	coords = new LineGrid(25.0f, 3.0f);
 
-	mCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
+	/*mCubes = new MarchingCubesShaded("data/mCubesShaded.txt");
 	mCubes->putSphere(5.0f, 5.0f, 5.0f, 3.0f);
 	mCubes->putSphere(0.0f, 5.0f, 5.0f, 7.0f);
 	mCubes->transform.setPosition({ -5.0f,0.0f,-20.0f });
-	mCubes->transform.setScale(mCubes->getScale());
+	mCubes->transform.setScale(mCubes->getScale());*/
 }
 
 
@@ -55,6 +55,7 @@ LyingShapesScene::~LyingShapesScene()
 	cubes.clear();
 
 	safeDelete(&grid);
+	safeDelete(&coords);
 	safeDelete(&mCubes);
 }
 
@@ -74,5 +75,12 @@ void LyingShapesScene::draw(const Camera & camera)
 	{
 		grid->draw(viewProjection);
 	}
-	mCubes->draw(camera);
+	if (coords != nullptr)
+	{
+		coords->draw(viewProjection);
+	}
+	if (mCubes != nullptr)
+	{
+		mCubes->draw(camera);
+	}
 }

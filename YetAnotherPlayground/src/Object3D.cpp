@@ -25,7 +25,6 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 		return;
 	}
 
-	this->elementCount = elementCount;
 	draw_mode = mode;
 
 	// Vertex attribute setup
@@ -61,7 +60,11 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 	// Element index buffer
 	glGenBuffers(1, &vbo_elements);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
+	glVertexArrayElementBuffer(vao, vbo_elements);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementCount, elements, GL_STATIC_DRAW);
+
+	// Actual number of elements
+	this->elementCount = elementCount / sizeof(GLuint);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

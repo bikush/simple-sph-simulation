@@ -25,16 +25,16 @@ LineGrid::LineGrid(int xCount, float deltaX, float offsetX, int yCount, float de
 	float endY = offsetY * 2 + deltaY * (yCount - 1);
 	for (int i = 0; i < xCount; i++) {
 		float x = offsetX + deltaX * i;
-		fillData(&vertices[(i * 2) * 6],	{ x,0.0f,0.0f }, { x/endX,1.0f,1.0f });	// Start
-		fillData(&vertices[(i * 2 +1) * 6],	{ x,endY,0.0f }, { 1.0f,1.0f,1.0f });	// End
+		fillData(&vertices[(i * 2) * 6],	{ x,0.0f,0.0f }, { 0.0f,x/endX,1.0f });	// Start
+		fillData(&vertices[(i * 2 +1) * 6],	{ x,endY,0.0f }, { 0.0f,1.0f,1.0f });	// End
 	}
 
 	int indexOffset = xCount * 2 * 6;
 	int elementIndexOffset = xCount * 2;
 	for (int i = 0; i < yCount; i++) {
 		float y = offsetY + deltaY * i;
-		fillData(&vertices[indexOffset + (i * 2) * 6],		{ 0.0f,y,0.0f }, { 1.0f,y/endY,1.0f });	// Start
-		fillData(&vertices[indexOffset + (i * 2 + 1) * 6],	{ endX,y,0.0f }, { 1.0f,1.0f,1.0f });	// End
+		fillData(&vertices[indexOffset + (i * 2) * 6],		{ 0.0f,y,0.0f }, { 1.0f,y/endY,0.0f });	// Start
+		fillData(&vertices[indexOffset + (i * 2 + 1) * 6],	{ endX,y,0.0f }, { 1.0f,1.0f,0.0f });	// End
 	}	
 
 	GLuint* elements = new GLuint[elementCount];
@@ -97,7 +97,7 @@ LineGrid::LineGrid( float length, float lineWidth ) : Object3D(), lineWidth(line
 	elements[16] = 9;
 	elements[17] = 11;
 
-	initializeVBO(vertices, vertexCount * sizeof(GLfloat), elements, 18 * sizeof(GLuint), GL_LINES);
+	initializeVBO(vertices, vertexCount * sizeof(GLfloat), elements, elementCount * sizeof(GLuint), GL_LINES);
 
 	delete[] vertices;
 	delete[] elements;
