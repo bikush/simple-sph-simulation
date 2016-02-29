@@ -10,52 +10,40 @@
 #define BUFFER_SIZE_INC 64
 
 PointDataVisualiser::PointDataVisualiser( const char* texturePath, bool useShader ) :
+	bufferSize(BUFFER_SIZE_INC), buffer(new vec3f[BUFFER_SIZE_INC]), bufferElements(0),
+	textureID(0), bufferID(0), color({1.f,1.f,1.f}),
+	shader(nullptr), useShader(useShader && GLEW_ARB_geometry_shader4 == GL_TRUE),
 	pointSize(5.0f)
 {
-	bufferSize = BUFFER_SIZE_INC;
-	buffer = new vec3f[ bufferSize ];	
-	bufferElements = 0;
-
-	textureID = 0;
 	setImage( texturePath );
 
-	shader = 0;
-	bufferID = 0;
-	
-	color = vec3f(1,1,1);
-
 	// Setup vao and vbo connections
-	/**/
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	// NULL => do not copy the buffer
+	glBufferData(GL_ARRAY_BUFFER, bufferSize * sizeof(float) * 3, NULL, GL_DYNAMIC_DRAW);
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
 		
-	if( useShader && GLEW_ARB_geometry_shader4 == GL_TRUE )
+	if( useShader )
 	{
-		this->useShader = true;
 		shader = ShaderProgram::CreateShader(
 			"data/shaders/testPS.vert",
 			"data/shaders/testPS.geom",
 			"data/shaders/testPS.frag",
-			true );
-
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		// NULL => do not copy the buffer
-		glBufferData(GL_ARRAY_BUFFER, bufferSize * sizeof(float) * 3, NULL, GL_DYNAMIC_DRAW);
-
-		glGenVertexArrays( 1, &vao );
-		glBindVertexArray(vao);
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL );
-
-		shader->turnOff();
-	}else{
-		this->useShader = false;
+			true );	
 	}
 }
 
 PointDataVisualiser::~PointDataVisualiser()
 {
 	delete [] buffer;
+	glDeleteBuffers(1, &vbo);
+	glDeleteVertexArrays(1, &vao);
 }
 
 void PointDataVisualiser::setImage( const char* texturePath )
