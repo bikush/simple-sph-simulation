@@ -216,7 +216,7 @@ void SPHSystem3d::putParticleIntoGrid( int particleIndex )
 
 void SPHSystem3d::addParticle( vec3f position, vec3f velocity )
 {
-	glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
+	position = glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
 	particles.push_back( SPHParticle3d( position, velocity, particleMass, restDensity ) );
 	putParticleIntoGrid( particleCount );
 	particleCount++;	

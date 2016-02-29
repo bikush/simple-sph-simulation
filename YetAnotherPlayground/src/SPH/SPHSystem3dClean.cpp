@@ -119,7 +119,7 @@ void SPHSystem3dClean::setKernel( SPHKernelUse kernelUse, KernelType type )
 
 void SPHSystem3dClean::addParticle( vec3f position, vec3f velocity )
 {
-	glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
+	position = glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
 	particles.push_back( SPHParticle3d( position, velocity, particleMass, restDensity ) );
 	particleCount++;
 }

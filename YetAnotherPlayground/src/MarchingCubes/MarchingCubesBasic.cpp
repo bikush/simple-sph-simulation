@@ -269,12 +269,12 @@ void MarchingCubesBasic::putSphere( float x, float y, float z, float r )
 {
 	float value;
 	vec3f start = vec3f( x-r, y-r, z-r );
-	glm::clamp( start, position, position+span );
+	start = glm::clamp( start, position, position+span );
 	start -= position;
 	start /= dSpan;
 
 	vec3f end = vec3f( x+r, y+r, z+r );
-	glm::clamp( end, position, position+span );
+	start = glm::clamp( end, position, position+span );
 	end -= position;
 	end /= dSpan;
 

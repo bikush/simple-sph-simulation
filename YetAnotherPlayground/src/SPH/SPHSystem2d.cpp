@@ -179,7 +179,7 @@ void SPHSystem2d::setKernel( SPHKernelUse kernelUse, KernelType type )
 
 void SPHSystem2d::addParticle( vec2f position, vec2f velocity )
 {
-	glm::clamp( position, vec2f(0,0), vec2f( dWidth, dHeight ) );
+	position = glm::clamp( position, vec2f(0,0), vec2f( dWidth, dHeight ) );
 	particles.push_back( SPHParticle2d( position, velocity, particleMass, restDensity ) );
 	putParticleIntoGrid( particleCount );
 	particleCount++;	
