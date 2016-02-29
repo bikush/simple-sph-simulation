@@ -150,7 +150,7 @@ void LearningWindowManager::setProjection( double width, double height )
 	////view = glm::translate( glm::mat4(), glm::vec3(-orthoWidth * 0.5, -orthoHeight * 0.5,0.0) );
 }
 
-void LearningWindowManager::drawScene()
+void LearningWindowManager::drawGLScene()
 {
 	//auto viewProjection = camera.getViewProjection(); // projection * view;
 	
@@ -160,7 +160,17 @@ void LearningWindowManager::drawScene()
 		scenes[i]->draw( camera );
 	}
 
-	WindowManager::drawScene();
+	WindowManager::drawGLScene();
+}
+
+void LearningWindowManager::drawSFMLScene(sf::RenderWindow & window)
+{
+	for (unsigned int i = 0; i<scenes.size(); i++)
+	{
+		scenes[i]->drawSFML(window);
+	}
+
+	WindowManager::drawSFMLScene(window);
 }
 
 void LearningWindowManager::updateScene( double dt )

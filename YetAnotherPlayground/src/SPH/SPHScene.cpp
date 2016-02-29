@@ -201,4 +201,6 @@ void SPHScene::draw(const Camera & camera)
 	//sprintf_s(title,256, "Time: %.2f, Fps: %d, Particles: %d, SPH time: %1.8f, Draw time: %1.8f, Rest time: %1.8f", Timer::getTime(), Timer::getFPS(), sph3->getParticleCount(), sphTimer->getAverage(), marchingTimer->getAverage(), restTimer->getAverage());
 	//window->setTitle( title );	
 
+}void SPHScene::drawSFML(sf::RenderWindow & window)
+{
 }

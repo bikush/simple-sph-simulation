@@ -16,6 +16,7 @@ public:
 	virtual ~SPHScene(void);
 	
 	void draw(const Camera& camera);
+	void drawSFML(sf::RenderWindow& window);
 	void update(float dt);
 	virtual void eventKeyboardUp(sf::Keyboard::Key keyPressed);
 

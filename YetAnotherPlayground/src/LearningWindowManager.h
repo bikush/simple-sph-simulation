@@ -17,7 +17,8 @@ public:
 protected:
 	virtual void windowWillRun();
 	virtual void windowWillClose();
-	virtual void drawScene();
+	virtual void drawGLScene();
+	virtual void drawSFMLScene(sf::RenderWindow& window);
 	virtual void updateScene( double dt );
 
 	void eventReshape( int width, int height );

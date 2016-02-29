@@ -65,7 +65,7 @@ WindowManager::WindowManager(const std::string& configFile) :
 	int height = data.getData("window", "height").getInt( 600 );
 	int bitsPerPixel = data.getData("window", "bitsPerPixel").getInt( 32 );
 	string title = data.getData("window", "title").getStringData("Playground");
-	window = new sf::Window(sf::VideoMode(width, height, bitsPerPixel), title.c_str(), sf::Style::Default , settings);	
+	window = new sf::RenderWindow(sf::VideoMode(width, height, bitsPerPixel), title.c_str(), sf::Style::Default , settings);	
 
 	loadGLEW();
 /*
@@ -232,32 +232,28 @@ void WindowManager::updateScene( double dt )
 
 }
 
-void WindowManager::drawScene()
+void WindowManager::drawGLScene()
 {
+}
+
+void WindowManager::drawSFMLScene(sf::RenderWindow& window)
+{
+
 }
 
 void WindowManager::drawCycle()
 {
 	window->setActive();
-
-	//glEnable(GL_NORMALIZE);
-	//glEnable(GL_CULL_FACE);
-	//glDepthFunc(GL_LESS);
-	//glEnable(GL_DEPTH_TEST);
-
-	//Timer::calcTimeFlow();
-	//camera.getFrustum().setupGLProjection();
-	//camera.getFrustum().CalculateFrustum();
-	//camera.setupCamera();
-
-
-		
+	
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 	glClearDepth(1.0);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
+	drawGLScene();
 
-	drawScene();
+	window->pushGLStates();
+	drawSFMLScene(*window);
+	window->popGLStates();	
         
     window->display();
 }
