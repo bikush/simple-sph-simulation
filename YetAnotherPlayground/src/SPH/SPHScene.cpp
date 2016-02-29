@@ -169,6 +169,9 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 
 void SPHScene::update(float dt)
 {
+	// TODO: refactor timer, it is horrible
+	Timer::calcTimeFlow();
+
 	if (!paused)
 	{
 		sphTimer.resume();
