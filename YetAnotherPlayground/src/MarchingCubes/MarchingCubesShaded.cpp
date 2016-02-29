@@ -248,9 +248,15 @@ void MarchingCubesShaded::draw(const Camera& camera)
 			glDrawArrays(GL_POINTS, 0, gridElementCount );
 			glBindVertexArray(0);
 		glDepthMask(GL_TRUE);
-		if( !blendEnabled ) glDisable( GL_BLEND );	
+		if (!blendEnabled) { 
+			glDisable(GL_BLEND); 
+		}
 
 		glDisable( GL_TEXTURE_3D);
+
+		//glEnable(GL_TEXTURE_2D);
+		//glActiveTexture(GL_TEXTURE1);
+		//glBindTexture(GL_TEXTURE_2D, 0);
 	mcShader->turnOff();
 	glEnable( GL_CULL_FACE );
 }

@@ -178,6 +178,7 @@ void MarchingCubesFactory::initTexture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA16I_EXT, 16, 256, 0, GL_ALPHA_INTEGER_EXT, GL_INT, triTable);
+	glActiveTexture(GL_TEXTURE0);
 }
 
 void MarchingCubesFactory::setTexture( GLenum textureSlot )
