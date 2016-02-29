@@ -26,7 +26,7 @@ class PointDataVisualiser
 
 	vec3f color;
 
-	float size;
+	float pointSize;
 
 	void drawPipeline(const Camera& camera);
 	void drawShaded(const Camera& camera);

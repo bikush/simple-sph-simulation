@@ -9,7 +9,8 @@
 
 #define BUFFER_SIZE_INC 64
 
-PointDataVisualiser::PointDataVisualiser( const char* texturePath,bool useShader )
+PointDataVisualiser::PointDataVisualiser( const char* texturePath, bool useShader ) :
+	pointSize(5.0f)
 {
 	bufferSize = BUFFER_SIZE_INC;
 	buffer = new vec3f[ bufferSize ];	
@@ -46,7 +47,6 @@ PointDataVisualiser::PointDataVisualiser( const char* texturePath,bool useShader
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL );
 
-		setPointSize(5.0);			
 		shader->turnOff();
 	}else{
 		this->useShader = false;
@@ -130,7 +130,7 @@ void PointDataVisualiser::drawShaded(const Camera& camera)
 	shader->setUniformM4( "ProjectionMatrix", glm::value_ptr(projection) );
 	shader->setUniformM4("mvp", glm::value_ptr(MVP));
 	shader->setUniformV3("up", up.x, up.y, up.z);
-	shader->setUniformF("Size2", 1 );
+	shader->setUniformF("Size2", pointSize);
 	shader->setUniformI("SpriteTex", 0 );
 	shader->setUniformV3("Color", color.x, color.y, color.z );
 	
@@ -150,7 +150,7 @@ void PointDataVisualiser::drawPipeline(const Camera& camera)
 	glGetFloatv( GL_POINT_SIZE_MAX, &maxSize );
 	if( maxSize > 100 )
 		maxSize = 100;
-	glPointSize( size*10 > maxSize ? maxSize : size*10 );
+	glPointSize( fmaxf( pointSize * 10 , maxSize ) );
 
 	glPointParameterf( GL_POINT_FADE_THRESHOLD_SIZE, 60.0f );
 	glPointParameterf( GL_POINT_SIZE_MIN, 1.0f );
@@ -189,16 +189,16 @@ void PointDataVisualiser::draw(const Camera& camera, bool forcePipeline )
 
 void PointDataVisualiser::drawPoints()
 {
-	glPointSize( 5 );
+	glPointSize( pointSize );
 	drawArray();
 }
 
 void PointDataVisualiser::setPointSize( float size )
 {
-	this->size = size*10;
+	pointSize = size;
 }
 
 float PointDataVisualiser::getPointSize()
 {
-	return size;
+	return pointSize;
 }
