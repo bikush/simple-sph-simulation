@@ -16,9 +16,7 @@ LearningWindowManager::LearningWindowManager( const std::string& configFile )
 	camera({ 1024.0f,768.0f }, Camera::ProjectionType::PERSPECTIVE, { 1.0f,1000.0f }),
 	averageFrameTime( 60 )
 {
-	//setProjection( 2.0, 2.0 );
-	//view = glm::mat4(1.0f);
-	//view = glm::lookAt( glm::vec3(0,0,10), glm::vec3(0,0,0), glm::vec3(0,1,0) );
+	
 }
 
 void LearningWindowManager::open()
@@ -50,6 +48,8 @@ void LearningWindowManager::windowWillRun()
 
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
+
+	addScene(new SPHScene());
 }
 
 void LearningWindowManager::eventReshape( int width, int height)
