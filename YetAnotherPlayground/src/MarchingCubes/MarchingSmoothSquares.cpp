@@ -53,7 +53,7 @@ void MarchingSmoothSquares::inc( int x, int y, char value )
 
 void MarchingSmoothSquares::dec( int x, int y, float value )
 {
-	char newValue = value*maxValue;
+	char newValue = char(value*maxValue);
 	if( x<0 || y<0 || x>=dataWidth || y>=dataHeight) return;
 	int index = x*dataWidth+y;
 	dataField[index] = newValue > dataField[index] ? 0 : dataField[index]-newValue;
@@ -90,7 +90,7 @@ void MarchingSmoothSquares::drawGrid(vec3f colorFalse, vec3f colorTrue)
 	glEnd();
 
 	glBegin(GL_QUADS);	
-	float o = 0.2;
+	float o = 0.2f;
 	float fac = 0;
 	for(int i=0; i<dataWidth; i++)
 	{

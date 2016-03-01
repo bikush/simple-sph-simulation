@@ -1,5 +1,6 @@
 
 #include "DataLine.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -92,11 +93,8 @@ vec3f DataLine::getVec3f()
 
 void DataLine::fillFloatArray( float* in, int count )
 {
-	if( count > lineData.size())
-	{
-		count = lineData.size();
-	}
-	for(unsigned int i=0; i<count; i++)
+	count = max(count, (int)lineData.size());
+	for(int i=0; i<count; i++)
 	{
 		in[i] = readString<float>( lineData[i] );
 	}

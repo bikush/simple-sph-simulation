@@ -51,7 +51,7 @@ Frustum::Frustum( float nCP, float fCP, float fOV, float winW, float winH, vec3f
 {
 	NCP = nCP;
 	FCP = fCP;
-	setWidthHeight( (int)winW, winH );
+	setWidthHeight( winW, winH );
 	setFOV( fOV );
 	setEyes( ociste, glediste );
 }

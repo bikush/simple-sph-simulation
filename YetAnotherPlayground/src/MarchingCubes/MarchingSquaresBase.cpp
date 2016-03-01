@@ -149,7 +149,7 @@ void MarchingSquaresBase::_putCircleUsingSetter( int x, int y, int r, void (Marc
 	{
 		for(int j=y-r; j<=y+r; j++)
 		{			
-			distance = (float)r - sqrtf( powf( i-x, 2 ) + powf( j-y, 2 ) );
+			distance = (float)r - sqrtf( powf( (float)(i-x), 2.f ) + powf((float)(j-y), 2.f ) );
 			if( distance > 0 )
 			{				
 				(this->*setter)( i, j, distance>1 ? 1:distance );

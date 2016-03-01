@@ -402,11 +402,11 @@ void MarchingCubes::drawTriangleBuffer()
 void MarchingCubes::putSphere( float x, float y, float z, float r )
 {
 	float value;
-	for(int i=x-r; i<x+r; i++)
+	for(int i=(int)(x-r); i<(int)(x+r); i++)
 	{
-		for(int j=y-r; j<y+r; j++)
+		for(int j= (int)(y-r); j<(int)(y+r); j++)
 		{
-			for(int k=z-r; k<z+r; k++)
+			for(int k= (int)(z-r); k<(int)(z+r); k++)
 			{
 				value = r-sqrtf(powf( x-i, 2 ) + powf( y-j, 2 ) + powf( z-k, 2 ));
 			/*	if( value > 0 )

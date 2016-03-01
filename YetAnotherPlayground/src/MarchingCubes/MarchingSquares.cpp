@@ -75,7 +75,7 @@ void MarchingSquares::drawGrid(vec3f colorFalse, vec3f colorTrue)
 
 	glBegin(GL_QUADS);
 	glColor3f( colorTrue.x, colorTrue.y, colorTrue.z );
-	float o = 0.2;
+	float o = 0.2f;
 	for(int i=0; i<dataWidth; i++)
 	{
 		for(int j=0; j<dataHeight; j++)

@@ -201,11 +201,12 @@ void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 	vec3f center = (vec3f( x,y,z ) - vPosition) / deltaSpan;
 	r /= glm::length( deltaSpan );
 
-	for(int i=start.x; i<end.x; i++)
+	// TODO: unnecessary float->int converions
+	for(int i=(int)start.x; i<(int)end.x; i++)
 	{
-		for(int j=start.y; j<end.y; j++)
+		for(int j= (int)start.y; j<(int)end.y; j++)
 		{
-			for(int k=start.z; k<end.z; k++)
+			for(int k= (int)start.z; k<(int)end.z; k++)
 			{
 				value = r-glm::length(center-vec3f(i,j,k))+1;
 				if (value > 0)

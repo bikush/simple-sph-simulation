@@ -143,7 +143,7 @@ float* Matrix::copy()
 
 Matrix* Matrix::unitMatrix( int size )
 {
-	Matrix out = Matrix(size, size);
-	for( int i=0; i<size; i++ ) out.set(i,i,1.0f);
-	return &out;
+	Matrix* out = new Matrix(size, size);
+	for( int i=0; i<size; i++ ) out->set(i,i,1.0f);
+	return out;
 }
