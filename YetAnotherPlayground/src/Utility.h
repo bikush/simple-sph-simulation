@@ -54,6 +54,17 @@ void inline safeDelete(T** pointer)
 	}
 }
 
+template<typename... Args>
+std::size_t sizeof_all() {
+	size_t sizes[] = { sizeof(Args)... };
+	int count = sizeof...(Args);
+	size_t total = 0;
+	for (int i = 0; i < count; i++) {
+		total += sizes[i];
+	}
+	return total;
+}
+
 void print(const glm::mat4& m);
 
 std::vector<std::string> split( const char* line, char splitter );
