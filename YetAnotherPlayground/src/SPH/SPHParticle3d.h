@@ -26,7 +26,8 @@ struct SPHParticle3d
 	vec3f colorGradient;
 	float colorLaplacian;
 	
-	 // Rounding up the structure to 128 bytes
+	//int padding[offsetFromBytes(128, sizeof_all2<vec3f, vec3f, vec3f, float, float, float, vec3f, float, vec3f, float>()) / 4 - 1];
+	// Rounding up the structure to 128 bytes
 #ifdef _DEBUG
 	int padding[11];
 #else

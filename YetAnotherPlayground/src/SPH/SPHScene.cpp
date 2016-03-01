@@ -11,9 +11,9 @@
 using namespace std;
 
 SPHScene::SPHScene(void) : Scene(),
-	paused(false),
-	sphTimer(3), marchingTimer(3),
-	drawWithMC(false), drawPDVWithShader(true)
+paused(false),
+sphTimer(3), marchingTimer(3),
+drawWithMC(false), drawPDVWithShader(true)
 {
 	// TODO: shared global settings
 	MappedData settings("data/settings.txt");
@@ -38,8 +38,8 @@ SPHScene::SPHScene(void) : Scene(),
 	pointVisualizer->transform.setAngles({ 0.0, 90.0f, 0.0f });
 	pointVisualizer->setColor(0.03f, 0.2f, 0.5f);
 
-	fontLoaded = anonPro.loadFromFile("data/fonts/anonymous-pro/AnonymousPro-Regular.ttf");	
-	if(fontLoaded)
+	fontLoaded = anonPro.loadFromFile("data/fonts/anonymous-pro/AnonymousPro-Regular.ttf");
+	if (fontLoaded)
 	{
 		status.setFont(anonPro);
 		status.setCharacterSize(18);

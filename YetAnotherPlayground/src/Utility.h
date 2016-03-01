@@ -54,16 +54,21 @@ void inline safeDelete(T** pointer)
 	}
 }
 
-template<typename... Args>
-std::size_t sizeof_all() {
-	size_t sizes[] = { sizeof(Args)... };
-	int count = sizeof...(Args);
-	size_t total = 0;
-	for (int i = 0; i < count; i++) {
-		total += sizes[i];
-	}
-	return total;
+
+template <size_t N>
+constexpr size_t cexprSum(const int(&values)[N], int index) {
+	return index < N ? (values[index] + cexprSum(values, index + 1)) : 0;
 }
+
+template<typename... Args>
+constexpr std::size_t sizeof_all() {
+	return cexprSum({ sizeof(Args)... }, 0);
+}
+
+constexpr size_t offsetFromBytes(size_t desired, size_t owned) {
+	return desired - owned;
+}
+
 
 void print(const glm::mat4& m);
 
