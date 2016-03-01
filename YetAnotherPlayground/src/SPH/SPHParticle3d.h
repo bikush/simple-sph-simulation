@@ -8,8 +8,16 @@
 
 struct SPHParticle3d
 {
-	SPHParticle3d();
-	SPHParticle3d( vec3f pos, vec3f v, float m, float density );
+	SPHParticle3d() :
+		position(0), velocity(0), oldAcceleration(0),
+		mass(0), density(0), pressure(0), force(0)
+	{}
+
+	SPHParticle3d(vec3f pos, vec3f v, float m, float density) :
+		position(pos), velocity(v), oldAcceleration(0),
+		mass(m), density(density), pressure(0), force(0),
+		colorGradient(0), colorLaplacian(0)
+	{}
 
 	virtual void reset();
 
