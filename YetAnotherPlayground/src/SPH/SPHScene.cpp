@@ -23,8 +23,8 @@ SPHScene::SPHScene(void) : Scene(),
 	sph3 = new SPHSystem3d("data/sph3d.txt");
 	cout << "SPH particle size: " << sizeof(SPHParticle3d) << endl;
 
-	grid = new LineGrid(20, 10.0f, 10.0f, 20, 10.0f, 10.0f);
-	grid->transform.setPosition({ -100.0f,0.0f,-100.0f });
+	grid = new LineGrid(10, 5.0f, 5.0f, 10, 5.0f, 5.0f);
+	grid->transform.setPosition({ -25.0f,0.0f,-25.0f });
 	grid->transform.setAngles(90.0f, 0.f, 0.0f);
 
 	coords = new LineGrid(25.0f, 3.0f);

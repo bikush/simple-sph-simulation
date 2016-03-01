@@ -8,7 +8,7 @@
 
 Camera::Camera( glm::vec2 windowSize, ProjectionType type, glm::vec2 zLimits) :
 	windowSize( windowSize ), projectionType( type ), projectionZLimit( zLimits ),
-	position({ 20.0f, 20.0f, 20.0f }), forward({ -0.577f, -0.577f, -0.577f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up))
+	position({ 15.0f, 10.0f, 15.0f }), forward({ -0.577f, -0.577f, -0.577f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up))
 {
 	setupView();
 	refreshProjection();
