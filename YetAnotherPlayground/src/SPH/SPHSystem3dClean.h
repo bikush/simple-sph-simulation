@@ -17,7 +17,7 @@ class PointDataVisualiser;
 // At least I hope so.
 class SPHSystem3dClean
 {
-	std::vector<SPHParticle3d> particles;
+	std::vector<SPHParticleNeighbour3d> particles;
 	int particleCount;
 
 	std::vector<SPHInteractor3d*> surfaces;
@@ -46,7 +46,7 @@ class SPHSystem3dClean
 
 	// Updates densities for both particles and generates neighbourhood data,
 	// but only in the first particle (to avoid colisions in later calculations).
-	void applyDensity( SPHParticle3d& first, SPHParticle3d& second );
+	void applyDensity(SPHParticleNeighbour3d& first, SPHParticleNeighbour3d& second );
 	// Updates the forces for a given particle pair. It is asumed that the 
 	// particles are neighbours and therefore proximity check is not made.
 	void applyForces( SPHParticle3d& first, SPHParticle3d& second );

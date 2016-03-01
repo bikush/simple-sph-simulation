@@ -3,6 +3,7 @@
 #define SPHPARTICLE3D_H
 
 #include "Vector3D.h"
+#include "Utility.h"
 #include <vector>
 
 struct SPHParticle3d
@@ -10,7 +11,7 @@ struct SPHParticle3d
 	SPHParticle3d();
 	SPHParticle3d( vec3f pos, vec3f v, float m, float density );
 
-	void reset();
+	virtual void reset();
 
 	vec3f position;
 	vec3f velocity;
@@ -24,15 +25,22 @@ struct SPHParticle3d
 
 	vec3f colorGradient;
 	float colorLaplacian;
-
-	std::vector<SPHParticle3d*> neighbours;
-
+	
 	 // Rounding up the structure to 128 bytes
 #ifdef _DEBUG
-	int padding[7];
+	int padding[11];
 #else
 	int padding[8];
 #endif
+};
+
+struct SPHParticleNeighbour3d : SPHParticle3d
+{
+	using SPHParticle3d::SPHParticle3d;
+
+	std::vector<SPHParticleNeighbour3d*> neighbours;
+
+	void reset();
 };
 
 #endif

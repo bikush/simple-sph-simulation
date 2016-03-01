@@ -19,7 +19,7 @@ using namespace std;
 SPHSystem3dClean::SPHSystem3dClean( float w, float h, float d, float density, float constantK, float constantMi, 
 							float cfTreshold, float surfTension,  float mass, float smLen )
 {
-	particles = vector<SPHParticle3d>();
+	particles = vector<SPHParticleNeighbour3d>();
 	particleCount = 0;
 	
 	dWidth = w;
@@ -55,7 +55,7 @@ SPHSystem3dClean::SPHSystem3dClean( float w, float h, float d, float density, fl
 SPHSystem3dClean::SPHSystem3dClean( const char* file )
 {
 	MappedData map( file );
-	particles = vector<SPHParticle3d>();	
+	particles = vector<SPHParticleNeighbour3d>();
 	particleCount = 0;
 
 	surfaces = vector<SPHInteractor3d*>();
@@ -120,7 +120,7 @@ void SPHSystem3dClean::setKernel( SPHKernelUse kernelUse, KernelType type )
 void SPHSystem3dClean::addParticle( vec3f position, vec3f velocity )
 {
 	position = glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
-	particles.push_back( SPHParticle3d( position, velocity, particleMass, restDensity ) );
+	particles.push_back(SPHParticleNeighbour3d( position, velocity, particleMass, restDensity ) );
 	particleCount++;
 }
 
@@ -129,7 +129,7 @@ void SPHSystem3dClean::addSurface( SPHInteractor3d* surface )
 	surfaces.push_back( surface );
 }
 
-void SPHSystem3dClean::applyDensity( SPHParticle3d& first, SPHParticle3d& second )
+void SPHSystem3dClean::applyDensity(SPHParticleNeighbour3d& first, SPHParticleNeighbour3d& second )
 {
 	vec3f rvec = first.position - second.position;
 	float r = glm::length( rvec );

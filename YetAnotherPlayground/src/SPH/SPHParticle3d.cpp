@@ -21,7 +21,6 @@ SPHParticle3d::SPHParticle3d( vec3f pos, vec3f v, float m, float density )
 	this->density = 0;
 	pressure = 0;
 	force = vec3f();
-	neighbours = std::vector<SPHParticle3d*>();
 	colorGradient = vec3f();
 	colorLaplacian = 0;
 }
@@ -31,8 +30,13 @@ void SPHParticle3d::reset()
 	density = 0;
 	pressure = 0;
 	force = vec3f( 0, 0, 0);
-	neighbours.clear();
 
 	colorGradient = vec3f( 0, 0, 0 );
 	colorLaplacian = 0;
+}
+
+void SPHParticleNeighbour3d::reset()
+{
+	SPHParticle3d::reset();
+	neighbours.clear();
 }
