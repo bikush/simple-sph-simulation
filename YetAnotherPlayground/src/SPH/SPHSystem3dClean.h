@@ -7,6 +7,7 @@
 
 class iKernel;
 class MarchingCubes;
+class MarchingCubesShaded;
 class SPHInteractor3d;
 enum SPHKernelUse;
 enum KernelType;
@@ -74,8 +75,10 @@ public:
 	void addDistributedParticles( vec3f start, vec3f direction, vec3f step );
 
 	void addSurface( SPHInteractor3d* surface );
+	void toggleSurface(int index);
 
 	void draw( MarchingCubes* ms );
+	void draw( MarchingCubesShaded* ms);
 	void draw( PointDataVisualiser* pdv );
 	void drawPoints();
 

@@ -3,6 +3,7 @@
 
 #include "PointDataVisualiser.h"
 #include "SPHSystem3d.h"
+#include "SPHSystem3dClean.h"
 #include "MarchingCubesShaded.h"
 #include "ShaderProgram.h"
 #include "Camera.h"
@@ -11,9 +12,9 @@
 using namespace std;
 
 SPHScene::SPHScene(void) : Scene(),
-paused(false),
-sphTimer(3), marchingTimer(3),
-drawWithMC(false), drawPDVWithShader(true)
+	paused(false),
+	sphTimer(3), marchingTimer(3),
+	drawWithMC(false), drawPDVWithShader(true)
 {
 	// TODO: shared global settings
 	MappedData settings("data/settings.txt");

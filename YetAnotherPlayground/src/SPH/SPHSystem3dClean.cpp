@@ -2,6 +2,7 @@
 #include "SPHSystem3dClean.h"
 #include "SmoothingKernels.h"
 #include "MarchingCubes.h"
+#include "MarchingCubesShaded.h"
 #include "SPHInteractor3d.h"
 #include "SPHInteractor3dFactory.h"
 #include "MappedData.h"
@@ -128,6 +129,15 @@ void SPHSystem3dClean::addSurface( SPHInteractor3d* surface )
 {
 	surfaces.push_back( surface );
 }
+
+void SPHSystem3dClean::toggleSurface(int index)
+{
+	if (index > -1 && index < surfaces.size())
+	{
+		surfaces[index]->toggle();
+	}
+}
+
 
 void SPHSystem3dClean::applyDensity(SPHParticleNeighbour3d& first, SPHParticleNeighbour3d& second )
 {
@@ -320,6 +330,20 @@ void SPHSystem3dClean::draw( MarchingCubes* ms )
 		r = particles[i].density*10*unitRadius;
 		if( r>smoothingLength ) r = smoothingLength;
 		ms->putSphere( particles[i].position.x/0.4, particles[i].position.y/0.4, particles[i].position.z/0.4, r );
+	}
+}
+
+void SPHSystem3dClean::draw(MarchingCubesShaded* ms)
+{
+	unitRadius = sqrt(particleMass / (restDensity*PI));
+	float r;
+	for (int i = 0; i<particleCount; i++)
+	{
+		//r = particles[i].density*10*unitRadius;
+		//r = particles[i].volume;
+		r = unitRadius;
+		if (r>smoothingLength) r = smoothingLength;
+		ms->putSphere(particles[i].position.x, particles[i].position.y, particles[i].position.z, r);
 	}
 }
 
