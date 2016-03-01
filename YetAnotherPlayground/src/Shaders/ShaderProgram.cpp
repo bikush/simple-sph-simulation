@@ -380,7 +380,7 @@ void ShaderProgram::populateActiveAttributes( bool output )
 			cout << "@ " << location << " : "<< name << endl;
 		}
 	}
-	delete name;
+	delete [] name;
 }
 
 GLint ShaderProgram::getAttribute( const string& attributeName )

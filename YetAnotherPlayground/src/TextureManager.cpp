@@ -62,13 +62,13 @@ void TextureManager::deleteAllTextures()
 	int index = 0;
 
 	map<string, GLuint>::iterator pair = loaded.begin();
-	while( pair != loaded.end() )
+	while( pair != loaded.end() && index < loaded.size() )
 	{
 		textureNames[index] = (*pair).second;	
 		index++;
 		pair++;
 	}
 	glDeleteTextures( index, textureNames );
-	delete textureNames;
+	delete [] textureNames;
 	loaded.clear();
 }

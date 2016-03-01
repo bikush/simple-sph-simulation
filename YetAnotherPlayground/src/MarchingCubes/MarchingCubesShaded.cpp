@@ -84,16 +84,18 @@ void MarchingCubesShaded::initGridBuffer( )
 	int gridTotalSize =  gridElementCount*3;
 	float* grid = new float[gridTotalSize];
 	int index = 0;
-	for( float x = -gridStep.x; x <= 1.0f; x+=gridStep.x )
+	bool done = false;
+	for( float x = -gridStep.x; x <= 1.0f && !done; x+=gridStep.x )
 	{
-		for( float y = -gridStep.y; y <= 1.0f; y+=gridStep.y )
+		for( float y = -gridStep.y; y <= 1.0f && !done; y+=gridStep.y )
 		{
-			for( float z = -gridStep.z; z <= 1.0f; z+=gridStep.z )
+			for( float z = -gridStep.z; z <= 1.0f && !done; z+=gridStep.z )
 			{
 				grid[ index   ] = x;
 				grid[ index+1 ] = y;
 				grid[ index+2 ] = z;
-				index += 3;				
+				index += 3;	
+				done = index >= gridTotalSize;
 			}
 		}
 	}
