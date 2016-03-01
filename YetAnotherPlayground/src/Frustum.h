@@ -15,8 +15,8 @@ public:
 
 	float aspectRatio; //aspect ratio	
 
-	int width;
-	int height;
+	float width;
+	float height;
 
 	//vec3f G;
 	vec3f O;
@@ -34,7 +34,7 @@ public:
 	void offsetEyesAngle( float x, float y, float z );
 	void offsetEyesOffset( float x, float y, float z );
 	void setFOV( float );
-	void setWidthHeight( int, int );
+	void setWidthHeight( float, float );
 
 	void setupGLProjection();
 	void setupCamera();

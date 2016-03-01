@@ -29,7 +29,7 @@ SPHSystem2d::SPHSystem2d( float w, float h, float density, float constantK, floa
 	restDensity = density;
 	fluidConstantK = constantK;
 	viscosityConstant = constantMi;
-	colorFieldTreshold = 0.075;
+	colorFieldTreshold = 0.075f;
 	colorFieldTreshold *= cfTreshold;
 	surfaceTension = surfTension;	
 	particleMass = mass;
@@ -67,9 +67,9 @@ SPHSystem2d::SPHSystem2d( const char* file )
 	dWidth = map.getData( "grid", "width" ).getFloat();
 	dHeight = map.getData( "grid", "height" ).getFloat();
 	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getStringVector();
-	for(int i=0; i<surfaceNames.size(); i++ )
+	for( string sName : surfaceNames )
 	{
-		surfaces.push_back( SPHInteractor2dFactory::getInteractor( surfaceNames[i], &map ) );
+		surfaces.push_back( SPHInteractor2dFactory::getInteractor( sName, &map ) );
 	}
 
 	restDensity = map.getData( "fluid", "density" ).getFloat();
@@ -115,8 +115,8 @@ void SPHSystem2d::clearGrid()
 
 void SPHSystem2d::createGrid()
 {
-	int newGridHeight = ceil( dHeight / smoothingLength );
-	int newGridWidth = ceil( dWidth / smoothingLength );
+	int newGridHeight = (int)ceil( dHeight / smoothingLength );
+	int newGridWidth = (int)ceil( dWidth / smoothingLength );
 	// If the grid dimensions change, rebuild the grid vectors
 	if( gridWidth != newGridWidth || gridHeight!= newGridHeight )
 	{
@@ -146,8 +146,8 @@ void SPHSystem2d::putParticleIntoGrid( int particleIndex )
 {
 	// Calculate grid index
 	vec2f position = (particles[ particleIndex ]).position;
-	int x = position.x * gridWidth / dWidth;
-	int y = position.y * gridHeight / dHeight;
+	int x = int( position.x * gridWidth / dWidth );
+	int y = int( position.y * gridHeight / dHeight );
 	if( x >= gridWidth ) x=gridWidth-1;
 	if( y >= gridHeight ) y=gridHeight-1;
 
@@ -269,7 +269,7 @@ void SPHSystem2d::applySurfaceDensity( SPHParticle2d& particle )
 {
 	vec2f rvec;
 	float r;
-	for( int surf = 0; surf < surfaces.size(); surf++)
+	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
 		rvec = surfaces[surf]->directionTo( particle );
 		r = glm::length( rvec );
@@ -284,7 +284,7 @@ void SPHSystem2d::applySurfaceForces( SPHParticle2d& particle )
 {
 	vec2f rvec;
 	float r;
-	for( int surf = 0; surf < surfaces.size(); surf++)
+	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
 		rvec = surfaces[surf]->directionTo( particle );
 		r = glm::length( rvec );
@@ -391,8 +391,6 @@ void SPHSystem2d::animate( float dt )
 		particles[i].reset();
 	}
 	vec2f rvec;
-	float r;
-	float additionalDensity;
 	
 	// Calculating densities and pressures for all particles:
 	//  - grid walk
@@ -404,7 +402,7 @@ void SPHSystem2d::animate( float dt )
 	for(int i=0; i<particleCount; i++)
 	{		
 		// visit all neighbours
-		for( int j=0; j<particles[i].neighbours.size(); j++)
+		for( size_t j=0, jLen = particles[i].neighbours.size(); j<jLen; j++)
 		{
 			applyForces( particles[i], *(particles[i].neighbours[j]) );
 		}
@@ -436,14 +434,16 @@ void SPHSystem2d::animate( float dt )
 		acceleration = particle.force / particle.density;
 		if(useGravity) acceleration += gravityAcc; 
 
-		oldPosition = particle.position;		
-		particle.position += particle.velocity */* powf(0.9,dt)* /**/ dt + particle.oldAcceleration * ( 0.5f*dt*dt );
+		oldPosition = particle.position;	
+		/* particle.velocity * dt or? powf(0.9,dt) */
+		particle.position += particle.velocity * dt + particle.oldAcceleration * ( 0.5f*dt*dt );
 
-		particle.velocity = particle.velocity/* * powf(0.9,dt)/**/ + (acceleration + particle.oldAcceleration) * ( 0.5f*dt );
+		/* particle.velocity *? powf(0.9,dt) */
+		particle.velocity = particle.velocity + (acceleration + particle.oldAcceleration) * ( 0.5f*dt );
 		particle.oldAcceleration = acceleration;
 				
 		// enforce surfaces
-		for( int surf = 0; surf < surfaces.size(); surf++)
+		for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 		{
 			rvec = surfaces[surf]->directionTo( particle );
 			surfaces[surf]->enforceInteractor( particle, rvec );			
@@ -463,7 +463,7 @@ void SPHSystem2d::draw( MarchingSquaresBase* ms )
 	{
 		r = particles[i].density*10*unitRadius;
 		if( r>smoothingLength ) r = smoothingLength;
-		ms->putCircle( particles[i].position.x/0.3, particles[i].position.y/0.3, r, true );
+		ms->putCircle( particles[i].position.x/0.3f, particles[i].position.y/0.3f, r, true );
 	}
 }
 
@@ -475,7 +475,7 @@ void SPHSystem2d::drawPoints()
 		glVertex2f( particles[i].position.x, particles[i].position.y );
 	glEnd();
 
-	glColor3f( 0.3, 0.9, 0.3 );
+	glColor3f( 0.3f, 0.9f, 0.3f );
 	glBegin( GL_LINES );
 	for( int i=1; i<gridWidth; i++)
 	{
@@ -492,8 +492,10 @@ void SPHSystem2d::drawPoints()
 	}
 	glEnd();
 
-	for(int i=0; i<surfaces.size(); i++)
-		surfaces[i]->draw();
+	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
+	{
+		surfaces[surf]->draw();
+	}
 }
 
 void SPHSystem2d::setUseGravity( bool value )
@@ -525,7 +527,7 @@ float SPHSystem2d::getRestDensity( )
 
 void SPHSystem2d::setRestDensity( float density )
 {
-	restDensity = contain<float>( density, 0.0001, 100 );
+	restDensity = contain<float>( density, 0.0001f, 100 );
 	cout << "New density: " << restDensity << endl;
 }
 	
@@ -536,7 +538,7 @@ float SPHSystem2d::getK( )
 
 void SPHSystem2d::setK( float k )
 {
-	fluidConstantK =  contain<float>( k, 0.00001, 1000 );
+	fluidConstantK =  contain<float>( k, 0.00001f, 1000 );
 	cout << "New constant K: " << fluidConstantK << endl;
 }
 
@@ -547,7 +549,7 @@ float SPHSystem2d::getViscosity( )
 
 void SPHSystem2d::setViscosity( float viscosity )
 {
-	viscosityConstant = contain<float>( viscosity, 0.0000001, 10 );
+	viscosityConstant = contain<float>( viscosity, 0.0000001f, 10 );
 	cout << "New viscosity: " << viscosityConstant << endl;
 }
 
@@ -558,7 +560,7 @@ float SPHSystem2d::getSmoothingLength( )
 
 void SPHSystem2d::setSmoothingLength( float smLen )
 {
-	smoothingLength = contain<float>(smLen, 0.1, 10);
+	smoothingLength = contain<float>(smLen, 0.1f, 10);
 	cout << "New smoothing length: " << smoothingLength << endl;
 	pressureKernel->adjustSmoothingLength( smoothingLength );
 	viscousKernel->adjustSmoothingLength( smoothingLength );

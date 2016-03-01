@@ -30,7 +30,7 @@ SPHSystem3dClean::SPHSystem3dClean( float w, float h, float d, float density, fl
 	restDensity = density;
 	fluidConstantK = constantK;
 	viscosityConstant = constantMi;
-	colorFieldTreshold = 0.075;
+	colorFieldTreshold = 0.075f;
 	colorFieldTreshold *= cfTreshold;
 	surfaceTension = surfTension;	
 	particleMass = mass;
@@ -64,7 +64,7 @@ SPHSystem3dClean::SPHSystem3dClean( const char* file )
 	dHeight = map.getData( "grid", "height" ).getFloat();
 	dDepth = map.getData( "grid", "depth" ).getFloat();
 	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getStringVector();
-	for(int i=0; i<surfaceNames.size(); i++ )
+	for(size_t i=0, iLen = surfaceNames.size(); i<iLen; i++ )
 	{
 		surfaces.push_back( SPHInteractor3dFactory::getInteractor( surfaceNames[i], &map ) );
 	}
@@ -132,7 +132,7 @@ void SPHSystem3dClean::addSurface( SPHInteractor3d* surface )
 
 void SPHSystem3dClean::toggleSurface(int index)
 {
-	if (index > -1 && index < surfaces.size())
+	if (index > -1 && index < (int)surfaces.size())
 	{
 		surfaces[index]->toggle();
 	}
@@ -211,7 +211,7 @@ void SPHSystem3dClean::applySurfaceDensity( SPHParticle3d& particle )
 {
 	vec3f rvec;
 	float r;
-	for( int surf = 0; surf < surfaces.size(); surf++)
+	for( size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++ )
 	{
 		rvec = surfaces[surf]->directionTo( particle );
 		r = glm::length( rvec );
@@ -226,7 +226,7 @@ void SPHSystem3dClean::applySurfaceForces( SPHParticle3d& particle )
 {
 	vec3f rvec;
 	float r;
-	for( int surf = 0; surf < surfaces.size(); surf++)
+	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
 		rvec = surfaces[surf]->directionTo( particle );
 		r = glm::length( rvec );
@@ -269,7 +269,7 @@ void SPHSystem3dClean::animate( float dt )
 	for(int i=0; i<particleCount; i++)
 	{		
 		// visit all neighbours
-		for( int j=0; j<particles[i].neighbours.size(); j++)
+		for (size_t j = 0, jLen = particles[i].neighbours.size(); j<jLen; j++)
 		{
 			applyForces( particles[i], *(particles[i].neighbours[j]) );
 		}
@@ -301,15 +301,17 @@ void SPHSystem3dClean::animate( float dt )
 		if(useGravity) acceleration += gravityAcc; 
 
 		oldPosition = particle.position;		
-		particle.position += particle.velocity */* powf(0.9,dt)* /**/ dt + particle.oldAcceleration * ( 0.5f*dt*dt );
+		/* particle.velocity * dt or? powf(0.9,dt) */
+		particle.position += particle.velocity * dt + particle.oldAcceleration * ( 0.5f*dt*dt );
 
-		particle.velocity = particle.velocity/* * powf(0.9,dt)/**/ + (acceleration + particle.oldAcceleration) * ( 0.5f*dt );
+		/* particle.velocity *? powf(0.9,dt) */
+		particle.velocity = particle.velocity + (acceleration + particle.oldAcceleration) * ( 0.5f*dt );
 		particle.oldAcceleration = acceleration;
 				
 		// enforce surfaces
 		vec3f rvec;
 		float smSquared = smoothingLength*smoothingLength;
-		for( int surf = 0; surf < surfaces.size(); surf++)
+		for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 		{
 			rvec = surfaces[surf]->directionTo( particle );
 			if( glm::length2( rvec ) < smSquared)
@@ -329,7 +331,7 @@ void SPHSystem3dClean::draw( MarchingCubes* ms )
 	{
 		r = particles[i].density*10*unitRadius;
 		if( r>smoothingLength ) r = smoothingLength;
-		ms->putSphere( particles[i].position.x/0.4, particles[i].position.y/0.4, particles[i].position.z/0.4, r );
+		ms->putSphere( particles[i].position.x/0.4f, particles[i].position.y/0.4f, particles[i].position.z/0.4f, r );
 	}
 }
 
@@ -395,7 +397,7 @@ float SPHSystem3dClean::getRestDensity( )
 
 void SPHSystem3dClean::setRestDensity( float density )
 {
-	restDensity = contain<float>( density, 0.0001, 100 );
+	restDensity = contain<float>( density, 0.0001f, 100 );
 	cout << "New density: " << restDensity << endl;
 }
 	
@@ -406,7 +408,7 @@ float SPHSystem3dClean::getK( )
 
 void SPHSystem3dClean::setK( float k )
 {
-	fluidConstantK =  contain<float>( k, 0.00001, 1000 );
+	fluidConstantK =  contain<float>( k, 0.00001f, 1000 );
 	cout << "New constant K: " << fluidConstantK << endl;
 }
 
@@ -417,7 +419,7 @@ float SPHSystem3dClean::getViscosity( )
 
 void SPHSystem3dClean::setViscosity( float viscosity )
 {
-	viscosityConstant = contain<float>( viscosity, 0.0000001, 10 );
+	viscosityConstant = contain<float>( viscosity, 0.0000001f, 10 );
 	cout << "New viscosity: " << viscosityConstant << endl;
 }
 
@@ -428,7 +430,7 @@ float SPHSystem3dClean::getSmoothingLength( )
 
 void SPHSystem3dClean::setSmoothingLength( float smLen )
 {
-	smoothingLength = contain<float>(smLen, 0.1, 10);
+	smoothingLength = contain<float>(smLen, 0.1f, 10);
 	cout << "New smoothing length: " << smoothingLength << endl;
 	pressureKernel->adjustSmoothingLength( smoothingLength );
 	viscousKernel->adjustSmoothingLength( smoothingLength );
@@ -442,7 +444,7 @@ float SPHSystem3dClean::getColorFieldTreshold( )
 
 void SPHSystem3dClean::setColorFieldTreshold( float cfTreshold )
 {
-	colorFieldTreshold = contain<float>(cfTreshold, 0.005, 1);
+	colorFieldTreshold = contain<float>(cfTreshold, 0.005f, 1);
 	cout << "New CFT: " << colorFieldTreshold << endl;
 }
 
@@ -453,6 +455,6 @@ float SPHSystem3dClean::getSurfaceTension( )
 
 void SPHSystem3dClean::setSurfaceTension( float sTension )
 {
-	surfaceTension = contain<float>(sTension, 0.005, 1);
+	surfaceTension = contain<float>(sTension, 0.005f, 1);
 	cout << "New surface tension: " << surfaceTension << endl;
 }

@@ -116,18 +116,18 @@ int MarchingCubesFactory::getInterpolatedCube(  char verticeValues[8], char maxV
 	float edgeWeight[12];	// Changed from char
 	for(int i=0; i<4; i++)
 	{
-		edgeWeight[i] = (verticeValues[(i+1)%4] - verticeValues[i]);	// front
+		edgeWeight[i] = float(verticeValues[(i+1)%4] - verticeValues[i]);	// front
 	//	edgeWeight[i]/=maxValue;
 
-		edgeWeight[i+4] = (verticeValues[(i+1)%4+4] - verticeValues[i+4]);	// back
+		edgeWeight[i+4] = float(verticeValues[(i+1)%4+4] - verticeValues[i+4]);	// back
 	//	edgeWeight[i+4]/=maxValue;
 
-		edgeWeight[i+8] = (verticeValues[i+4] - verticeValues[i]);	// middle
+		edgeWeight[i+8] = float(verticeValues[i+4] - verticeValues[i]);	// middle
 	//	edgeWeight[i+8]/=maxValue;
 	}
 
 	vec3f intVerts[12];
-	float f = 1.0/maxValue;
+	float f = 1.0f/maxValue;
 	if(edgeTable[cubeIndex] & 1) intVerts[0] = cubeEdges[0] + cubeEdgesOffset[0]*edgeWeight[0]*f;
 	if(edgeTable[cubeIndex] & 2) intVerts[1] = cubeEdges[1] + cubeEdgesOffset[1]*edgeWeight[1]*f;
 	if(edgeTable[cubeIndex] & 4) intVerts[2] = cubeEdges[2] + cubeEdgesOffset[2]*edgeWeight[2]*f;

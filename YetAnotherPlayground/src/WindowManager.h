@@ -37,7 +37,7 @@ public:
 protected:
 	virtual void windowWillRun();
 	virtual void windowWillClose();
-	virtual void updateScene( double dt );
+	virtual void updateScene( float dt );
 	virtual void drawGLScene();
 	virtual void drawSFMLScene(sf::RenderWindow& window);
 

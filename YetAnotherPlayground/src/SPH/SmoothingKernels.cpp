@@ -3,7 +3,7 @@
 #include <math.h>
 #include <glm\geometric.hpp>
 
-#define PI 3.1415926
+#define PI 3.1415926f
 
 iKernel* KernelBuilder::getKernel( std::string name, float smoothingLength )
 {
@@ -52,11 +52,11 @@ KernelPoly6::KernelPoly6( float h )
 inline void KernelPoly6::adjustSmoothingLength( float h )
 {
 	this->h = h;
-	baseFactor = 315.0 / (64 * PI * pow( h, 9 ));
+	baseFactor = 315.0f / (64 * PI * pow( h, 9 ));
 	// CHECK
 	// this gives a negative gradient graph, in Muller the graph is positive...
-	gradientFactor = 6.0*baseFactor;// -6*315 / (64 * PI * pow( h, 9 ) );
-	laplacianFactor = 24.0*baseFactor;//24*315 / (64 * PI * pow( h, 9 ) );
+	gradientFactor = 6.0f*baseFactor;// -6*315 / (64 * PI * pow( h, 9 ) );
+	laplacianFactor = 24.0f*baseFactor;//24*315 / (64 * PI * pow( h, 9 ) );
 	hSquared = h*h;
 }
 
@@ -102,7 +102,7 @@ inline float KernelPoly6::laplacian( float r )
 	float rSq = r*r;
 	if( rSq >= 0 && rSq < hSquared )
 	{
-		return laplacianFactor * (hSquared - rSq) * ( -0.75*(hSquared - rSq) + rSq )/(3*PI); // 3PI is experimental constant
+		return laplacianFactor * (hSquared - rSq) * ( -0.75f*(hSquared - rSq) + rSq )/(3*PI); // 3PI is experimental constant
 	}else
 	{
 		return 0.0;
@@ -121,7 +121,7 @@ KernelSpiky::KernelSpiky( float h )
 inline void KernelSpiky::adjustSmoothingLength( float h )
 {
 	this->h = h;
-	baseFactor = 15.0 / ( PI * pow( h, 6 ) );
+	baseFactor = 15.0f / ( PI * pow( h, 6 ) );
 	gradientFactor = 3 * baseFactor;// -45.0 / ( PI * pow( h, 6 ) );
 	laplacianFactor = -6 * baseFactor;// 90 / ( PI * pow( h, 6 ) );
 }
@@ -169,11 +169,11 @@ inline float KernelSpiky::laplacian( float r )
 	r = abs(r);
 	if( r < h )
 	{
-		if( r<0.0001) r = 0.0001;
+		if( r<0.0001f ) r = 0.0001f;
 		return laplacianFactor *(h*h/r-3*h+2*r);
 	}else
 	{
-		return 0.0;
+		return 0.0f;
 	}
 }
 

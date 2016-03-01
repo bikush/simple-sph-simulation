@@ -67,7 +67,7 @@ void MarchingSquares::drawGrid(vec3f colorFalse, vec3f colorTrue)
 		{
 			if(!dataField[i*dataWidth+j])
 			{
-				glVertex2f( i, j );
+				glVertex2f( (float)i, (float)j );
 			}
 		}
 	}

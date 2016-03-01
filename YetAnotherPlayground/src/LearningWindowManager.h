@@ -19,7 +19,7 @@ protected:
 	virtual void windowWillClose();
 	virtual void drawGLScene();
 	virtual void drawSFMLScene(sf::RenderWindow& window);
-	virtual void updateScene( double dt );
+	virtual void updateScene( float dt );
 
 	void eventReshape( int width, int height );
 	void eventKeyboardDown( sf::Keyboard::Key keyPressed );

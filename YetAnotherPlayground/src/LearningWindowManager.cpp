@@ -55,7 +55,7 @@ void LearningWindowManager::windowWillRun()
 void LearningWindowManager::eventReshape( int width, int height)
 {
 	setProjection( width, height );
-	camera.windowDidResize(width, height);
+	camera.windowDidResize( width, height );
 	for( unsigned int i = 0; i<scenes.size(); i++)
 	{
 		scenes[i]->eventReshape(width, height);
@@ -173,7 +173,7 @@ void LearningWindowManager::drawSFMLScene(sf::RenderWindow & window)
 	WindowManager::drawSFMLScene(window);
 }
 
-void LearningWindowManager::updateScene( double dt )
+void LearningWindowManager::updateScene( float dt )
 {	
 	camera.update(dt);
 	camera.updateCamera();

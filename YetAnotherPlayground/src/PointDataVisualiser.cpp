@@ -131,7 +131,7 @@ void PointDataVisualiser::drawShaded(const Camera& camera)
 // TODO: remove or fix pipeline draw
 void PointDataVisualiser::drawPipeline(const Camera& camera)
 {
-	float quadratic[] =  { 0.4, 0.01f, 0.0f };
+	float quadratic[] =  { 0.4f, 0.01f, 0.0f };
 	glPointParameterfv( GL_POINT_DISTANCE_ATTENUATION, quadratic );
 
 	float maxSize = 0.0f;

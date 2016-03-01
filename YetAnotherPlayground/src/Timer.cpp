@@ -60,7 +60,7 @@ int Timer::createTimer()
 // Stops timerID timer and returns time passed.
 double Timer::stopTimerD( int timerID )
 {
-	return Timer::stopTimerT( timerID )/CLOCKS_PER_SEC;
+	return double(Timer::stopTimerT( timerID )/CLOCKS_PER_SEC);
 }
 
 time_t Timer::stopTimerT( int timerID )

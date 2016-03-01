@@ -126,7 +126,7 @@ void MarchingCubes::setAllDataChanged( bool value )
 void MarchingCubes::set( int x, int y, int z, float value )
 {
 	if( x<1 || y<1  || z<1 || x>=dataWidth-1 || y>=dataHeight-1 || z>=dataDepth-1 ) return;	
-	dataField[ x*dataHeight*dataDepth + y*dataDepth + z ] = contain(value, 0.0f, 1.0f) * dataMax;
+	dataField[ x*dataHeight*dataDepth + y*dataDepth + z ] = char(contain(value, 0.0f, 1.0f) * (float)dataMax);
 	setDataChanged( x,y,z );
 }
 /*
@@ -173,7 +173,7 @@ void MarchingCubes::drawGrid( vec3f colorFalse, vec3f colorTrue )
 			{				
 				if( dataField[ i*dataHeight*dataDepth + j*dataDepth	+ k ] )
 				{
-					glVertex3f( i, j, k );
+					glVertex3f((float)i, (float)j, (float)k );
 				}
 			}
 		}
@@ -192,7 +192,7 @@ void MarchingCubes::drawGrid( vec3f colorFalse, vec3f colorTrue )
 				{
 					if( getDataChanged( i, j, k ) )
 					{						
-						glVertex3f( i, j, k );
+						glVertex3f((float)i, (float)j, (float)k );
 					}
 				}
 			}
@@ -399,7 +399,7 @@ void MarchingCubes::drawTriangleBuffer()
 
 }
 
-void MarchingCubes::putSphere( double x, double y, double z, double r )
+void MarchingCubes::putSphere( float x, float y, float z, float r )
 {
 	float value;
 	for(int i=x-r; i<x+r; i++)
@@ -411,7 +411,8 @@ void MarchingCubes::putSphere( double x, double y, double z, double r )
 				value = r-sqrtf(powf( x-i, 2 ) + powf( y-j, 2 ) + powf( z-k, 2 ));
 			/*	if( value > 0 )
 					set( i, j, k, 1.0 );
-				else/**/ if( value > -1 )
+				else/**/ 
+				if( value > -1 )
 					set( i, j, k, 1+value );
 				
 			}
@@ -465,11 +466,11 @@ void MarchingCubes::initPointGrid()
 {
 	pointGrid = new vec3f[ dataSize ];
 	int index = 0;
-	for(float x = -1; x<1.0; x += 2.0/dataWidth)
+	for(float x = -1; x<1.0f; x += 2.0f/dataWidth)
 	{
-		for(float y = -1; y<1.0; y += 2.0/dataWidth)
+		for(float y = -1; y<1.0f; y += 2.0f/dataWidth)
 		{
-			for(float z = -1; z<1.0; z += 2.0/dataWidth)
+			for(float z = -1; z<1.0f; z += 2.0f/dataWidth)
 			{
 				pointGrid[ index ] = vec3f( x, y, z );
 				index++;
@@ -521,9 +522,9 @@ void MarchingCubes::initUniforms( GLuint program )
 	glUniform3f(glGetUniformLocation(program, "dataStep"), 1.0f/dataWidth, 1.0f/dataHeight, 1.0f/dataDepth); 
 	
 	//Decal for each vertex in a marching cube
-	float dx = 2.0/dataWidth;
-	float dy = 2.0/dataHeight;
-	float dz = 2.0/dataDepth;
+	float dx = 2.0f/dataWidth;
+	float dy = 2.0f/dataHeight;
+	float dz = 2.0f/dataDepth;
 	glUniform3f(glGetUniformLocation(program, "vertDecals[0]"), 0.0f, 0.0f, 0.0f); 
 	glUniform3f(glGetUniformLocation(program, "vertDecals[1]"), dx, 0.0f, 0.0f); 
 	glUniform3f(glGetUniformLocation(program, "vertDecals[2]"), dx, dy, 0.0f); 

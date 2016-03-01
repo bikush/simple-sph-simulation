@@ -25,7 +25,7 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 	dataHeight = dataHeight<DATA_MIN ? DATA_MIN : dataHeight;
 	dataDepth = dataDepth<DATA_MIN ? DATA_MIN : dataDepth;
 	
-	dataMax = paramFile.getData("base","maxValue").getInt();
+	dataMax = paramFile.getData("base","maxValue").getFloat();
 	treshold = paramFile.getData("base","treshold").getFloat( 0.5f );
 
 	string vertex = paramFile.getData("shaders", "v").getStringData();

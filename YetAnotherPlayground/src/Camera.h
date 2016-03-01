@@ -76,7 +76,7 @@ private:
 	glm::vec2 viewportSize;
 
 public:
-	void windowDidResize(float width, float height);
+	void windowDidResize(int width, int height);
 	void setupViewport(float x, float y, float widthm, float height);
 	void loadViewport();
 

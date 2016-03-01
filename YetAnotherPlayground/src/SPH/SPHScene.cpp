@@ -63,12 +63,12 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 	switch (keyPressed)
 	{
 		case sf::Keyboard::Add: 
-					treshold = contain<float>( treshold+0.01, 0, 2 );
+					treshold = contain<float>( treshold+0.01f, 0, 2 );
 					marchingCubes->setTreshold( treshold );
 					break;
 
 		case sf::Keyboard::Subtract: 	
-					treshold = contain<float>( treshold-0.01, 0, 2 );
+					treshold = contain<float>( treshold-0.01f, 0, 2 );
 					marchingCubes->setTreshold( treshold );
 					break;
 

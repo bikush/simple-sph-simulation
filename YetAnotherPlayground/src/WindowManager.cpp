@@ -138,7 +138,7 @@ void WindowManager::run()
 			break; 
 		}
 			
-		double dt = (windowClock.getElapsedTime().asMicroseconds() - lastDrawTime.asMicroseconds()) / 1000000.0;		
+		float dt = (windowClock.getElapsedTime().asMicroseconds() - lastDrawTime.asMicroseconds()) / 1000000.0f;		
 		lastDrawTime = windowClock.getElapsedTime();
 		updateScene( dt );
 
@@ -227,7 +227,7 @@ void WindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 
 }
 
-void WindowManager::updateScene( double dt )
+void WindowManager::updateScene( float dt )
 {
 
 }

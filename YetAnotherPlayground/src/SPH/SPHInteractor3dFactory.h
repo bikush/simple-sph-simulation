@@ -11,6 +11,7 @@
 class SPHInteractor3dFactory
 {
 public:
+	// TODO: this is very wrong
 	static SPHInteractor3d* getInteractor(std::string name, MappedData* map )
 	{
 		SPHInteractor3d* out=0;

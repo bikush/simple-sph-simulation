@@ -4,7 +4,7 @@
 
 using namespace std;
 
-
+// TODO: REMOVE THIS CRAPPY CLASS
 void Matrix::initialize( int rows, int cols, float data[]){
 	rowCount = rows;
 	columnCount = cols;
@@ -90,6 +90,7 @@ void Matrix::operator+=(Matrix other){
 		return;
 	}
 	if(rowCount != other.rowCount){
+		// Damn, Croatian
 		cerr << "Matrix: zbroji: U matricama se ne podudara broj redova." << endl;
 		return;
 	}

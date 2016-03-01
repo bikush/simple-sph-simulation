@@ -26,7 +26,7 @@ MarchingSmoothSquares::MarchingSmoothSquares( const char* file )
 	: MarchingSquaresBase( MappedData( file ) )
 {
 	MappedData md( file );
-	maxValue = md.getData( "smooth", "maxValue" ).getFloat();
+	maxValue = (char)md.getData( "smooth", "maxValue" ).getInt();
 	dataField = new char[ dataWidth * dataHeight ];
 	clear();
 }
@@ -39,7 +39,7 @@ MarchingSmoothSquares::~MarchingSmoothSquares()
 void MarchingSmoothSquares::set( int x, int y, float value )
 {
 	if( x<0 || y<0 || x>=dataWidth || y>=dataHeight) return;
-	dataField[x*dataWidth+y] = contain<char>( dataField[x*dataWidth+y]+value*maxValue, 0, maxValue );
+	dataField[x*dataWidth+y] = (char)contain<int>( (int)dataField[x*dataWidth+y]+int(value*maxValue), 0, maxValue );
 	//dataField[x*dataWidth+y] = value>1 ? maxValue : value*maxValue;
 	dataChanged = true;
 }
@@ -83,7 +83,7 @@ void MarchingSmoothSquares::drawGrid(vec3f colorFalse, vec3f colorTrue)
 		{
 			if(!dataField[i*dataWidth+j])
 			{				
-				glVertex2f( i, j );
+				glVertex2f((float)i, (float)j );
 			}
 		}
 	}

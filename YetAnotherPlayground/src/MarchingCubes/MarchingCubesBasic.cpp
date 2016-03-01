@@ -58,8 +58,8 @@ MarchingCubesBasic::MarchingCubesBasic( const char* filePath )
 	dSpan = span / vec3f( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ];
 
-	dataMax = paramFile.getData("base","maxValue").getInt();
-	treshold = paramFile.getData("base","treshold").getInt();
+	dataMax = paramFile.getData("base","maxValue").getFloat();
+	treshold = paramFile.getData("base","treshold").getFloat();
 
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
@@ -175,7 +175,6 @@ void MarchingCubesBasic::generateTriangles()
 	int index0, index1, index2, index3;	// helping indices
 
 	float cube[8];	
-	int cubeIndex;
 	for(int i=0; i<dataWidth-1; i++)
 	{
 		iHD = i*HD;

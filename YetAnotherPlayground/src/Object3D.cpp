@@ -20,7 +20,7 @@ Object3D::Object3D() : transform()
 
 void Object3D::initializeVBO(const float * triangleAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode)
 {
-	if (this->elementCount & vbo_elements & vbo_triangle != 0)
+	if (this->elementCount & vbo_elements & (vbo_triangle != 0))
 	{
 		return;
 	}
@@ -83,7 +83,7 @@ Object3D::~Object3D()
 
 void Object3D::draw(const glm::mat4 & viewProjection)
 {
-	if (elementCount & vbo_elements & vbo_triangle == 0)
+	if (elementCount & vbo_elements & (vbo_triangle == 0))
 	{
 		return;
 	}

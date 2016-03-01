@@ -51,7 +51,7 @@ Frustum::Frustum( float nCP, float fCP, float fOV, float winW, float winH, vec3f
 {
 	NCP = nCP;
 	FCP = fCP;
-	setWidthHeight( winW, winH );
+	setWidthHeight( (int)winW, winH );
 	setFOV( fOV );
 	setEyes( ociste, glediste );
 }
@@ -130,7 +130,7 @@ void Frustum::setFOV( float fOV )
 	FOVy = angleFromRadians( atan( tan( angleToRadians(FOVx/2) ) / aspectRatio ) ); //WARNING: maybe *2, maybe not
 }
 
-void Frustum::setWidthHeight( int winW, int winH )
+void Frustum::setWidthHeight( float winW, float winH )
 {
 	width = winW;
 	height = winH;

@@ -155,12 +155,12 @@ void Camera::updateCamera()
 }
 
 // VIEWPORT
-void Camera::windowDidResize(float width, float height)
+void Camera::windowDidResize(int width, int height)
 {
 	// TODO: viewport could stretch to fit, or it could be static
-	windowSize.x = width;
-	windowSize.y = height;
-	setupViewport(0,0,width,height);
+	windowSize.x = (float)width;
+	windowSize.y = (float)height;
+	setupViewport(0.f,0.f, windowSize.x, windowSize.y);
 	refreshProjection();
 }
 
@@ -174,7 +174,7 @@ void Camera::setupViewport(float x, float y, float width, float height)
 
 void Camera::loadViewport()
 {
-	glViewport(viewportPos.x, viewportPos.y, viewportSize.x, viewportSize.y);
+	glViewport((int)viewportPos.x, (int)viewportPos.y, (int)viewportSize.x, (int)viewportSize.y);
 }
 
 const Frustum & Camera::getFrustum() const

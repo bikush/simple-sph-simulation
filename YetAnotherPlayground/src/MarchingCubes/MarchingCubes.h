@@ -77,7 +77,7 @@ public:
 	void drawColoredCubes( vec3f color );
 	void drawLightedCubes( GLfloat material[4] );	
 	
-	void putSphere( double x, double y, double z, double r );
+	void putSphere(float x, float y, float z, float r );
 
 	vec3f getDataDimensions();
 	char* getData();

@@ -63,14 +63,15 @@ SPHSystem3d::SPHSystem3d( const char* file )
 
 	pairs = vector< SPHPair >();
 
+	// TODO: this is a wrong
 	surfaces = vector<SPHInteractor3d*>();
 	dWidth = map.getData( "grid", "width" ).getFloat();
 	dHeight = map.getData( "grid", "height" ).getFloat();
 	dDepth = map.getData( "grid", "depth" ).getFloat();
 	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getStringVector();
-	for(int i=0; i<surfaceNames.size(); i++ )
+	for ( string sName : surfaceNames )
 	{
-		surfaces.push_back( SPHInteractor3dFactory::getInteractor( surfaceNames[i], &map ) );
+		surfaces.push_back( SPHInteractor3dFactory::getInteractor( sName, &map ) );
 	}
 
 	restDensity = map.getData( "fluid", "density" ).getFloat();
@@ -230,7 +231,7 @@ void SPHSystem3d::addSurface( SPHInteractor3d* surface )
 
 void SPHSystem3d::toggleSurface( int index )
 {
-	if( index > -1 && index < surfaces.size() )
+	if( index > -1 && index < (int)surfaces.size() )
 	{
 		surfaces[index]->toggle();
 	}
@@ -319,7 +320,7 @@ void SPHSystem3d::applySurfaceDensity( SPHParticle3d& particle )
 {
 	vec3f rvec;
 	float rSq;
-	for( int surf = 0; surf < surfaces.size(); surf++)
+	for( size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
 		rvec = surfaces[surf]->directionTo( particle );
 		rSq = glm::length2( rvec );
@@ -335,7 +336,7 @@ void SPHSystem3d::applySurfaceForces( SPHParticle3d& particle )
 	vec3f rvec;
 	float rSq;
 	vec3f oldForce;
-	for( int surf = 0; surf < surfaces.size(); surf++)
+	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
 		rvec = surfaces[surf]->directionTo( particle );
 		rSq = glm::length2( rvec );
@@ -435,7 +436,7 @@ void SPHSystem3d::gridDensityUpdate( )
 				if( mask & 0x1 ) // last bit is set
 				{
 					neighbourCell = &grid[ gridOffsets[gi]+cellIndex ];
-					for( int k=0; k<neighbourCell->size(); k++ )
+					for( size_t k=0, kLen = neighbourCell->size(); k<kLen; k++ )
 					{
 						applyDensity( particle, particles[ (*neighbourCell)[k] ] );
 					}
@@ -492,7 +493,7 @@ void SPHSystem3d::animate( float dt )
 		densityUpdate();
 
 	// Visit pairs
-	for(int i=0; i<pairs.size(); i++)
+	for(size_t i=0, iLen = pairs.size(); i<iLen; i++)
 	{
 		applyForces( pairs[i].first, pairs[i].second, pairs[i].rvec );
 	}/**/
@@ -591,7 +592,7 @@ void SPHSystem3d::animate( float dt )
 			wasOK = false;
 		}
 
-		for( int surf = 0; surf < surfaces.size(); surf++)
+		for( size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 		{
 			rvec = surfaces[surf]->directionTo( particle );
 			surfaces[surf]->enforceInteractor( particle, rvec );			
@@ -617,7 +618,7 @@ void SPHSystem3d::draw( MarchingCubes* ms )
 		r = particles[i].density*10*unitRadius;
 		//r = particles[i].volume;
 		if( r>smoothingLength ) r = smoothingLength;
-		ms->putSphere( particles[i].position.x/0.4, particles[i].position.y/0.4, particles[i].position.z/0.4, r/0.4 );
+		ms->putSphere( particles[i].position.x/0.4f, particles[i].position.y/0.4f, particles[i].position.z/0.4f, r/0.4f );
 	}
 }
 
@@ -714,7 +715,7 @@ float SPHSystem3d::getK( )
 
 void SPHSystem3d::setK( float k )
 {
-	fluidConstantK =  contain<float>( k, 0.05, 100 );
+	fluidConstantK =  contain<float>( k, 0.05f, 100 );
 	cout << "New constant K: " << fluidConstantK << endl;
 }
 
@@ -725,7 +726,7 @@ float SPHSystem3d::getViscosity( )
 
 void SPHSystem3d::setViscosity( float viscosity )
 {
-	viscosityConstant = contain<float>( viscosity, 0.01, 10 );
+	viscosityConstant = contain<float>( viscosity, 0.01f, 10 );
 	cout << "New viscosity: " << viscosityConstant << endl;
 }
 
@@ -736,7 +737,7 @@ float SPHSystem3d::getSmoothingLength( )
 
 void SPHSystem3d::setSmoothingLength( float smLen )
 {
-	adjustSmoothingLength( contain<float>(smLen, 0.1, 10) );
+	adjustSmoothingLength( contain<float>(smLen, 0.1f, 10) );
 	cout << "New smoothing length: " << smoothingLength << endl;		
 }
 
@@ -747,7 +748,7 @@ float SPHSystem3d::getColorFieldTreshold( )
 
 void SPHSystem3d::setColorFieldTreshold( float cfTreshold )
 {
-	colorFieldTreshold = contain<float>(cfTreshold, 0.005, 5);
+	colorFieldTreshold = contain<float>(cfTreshold, 0.005f, 5);
 	cout << "New CFT: " << colorFieldTreshold << endl;
 }
 
@@ -758,7 +759,7 @@ float SPHSystem3d::getSurfaceTension( )
 
 void SPHSystem3d::setSurfaceTension( float sTension )
 {
-	surfaceTension = contain<float>(sTension, 0.005, 5);
+	surfaceTension = contain<float>(sTension, 0.005f, 5);
 	cout << "New surface tension: " << surfaceTension << endl;
 }
 
@@ -773,14 +774,14 @@ void SPHSystem3d::paramOutput()
 void SPHSystem3d::adjustSmoothingLength( float h )
 {
 	this->smoothingLength = h;	
-	kp6baseFactor = 315.0 / (64 * PI * pow( h, 9 ));
+	kp6baseFactor = 315.0f / (64 * PI * pow( h, 9 ));
 	// CHECK
 	// this gives a negative gradient graph, in Muller the graph is positive...
-	kp6gradientFactor = 6.0*kp6baseFactor;// -6*315 / (64 * PI * pow( h, 9 ) );
-	kp6laplacianFactor = 24.0*kp6baseFactor;//24*315 / (64 * PI * pow( h, 9 ) );
+	kp6gradientFactor = 6.0f*kp6baseFactor;// -6*315 / (64 * PI * pow( h, 9 ) );
+	kp6laplacianFactor = 24.0f*kp6baseFactor;//24*315 / (64 * PI * pow( h, 9 ) );
 	// changed sign of gradient
 
-	ksbaseFactor = 15.0 / ( PI * pow( h, 6 ) );
+	ksbaseFactor = 15.0f / ( PI * pow( h, 6 ) );
 	ksgradientFactor = -3 * ksbaseFactor;// -45.0 / ( PI * pow( h, 6 ) );
 	kslaplacianFactor = 6 * ksbaseFactor;
 	// not-changed signs of gradient and laplacian
