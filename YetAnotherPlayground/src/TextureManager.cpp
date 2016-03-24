@@ -6,8 +6,9 @@
 using namespace std;
 
 TextureManager TextureManager::instance;
+bool TextureManager::isInitialized = false;
 
-TextureManager::TextureManager() : isInitialized(false)
+TextureManager::TextureManager()
 {
 }
 
