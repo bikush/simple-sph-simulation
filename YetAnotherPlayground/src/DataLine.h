@@ -62,6 +62,12 @@ public:
 		}		
 	}
 
+	static const DataLine& getDefault()
+	{
+		static DataLine empty;
+		return empty;
+	}
+
 };
 
 #endif

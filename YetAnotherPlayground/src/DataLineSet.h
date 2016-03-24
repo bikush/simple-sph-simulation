@@ -9,13 +9,14 @@
 
 class DataLineSet
 {
+private:
 	std::map< std::string, DataLine > lineMap;
 
 public:
 	DataLineSet();
 
 	bool readLine(std::istream& is );
-	DataLine getData(std::string name );
+	const DataLine& getData(std::string name ) const;
 };
 
 #endif

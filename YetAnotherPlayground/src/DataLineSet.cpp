@@ -5,14 +5,13 @@ using namespace std;
 
 DataLineSet::DataLineSet()
 {
-	lineMap = map< string, DataLine >();
 }
 
 bool DataLineSet::readLine( istream& is )
 {
 	string lineName;
 	is >> lineName;
-	DataLine data = DataLine( is );
+	DataLine data( is );
 	if( lineMap.find( lineName ) == lineMap.end() )
 	{
 		lineMap[ lineName ] = data;
@@ -23,13 +22,8 @@ bool DataLineSet::readLine( istream& is )
 	}
 }
 
-DataLine DataLineSet::getData( string name )
+const DataLine& DataLineSet::getData( string name ) const
 {
-	DataLine data;
-	map< string, DataLine >::iterator foundData = lineMap.find( name );
-	if( foundData != lineMap.end() )
-	{
-		data = foundData->second;
-	}
-	return data;
+	auto foundData = lineMap.find( name );
+	return foundData != lineMap.end() ? foundData->second : DataLine::getDefault();
 }
