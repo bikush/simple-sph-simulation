@@ -57,9 +57,6 @@
     <ClCompile Include="src\Playground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -150,16 +147,10 @@
     <ClCompile Include="src\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DistributedShapesScene.cpp">
-      <Filter>Source Files\Learning</Filter>
-    </ClCompile>
     <ClCompile Include="src\LyingShapesScene.cpp">
       <Filter>Source Files\Learning</Filter>
     </ClCompile>
     <ClCompile Include="src\LearningWindowManager.cpp">
-      <Filter>Source Files\Learning</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PongScene.cpp">
       <Filter>Source Files\Learning</Filter>
     </ClCompile>
     <ClCompile Include="src\SPH\SPHScene.cpp">
@@ -192,9 +183,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility.h">
@@ -302,13 +290,7 @@
     <ClInclude Include="src\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\DistributedShapesScene.h">
-      <Filter>Header Files\Learning</Filter>
-    </ClInclude>
     <ClInclude Include="src\LearningWindowManager.h">
-      <Filter>Header Files\Learning</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PongScene.h">
       <Filter>Header Files\Learning</Filter>
     </ClInclude>
     <ClInclude Include="src\LyingShapesScene.h">

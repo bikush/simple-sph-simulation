@@ -159,7 +159,6 @@
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DataLine.cpp" />
     <ClCompile Include="src\DataLineSet.cpp" />
-    <ClCompile Include="src\DistributedShapesScene.cpp" />
     <ClCompile Include="src\LearningWindowManager.cpp" />
     <ClCompile Include="src\LineGrid.cpp" />
     <ClCompile Include="src\LyingShapesScene.cpp" />
@@ -175,11 +174,9 @@
     <ClCompile Include="src\Object3D.cpp" />
     <ClCompile Include="src\Playground.cpp" />
     <ClCompile Include="src\PointDataVisualiser.cpp" />
-    <ClCompile Include="src\PongScene.cpp" />
     <ClCompile Include="src\Shaders\ShaderBase.cpp" />
     <ClCompile Include="src\Shaders\ShaderProgram.cpp" />
     <ClCompile Include="src\Shaders\ShaderUtility.cpp" />
-    <ClCompile Include="src\Shape.cpp" />
     <ClCompile Include="src\SPH\SmoothingKernels.cpp" />
     <ClCompile Include="src\SPH\SPHAABBInteractor3d.cpp" />
     <ClCompile Include="src\SPH\SPHLineInteractor2d.cpp" />
@@ -206,7 +203,6 @@
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\DataLine.h" />
     <ClInclude Include="src\DataLineSet.h" />
-    <ClInclude Include="src\DistributedShapesScene.h" />
     <ClInclude Include="src\IntervalAverageTimer.h" />
     <ClInclude Include="src\LearningWindowManager.h" />
     <ClInclude Include="src\LineGrid.h" />
@@ -222,12 +218,10 @@
     <ClInclude Include="src\MarchingCubes\MarchingSquaresFactory.h" />
     <ClInclude Include="src\Object3D.h" />
     <ClInclude Include="src\PointDataVisualiser.h" />
-    <ClInclude Include="src\PongScene.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Shaders\ShaderBase.h" />
     <ClInclude Include="src\Shaders\ShaderProgram.h" />
     <ClInclude Include="src\Shaders\ShaderUtility.h" />
-    <ClInclude Include="src\Shape.h" />
     <ClInclude Include="src\SPH\SmoothingKernels.h" />
     <ClInclude Include="src\SPH\SPHAABBInteractor3d.h" />
     <ClInclude Include="src\SPH\SPHInteractor2d.h" />

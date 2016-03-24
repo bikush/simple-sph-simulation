@@ -2,8 +2,6 @@
 #include "LearningWindowManager.h"
 #include "ShaderProgram.h"
 #include "Scene.h"
-#include "DistributedShapesScene.h"
-#include "PongScene.h"
 #include "LyingShapesScene.h"
 #include "SPHScene.h"
 
@@ -78,15 +76,7 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 	{
 		scenes[i]->eventKeyboardUp( keyPressed );
 	}
-
-	if( keyPressed == sf::Keyboard::Num1 )
-	{
-		addScene( new DistributedShapesScene() );
-	}
-	if ( keyPressed == sf::Keyboard::Num2 )
-	{
-		addScene( new PongScene() );
-	}
+	
 	if (keyPressed == sf::Keyboard::Num3)
 	{
 		addScene(new LyingShapesScene());
