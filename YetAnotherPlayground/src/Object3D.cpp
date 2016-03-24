@@ -9,23 +9,23 @@
 Object3D::Object3D() : transform()
 {
 	program = ShaderProgram::CreateBase3DShader();
-	attribute_v_color = program->getAttribute("v_color");
-	attribute_position = program->getAttribute("position");
+	attrVertexColor = program->getAttribute("v_color");
+	attrVertexPosition = program->getAttribute("position");
 
-	vbo_triangle = GL_ZERO;
-	vbo_elements = GL_ZERO;
+	vboGeometry = GL_ZERO;
+	vboElements = GL_ZERO;
 	elementCount = 0;
-	draw_mode = GL_TRIANGLES;
+	drawMode = GL_TRIANGLES;
 }
 
-void Object3D::initializeVBO(const float * triangleAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode)
+void Object3D::initializeVBO(const float * geometryAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode)
 {
-	if (this->elementCount & vbo_elements & (vbo_triangle != 0))
+	if (this->elementCount & vboElements & (vboGeometry != 0))
 	{
 		return;
 	}
 
-	draw_mode = mode;
+	drawMode = mode;
 
 	// Vertex attribute setup
 	glGenVertexArrays(1, &vao);
@@ -33,13 +33,13 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 	//glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle); // already bound
 
 	// Vertex data buffer
-	glGenBuffers(1, &vbo_triangle);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
-	glBufferData(GL_ARRAY_BUFFER, attributeCount, triangleAttributes, GL_STATIC_DRAW);
+	glGenBuffers(1, &vboGeometry);
+	glBindBuffer(GL_ARRAY_BUFFER, vboGeometry);
+	glBufferData(GL_ARRAY_BUFFER, attributeCount, geometryAttributes, GL_STATIC_DRAW);
 
-	glEnableVertexArrayAttrib(vao, attribute_position);
+	glEnableVertexArrayAttrib(vao, attrVertexPosition);
 	glVertexAttribPointer(
-		attribute_position,  // attribute
+		attrVertexPosition,  // attribute
 		3,                   // number of elements per vertex, here (x,y,z)
 		GL_FLOAT,            // the type of each element
 		GL_FALSE,            // take our values as-is
@@ -47,9 +47,9 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 		0                    // offset of the first element
 		);
 
-	glEnableVertexArrayAttrib(vao, attribute_v_color);
+	glEnableVertexArrayAttrib(vao, attrVertexColor);
 	glVertexAttribPointer(
-		attribute_v_color,      // attribute
+		attrVertexColor,      // attribute
 		3,                      // number of elements per vertex, here (r,g,b)
 		GL_FLOAT,               // the type of each element
 		GL_FALSE,               // take our values as-is
@@ -58,9 +58,9 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 		);
 
 	// Element index buffer
-	glGenBuffers(1, &vbo_elements);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
-	glVertexArrayElementBuffer(vao, vbo_elements);
+	glGenBuffers(1, &vboElements);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboElements);
+	glVertexArrayElementBuffer(vao, vboElements);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementCount, elements, GL_STATIC_DRAW);
 
 	// Actual number of elements
@@ -74,16 +74,15 @@ void Object3D::initializeVBO(const float * triangleAttributes, int attributeCoun
 
 Object3D::~Object3D()
 {
-	// TODO: could some objects have a single verticeAttribute and element buffer?
-	glDeleteBuffers(1, &vbo_triangle);
-	glDeleteBuffers(1, &vbo_elements);
+	glDeleteBuffers(1, &vboGeometry);
+	glDeleteBuffers(1, &vboElements);
 	glDeleteVertexArrays(1, &vao);
 }
 
 
-void Object3D::draw(const glm::mat4 & viewProjection)
+void Object3D::draw(const glm::mat4 & viewProjection) 
 {
-	if (elementCount & vbo_elements & (vbo_triangle == 0))
+	if (elementCount & vboElements & (vboGeometry == 0))
 	{
 		return;
 	}
@@ -94,8 +93,6 @@ void Object3D::draw(const glm::mat4 & viewProjection)
 	program->setUniformM4("mvp", glm::value_ptr(MVP));
 	
 	glBindVertexArray(vao);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_elements);
-	glDrawElements(draw_mode, elementCount, GL_UNSIGNED_INT, 0);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDrawElements(drawMode, elementCount, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }

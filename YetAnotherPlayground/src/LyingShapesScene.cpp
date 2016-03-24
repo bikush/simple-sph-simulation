@@ -20,11 +20,11 @@ LyingShapesScene::LyingShapesScene()
 		{
 			//for (float y = -halfSize; y < halfSize + deltaX * 0.5f; y += deltaX)
 			//{
-				/*float y = 0.0f;
+				float y = 0.0f;
 				cubes.push_back(new Cube());
 				cubes[i]->transform.setPosition({ x, y, z });
 				cubes[i]->transform.setScale(scale);
-				i++;*/
+				i++;
 			//}
 		}
 	}

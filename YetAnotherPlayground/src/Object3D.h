@@ -21,15 +21,15 @@ public:
 	Transform transform;
 
 protected:
-	void initializeVBO(const float* triangleAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode);
+	void initializeVBO(const float* geometryAttributes, int attributeCount, const GLuint * elements, int elementCount, GLenum mode);
 
 private:
 	ShaderProgram* program;
-	GLuint vbo_triangle;
-	GLuint vbo_elements;
+	GLuint vboGeometry;
+	GLuint vboElements;
 	GLuint vao;
-	GLint attribute_position;
-	GLint attribute_v_color;
-	GLenum draw_mode;
+	GLint attrVertexPosition;
+	GLint attrVertexColor;
+	GLenum drawMode;
 	int elementCount;
 };
