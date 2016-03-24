@@ -66,7 +66,6 @@ protected:
 
 public:
 	const glm::mat4& getViewProjection() const;
-	void updateCamera();
 
 // VIEWPORT
 private:

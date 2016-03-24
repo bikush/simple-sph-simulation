@@ -176,7 +176,6 @@ void LearningWindowManager::drawSFMLScene(sf::RenderWindow & window)
 void LearningWindowManager::updateScene( float dt )
 {	
 	camera.update(dt);
-	camera.updateCamera();
 
 	for (unsigned int i = 0; i < scenes.size(); i++)
 	{

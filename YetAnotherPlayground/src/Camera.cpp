@@ -135,9 +135,6 @@ const glm::mat4& Camera::getViewProjection() const
 	return viewProjection;
 }
 
-void Camera::updateCamera()
-{
-}
 
 // VIEWPORT
 void Camera::windowDidResize(int width, int height)
