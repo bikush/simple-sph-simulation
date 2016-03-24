@@ -188,7 +188,6 @@
     <ClCompile Include="src\SPH\SPHSystem3d.cpp" />
     <ClCompile Include="src\SPH\SPHSystem3dClean.cpp" />
     <ClCompile Include="src\SPH\SPHScene.cpp" />
-    <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Transform.cpp" />
@@ -237,7 +236,6 @@
     <ClInclude Include="src\SPH\SPHSystem3d.h" />
     <ClInclude Include="src\SPH\SPHSystem3dClean.h" />
     <ClInclude Include="src\SPH\SPHScene.h" />
-    <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Transform.h" />
