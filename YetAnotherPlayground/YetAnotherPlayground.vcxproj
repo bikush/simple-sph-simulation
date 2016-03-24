@@ -172,7 +172,6 @@
     <ClCompile Include="src\MarchingCubes\MarchingSquares.cpp" />
     <ClCompile Include="src\MarchingCubes\MarchingSquaresBase.cpp" />
     <ClCompile Include="src\MarchingCubes\MarchingSquaresFactory.cpp" />
-    <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\Object3D.cpp" />
     <ClCompile Include="src\Playground.cpp" />
     <ClCompile Include="src\PointDataVisualiser.cpp" />
@@ -221,7 +220,6 @@
     <ClInclude Include="src\MarchingCubes\MarchingSquares.h" />
     <ClInclude Include="src\MarchingCubes\MarchingSquaresBase.h" />
     <ClInclude Include="src\MarchingCubes\MarchingSquaresFactory.h" />
-    <ClInclude Include="src\Matrix.h" />
     <ClInclude Include="src\Object3D.h" />
     <ClInclude Include="src\PointDataVisualiser.h" />
     <ClInclude Include="src\PongScene.h" />
