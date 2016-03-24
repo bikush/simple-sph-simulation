@@ -1,7 +1,8 @@
 #include "LineGrid.h"
 #include <iostream>
 
-void fillData(float * vertice, glm::vec3 position, glm::vec3 color) {
+void fillData(float * vertice, glm::vec3 position, glm::vec3 color) 
+{
 	vertice[0] = position.x;
 	vertice[1] = position.y;
 	vertice[2] = position.z;
@@ -10,7 +11,8 @@ void fillData(float * vertice, glm::vec3 position, glm::vec3 color) {
 	vertice[5] = color.z;
 }
 
-void fillElement(GLuint* elements, int index) {
+void fillElement(GLuint* elements, int index) 
+{
 	elements[index] = index;
 }
 
@@ -48,7 +50,8 @@ LineGrid::LineGrid(int xCount, float deltaX, float offsetX, int yCount, float de
 	delete[] elements;
 }
 
-LineGrid::LineGrid( float length, float lineWidth ) : Object3D(), lineWidth(lineWidth)
+LineGrid::LineGrid( float length, float lineWidth ) : 
+	Object3D(), lineWidth(lineWidth)
 {
 	int elementCount = 18;
 	int vertexCount = 12 * 6;
