@@ -184,7 +184,7 @@ void LearningWindowManager::updateScene( float dt )
 	}
 
 	averageFrameTime.addValue(1, dt);
-	double perFrame = averageFrameTime.currentAverage();
+	double perFrame = averageFrameTime.getAverage();
 	std::stringstream titleStream;
 	titleStream << "Time: " << perFrame << " FPS: " << 1.0/perFrame;
 	std::string title = titleStream.str();
