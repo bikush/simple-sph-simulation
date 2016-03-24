@@ -14,7 +14,8 @@ void MappedData::loadFromStream( istream& is )
 		{
 			is >> groupName;
 			groupName.erase( groupName.size()-1 );
-		}else
+		}
+		else
 		{
 			is.putback( next );
 		}
@@ -24,13 +25,10 @@ void MappedData::loadFromStream( istream& is )
 
 MappedData::MappedData()
 {
-	dataMap = map< string, DataLineSet >();
 }
 
 MappedData::MappedData( const char* filePath )
 {
-	dataMap = map< string, DataLineSet >();
-
 	ifstream mapFile(filePath);
 	if( mapFile.is_open() )
 	{
@@ -40,16 +38,15 @@ MappedData::MappedData( const char* filePath )
 
 MappedData::MappedData( istream& is )
 {
-	dataMap = map< string, DataLineSet >();
 	loadFromStream( is );
 }
 	
-DataLine MappedData::getData( string groupName, string dataName )
+const DataLine& MappedData::getData( string groupName, string dataName ) const
 {		
-	map<string, DataLineSet>::iterator group = dataMap.find( groupName );
+	auto group = dataMap.find( groupName );
 	if( group != dataMap.end() )
 	{
 		return group->second.getData( dataName );
 	}
-	return DataLine();
+	return DataLine::getDefault();
 }

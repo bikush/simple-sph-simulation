@@ -10,16 +10,17 @@
 
 class MappedData
 {
+private:
 	std::map< std::string, DataLineSet > dataMap;
 
-	void loadFromStream(std::istream& is );
+	void loadFromStream( std::istream& is );
 
 public:
 	MappedData();
 	MappedData( const char* filePath );
-	MappedData(std::istream& is );
+	MappedData( std::istream& is );
 
-	DataLine getData(std::string groupName, std::string dataName );
+	const DataLine& getData( std::string groupName, std::string dataName ) const;
 };
 
 #endif
