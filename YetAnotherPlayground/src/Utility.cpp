@@ -36,19 +36,17 @@ vector<string> split( string line, char splitter )
 
 
 
-string join( vector<string> parts, string joiner )
+string join( const vector<string>& parts, string joiner )
 {
 	if( parts.size() == 0 )
 		return "";
 
-	string outString = "";
-	vector<string>::iterator i;
-	for(i = parts.begin(); i!=parts.end()-1; i++)
+	string outString( *parts.begin() );
+	for (auto element = parts.begin() + 1; element != parts.end(); element++)
 	{
-		outString += *i;
 		outString += joiner;
+		outString += *element;
 	}
-	outString += *i;
 
 	return outString;
 }

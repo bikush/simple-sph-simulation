@@ -22,18 +22,18 @@ public:
 
 	DataLine& operator=( DataLine& in );
 	
-	std::string getStringData(std::string fallback = "", std::string joiner = " ");
-	vec2f getVec2f();
-	vec3f getVec3f();
+	std::string getStringData(std::string fallback = "", std::string joiner = " ") const;
+	vec2f getVec2f() const;
+	vec3f getVec3f() const;
 
 	template<class T>
-	T get( T fallback = T() )
+	T get( T fallback = T() ) const
 	{
 		return lineData.size() > 0 ? readString<T>(lineData[0]) : fallback;
 	}
 
 	template<class T>
-	std::vector<T> getVector()
+	std::vector<T> getVector() const
 	{
 		std::vector<T> data;
 		for (auto& line : lineData)
@@ -44,13 +44,13 @@ public:
 	}
 
 	template<>
-	std::vector<std::string> getVector()
+	std::vector<std::string> getVector() const
 	{
 		return lineData;
 	}
 
 	template<class T>
-	void fillArray( T* in, int count )
+	void fillArray( T* in, int count ) const
 	{
 		if (in != nullptr)
 		{

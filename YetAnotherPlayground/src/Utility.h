@@ -31,7 +31,7 @@ template<class T> T inline contain( T input, T lower, T upper ){
 	return input;
 }
 
-template<class T> T readString( std::string &s )
+template<class T> T readString( const std::string &s )
 {
 	std::istringstream stream( s );
 	T out;
@@ -74,7 +74,7 @@ void print(const glm::mat4& m);
 
 std::vector<std::string> split( const char* line, char splitter );
 std::vector<std::string> split( std::string line, char splitter );
-std::string join( std::vector<std::string> parts, std::string joiner );
+std::string join( const std::vector<std::string>& parts, std::string joiner );
 int countChar( const char* line, char c );
 bool equals( std::string first, std::string second );
 

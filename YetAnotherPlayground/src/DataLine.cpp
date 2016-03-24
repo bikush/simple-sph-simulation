@@ -24,7 +24,7 @@ DataLine& DataLine::operator=( DataLine& in )
 	return *this;
 }
 	
-string DataLine::getStringData( string fallback, string joiner)
+string DataLine::getStringData( string fallback, string joiner) const
 {
 	if( lineData.size() == 0 )
 	{
@@ -33,7 +33,7 @@ string DataLine::getStringData( string fallback, string joiner)
 	return join( lineData, joiner );
 }
 
-vec2f DataLine::getVec2f()
+vec2f DataLine::getVec2f() const
 {
 	vec2f out;
 	if( lineData.size() >= 2 )
@@ -44,7 +44,7 @@ vec2f DataLine::getVec2f()
 	return out;
 }
 
-vec3f DataLine::getVec3f()
+vec3f DataLine::getVec3f() const
 {
 	vec3f out;
 	if( lineData.size() >= 3 )
