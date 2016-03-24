@@ -5,32 +5,26 @@
 
 using namespace std;
 
-TextureManager *TextureManager::instance = 0;
+TextureManager TextureManager::instance;
 
-TextureManager::TextureManager()
+TextureManager::TextureManager() : isInitialized(false)
 {
-	ilInit();
-	ilutInit();
-	ilutRenderer(ILUT_OPENGL);
-	loaded = map<string,GLuint>();
 }
 
 TextureManager::~TextureManager()
 {
 	deleteAllTextures();
-	instance = 0;
 }
-
-TextureManager* TextureManager::getInstance()
-{
-	if( !instance ) 
-		instance = new TextureManager;
-	return instance;
-}
-
 
 GLuint TextureManager::loadTexture( const char* fileName )
 {
+	if (!isInitialized) {
+		ilInit();
+		ilutInit();
+		ilutRenderer(ILUT_OPENGL);
+		isInitialized = true;
+	}
+
 	string sFileName = string(fileName);
 	map<string, GLuint>::iterator found = loaded.find( sFileName );
 
@@ -45,9 +39,6 @@ GLuint TextureManager::loadTexture( const char* fileName )
 	mbstowcs_s(&outSize, wc_imgPath, size, sFileName.c_str(), size - 1);
 
 	// TODO: unhack this wc crap
-	/*std::wstring wc(sFileName.length()*2, L'#');
-	size_t numConverted = 0;
-	mbstowcs_s( &numConverted, &wc[0], sFileName.length(), sFileName.c_str(), sFileName.length());*/
 	GLuint tex =  ilutGLLoadImage(wc_imgPath);
 	
 	loaded[ sFileName ] = tex;
@@ -59,7 +50,7 @@ GLuint TextureManager::loadTexture( const char* fileName )
 void TextureManager::deleteAllTextures()
 {	
 	GLuint *textureNames = new GLuint[ loaded.size() ];	
-	int index = 0;
+	unsigned int index = 0;
 
 	map<string, GLuint>::iterator pair = loaded.begin();
 	while( pair != loaded.end() && index < loaded.size() )

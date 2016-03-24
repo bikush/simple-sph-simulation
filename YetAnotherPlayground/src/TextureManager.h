@@ -9,17 +9,17 @@
 
 class TextureManager
 {
-	TextureManager();	
-
+private:
 	std::map< std::string, GLuint > loaded;
-	static TextureManager* instance;
-
+	bool isInitialized;
 	void deleteAllTextures();
 
 public:
+	static TextureManager instance;
+
+	TextureManager();
 	~TextureManager();
 
-	static TextureManager* getInstance();
 	GLuint loadTexture( const char* fileName );
 };
 

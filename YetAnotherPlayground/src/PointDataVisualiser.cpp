@@ -53,7 +53,7 @@ void PointDataVisualiser::setImage( const char* texturePath )
 		textureID = 0;
 		return;
 	}
-	textureID = TextureManager::getInstance()->loadTexture( texturePath );
+	textureID = TextureManager::instance.loadTexture( texturePath );
 }
 
 void PointDataVisualiser::setColor( float r, float g, float b )
