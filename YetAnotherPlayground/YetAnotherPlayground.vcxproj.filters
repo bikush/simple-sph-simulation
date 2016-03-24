@@ -135,9 +135,6 @@
     <ClCompile Include="src\MarchingCubes\MarchingSquaresFactory.cpp">
       <Filter>Source Files\MarchingCubes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Frustum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -289,9 +286,6 @@
     </ClInclude>
     <ClInclude Include="src\MarchingCubes\MarchingSquaresFactory.h">
       <Filter>Header Files\MarchingCubes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Frustum.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Matrix.h">
       <Filter>Header Files</Filter>

@@ -3,7 +3,6 @@
 #include <glm\mat4x4.hpp>
 #include <glm\vec2.hpp>
 #include <glm\vec3.hpp>
-#include "Frustum.h"
 
 class Camera
 {
@@ -79,11 +78,5 @@ public:
 	void windowDidResize(int width, int height);
 	void setupViewport(float x, float y, float widthm, float height);
 	void loadViewport();
-
-// FRUSTUM
-private:
-	Frustum frustum;
-public:
-	const Frustum& getFrustum() const;
 };
 

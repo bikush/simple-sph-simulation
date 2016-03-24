@@ -160,7 +160,6 @@
     <ClCompile Include="src\DataLine.cpp" />
     <ClCompile Include="src\DataLineSet.cpp" />
     <ClCompile Include="src\DistributedShapesScene.cpp" />
-    <ClCompile Include="src\Frustum.cpp" />
     <ClCompile Include="src\LearningWindowManager.cpp" />
     <ClCompile Include="src\LineGrid.cpp" />
     <ClCompile Include="src\LyingShapesScene.cpp" />
@@ -209,7 +208,6 @@
     <ClInclude Include="src\DataLine.h" />
     <ClInclude Include="src\DataLineSet.h" />
     <ClInclude Include="src\DistributedShapesScene.h" />
-    <ClInclude Include="src\Frustum.h" />
     <ClInclude Include="src\IntervalAverageTimer.h" />
     <ClInclude Include="src\LearningWindowManager.h" />
     <ClInclude Include="src\LineGrid.h" />

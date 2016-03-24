@@ -137,21 +137,6 @@ const glm::mat4& Camera::getViewProjection() const
 
 void Camera::updateCamera()
 {
-	// OLD: 
-	/*glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glTranslatef(0, 0, -distance);
-
-	glRotatef(angles.x, 1.0, 0.0, 0.0);
-	glRotatef(angles.y, 0.0, 1.0, 0.0);
-
-	glTranslatef(-center.x, -center.y, -center.z);*/
-	/*glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(FOVy, aspectRatio, NCP, FCP); */
-	frustum.setupGLProjection();
-	frustum.CalculateFrustum();
 }
 
 // VIEWPORT
@@ -175,9 +160,4 @@ void Camera::setupViewport(float x, float y, float width, float height)
 void Camera::loadViewport()
 {
 	glViewport((int)viewportPos.x, (int)viewportPos.y, (int)viewportSize.x, (int)viewportSize.y);
-}
-
-const Frustum & Camera::getFrustum() const
-{
-	return frustum;
 }
