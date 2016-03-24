@@ -190,25 +190,24 @@ void MarchingCubesShaded::setTreshold( float t )
 void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 {
 	float value;
-	vec3f start = vec3f( x-r, y-r, z-r );
-	//start = glm::clamp( start, vPosition, vPosition+vSpan );
+	vec3f start( x-r, y-r, z-r );
 	start -= vPosition;
 	start /= deltaSpan;
 
-	vec3f end = vec3f( x+r, y+r, z+r );
-	//glm::clamp( end, vPosition, vPosition+vSpan );
+	vec3f end( x+r, y+r, z+r );
 	end -= vPosition;
 	end /= deltaSpan;
 
 	vec3f center = (vec3f( x,y,z ) - vPosition) / deltaSpan;
 	r /= glm::length( deltaSpan );
 
-	// TODO: unnecessary float->int converions
-	for(int i=(int)start.x; i<(int)end.x; i++)
+	glm::ivec3 iStart( start.x, start.y, start.z );
+	glm::ivec3 iEnd( end.x+1, end.y+1, end.z+1 );
+	for(int i= iStart.x; i<iEnd.x; i++)
 	{
-		for(int j= (int)start.y; j<(int)end.y; j++)
+		for(int j= iStart.y; j<iEnd.y; j++)
 		{
-			for(int k= (int)start.z; k<(int)end.z; k++)
+			for(int k= iStart.z; k<iEnd.z; k++)
 			{
 				value = r-glm::length(center-vec3f(i,j,k))+1;
 				if (value > 0)
