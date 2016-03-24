@@ -26,7 +26,7 @@ public:
 		{
 			vec3f min = map->getData( name, "mim" ).getVec3f();
 			vec3f max = map->getData( name, "max" ).getVec3f();
-			float dampen = map->getData( name, "dampen" ).getFloat();
+			float dampen = map->getData( name, "dampen" ).get<float>();
 			out = new SPHAABBInteractor3d( min, max, dampen );	
 		}
 		return out;

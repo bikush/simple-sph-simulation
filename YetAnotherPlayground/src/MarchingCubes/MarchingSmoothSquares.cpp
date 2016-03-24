@@ -26,7 +26,7 @@ MarchingSmoothSquares::MarchingSmoothSquares( const char* file )
 	: MarchingSquaresBase( MappedData( file ) )
 {
 	MappedData md( file );
-	maxValue = (char)md.getData( "smooth", "maxValue" ).getInt();
+	maxValue = (char)md.getData( "smooth", "maxValue" ).get<int>();
 	dataField = new char[ dataWidth * dataHeight ];
 	clear();
 }

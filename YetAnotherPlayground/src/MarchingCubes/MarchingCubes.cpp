@@ -3,6 +3,7 @@
 #include "MarchingCubesFactory.h"
 #include "Utility.h"
 #include "MappedData.h"
+#include "DataLine.h"
 #include "ShaderProgram.h"
 
 MarchingCubes::MarchingCubes( )
@@ -62,9 +63,9 @@ MarchingCubes::MarchingCubes( const char* filePath )
 	position = paramFile.getData("base","position").getVec3f();	
 	scale = paramFile.getData("base","scale").getVec3f();	
 		
-	dataWidth = paramFile.getData("base","dataWidth").getInt();
-	dataHeight = paramFile.getData("base","dataHeight").getInt();
-	dataDepth = paramFile.getData("base","dataDepth").getInt();
+	dataWidth = paramFile.getData("base","dataWidth").get<int>();
+	dataHeight = paramFile.getData("base","dataHeight").get<int>();
+	dataDepth = paramFile.getData("base","dataDepth").get<int>();
 	dataWidth = dataWidth<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataWidth;
 	dataHeight = dataHeight<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataHeight;
 	dataDepth = dataDepth<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataDepth;
@@ -77,7 +78,7 @@ MarchingCubes::MarchingCubes( const char* filePath )
 	dataChangedDepth = (dataDepth/DATA_CHANGE_DIV);
 	dataChangedGlobal = false;
 	
-	dataMax = paramFile.getData("base","maxValue").getInt();
+	dataMax = paramFile.getData("base","maxValue").get<int>();
 	treshold = 0;
 	useInterpolated = true;
 

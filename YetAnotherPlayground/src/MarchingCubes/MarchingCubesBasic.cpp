@@ -48,9 +48,9 @@ MarchingCubesBasic::MarchingCubesBasic( const char* filePath )
 	position = paramFile.getData("base","position").getVec3f();	
 	span = paramFile.getData("base","span").getVec3f();	
 		
-	dataWidth = paramFile.getData("base","dataWidth").getInt();
-	dataHeight = paramFile.getData("base","dataHeight").getInt();
-	dataDepth = paramFile.getData("base","dataDepth").getInt();
+	dataWidth = paramFile.getData("base","dataWidth").get<int>();
+	dataHeight = paramFile.getData("base","dataHeight").get<int>();
+	dataDepth = paramFile.getData("base","dataDepth").get<int>();
 	dataWidth = dataWidth<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataWidth;
 	dataHeight = dataHeight<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataHeight;
 	dataDepth = dataDepth<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataDepth;
@@ -58,8 +58,8 @@ MarchingCubesBasic::MarchingCubesBasic( const char* filePath )
 	dSpan = span / vec3f( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ];
 
-	dataMax = paramFile.getData("base","maxValue").getFloat();
-	treshold = paramFile.getData("base","treshold").getFloat();
+	dataMax = paramFile.getData("base","maxValue").get<float>();
+	treshold = paramFile.getData("base","treshold").get<float>();
 
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;

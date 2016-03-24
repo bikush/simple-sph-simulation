@@ -65,22 +65,22 @@ SPHSystem3d::SPHSystem3d( const char* file )
 
 	// TODO: this is a wrong
 	surfaces = vector<SPHInteractor3d*>();
-	dWidth = map.getData( "grid", "width" ).getFloat();
-	dHeight = map.getData( "grid", "height" ).getFloat();
-	dDepth = map.getData( "grid", "depth" ).getFloat();
-	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getStringVector();
+	dWidth = map.getData( "grid", "width" ).get<float>();
+	dHeight = map.getData( "grid", "height" ).get<float>();
+	dDepth = map.getData( "grid", "depth" ).get<float>();
+	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getVector<string>();
 	for ( string sName : surfaceNames )
 	{
 		surfaces.push_back( SPHInteractor3dFactory::getInteractor( sName, &map ) );
 	}
 
-	restDensity = map.getData( "fluid", "density" ).getFloat();
-	fluidConstantK = map.getData( "fluid", "k" ).getFloat();
-	viscosityConstant = map.getData( "fluid", "viscosity" ).getFloat();
-	colorFieldTreshold = map.getData( "fluid", "colorFieldTreshold" ).getFloat();
+	restDensity = map.getData( "fluid", "density" ).get<float>();
+	fluidConstantK = map.getData( "fluid", "k" ).get<float>();
+	viscosityConstant = map.getData( "fluid", "viscosity" ).get<float>();
+	colorFieldTreshold = map.getData( "fluid", "colorFieldTreshold" ).get<float>();
 	//colorFieldTreshold *= colorFieldTreshold;
-	surfaceTension = map.getData( "fluid", "surfaceTension" ).getFloat();
-	particleMass = map.getData( "fluid", "unitMass" ).getFloat();
+	surfaceTension = map.getData( "fluid", "surfaceTension" ).get<float>();
+	particleMass = map.getData( "fluid", "unitMass" ).get<float>();
 	gravityAcc =  map.getData( "fluid", "gravity" ).getVec3f();
 		
 	unitRadius = sqrt( particleMass / (restDensity*PI) );
@@ -90,7 +90,7 @@ SPHSystem3d::SPHSystem3d( const char* file )
 	gridWidth = -1;
 	gridHeight = -1;
 	gridDepth = -1;
-	adjustSmoothingLength( map.getData( "kernel", "smoothingLength" ).getFloat() );
+	adjustSmoothingLength( map.getData( "kernel", "smoothingLength" ).get<float>() );
 }
 
 

@@ -18,15 +18,15 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 	vPosition = paramFile.getData("base","position").getVec3f();	
 	vSpan = paramFile.getData("base","span").getVec3f();	
 		
-	dataWidth = paramFile.getData("base","dataWidth").getInt();
-	dataHeight = paramFile.getData("base","dataHeight").getInt();
-	dataDepth = paramFile.getData("base","dataDepth").getInt();
+	dataWidth = paramFile.getData("base","dataWidth").get<int>();
+	dataHeight = paramFile.getData("base","dataHeight").get<int>();
+	dataDepth = paramFile.getData("base","dataDepth").get<int>();
 	dataWidth = dataWidth<DATA_MIN ? DATA_MIN : dataWidth;
 	dataHeight = dataHeight<DATA_MIN ? DATA_MIN : dataHeight;
 	dataDepth = dataDepth<DATA_MIN ? DATA_MIN : dataDepth;
 	
-	dataMax = paramFile.getData("base","maxValue").getFloat();
-	treshold = paramFile.getData("base","treshold").getFloat( 0.5f );
+	dataMax = paramFile.getData("base","maxValue").get<float>();
+	treshold = paramFile.getData("base","treshold").get<float>( 0.5f );
 
 	string vertex = paramFile.getData("shaders", "v").getStringData();
 	string geometry = paramFile.getData("shaders", "g").getStringData();

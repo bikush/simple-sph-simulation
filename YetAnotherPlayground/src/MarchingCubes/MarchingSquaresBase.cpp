@@ -32,8 +32,8 @@ MarchingSquaresBase::MarchingSquaresBase( MappedData& paramFile )
 	position = paramFile.getData("base","position").getVec3f();	
 	scale = paramFile.getData("base","scale").getVec3f();	
 		
-	dataWidth = paramFile.getData("base","dataWidth").getInt();
-	dataHeight = paramFile.getData("base","dataHeight").getInt();
+	dataWidth = paramFile.getData("base","dataWidth").get<int>();
+	dataHeight = paramFile.getData("base","dataHeight").get<int>();
 	dataChanged = false;
 	
 	triangles = new vec2f[ TRIANGLE_COUNT_INCREASE ];

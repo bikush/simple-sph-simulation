@@ -64,24 +64,24 @@ SPHSystem2d::SPHSystem2d( const char* file )
 	particleCount = 0;
 
 	surfaces = vector<SPHInteractor2d*>();
-	dWidth = map.getData( "grid", "width" ).getFloat();
-	dHeight = map.getData( "grid", "height" ).getFloat();
-	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getStringVector();
+	dWidth = map.getData( "grid", "width" ).get<float>();
+	dHeight = map.getData( "grid", "height" ).get<float>();
+	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getVector<string>();
 	for( string sName : surfaceNames )
 	{
 		surfaces.push_back( SPHInteractor2dFactory::getInteractor( sName, &map ) );
 	}
 
-	restDensity = map.getData( "fluid", "density" ).getFloat();
-	fluidConstantK = map.getData( "fluid", "k" ).getFloat();
-	viscosityConstant = map.getData( "fluid", "viscosity" ).getFloat();
-	colorFieldTreshold = map.getData( "fluid", "colorFieldTreshold" ).getFloat();
+	restDensity = map.getData( "fluid", "density" ).get<float>();
+	fluidConstantK = map.getData( "fluid", "k" ).get<float>();
+	viscosityConstant = map.getData( "fluid", "viscosity" ).get<float>();
+	colorFieldTreshold = map.getData( "fluid", "colorFieldTreshold" ).get<float>();
 	colorFieldTreshold *= colorFieldTreshold;
-	surfaceTension = map.getData( "fluid", "surfaceTension" ).getFloat();
-	particleMass = map.getData( "fluid", "unitMass" ).getFloat();
+	surfaceTension = map.getData( "fluid", "surfaceTension" ).get<float>();
+	particleMass = map.getData( "fluid", "unitMass" ).get<float>();
 	gravityAcc =  map.getData( "fluid", "gravity" ).getVec2f() * particleMass;
 
-	smoothingLength = map.getData( "kernel", "smoothingLength" ).getFloat();
+	smoothingLength = map.getData( "kernel", "smoothingLength" ).get<float>();
 	kernel = KernelBuilder::getKernel( map.getData("kernel", "base").getStringData(), smoothingLength );
 	pressureKernel = KernelBuilder::getKernel( map.getData("kernel", "pressure").getStringData(), smoothingLength );
 	viscousKernel =  KernelBuilder::getKernel( map.getData("kernel", "viscous" ).getStringData(), smoothingLength );

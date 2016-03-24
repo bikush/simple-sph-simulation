@@ -58,12 +58,12 @@ WindowManager::WindowManager(const std::string& configFile) :
 	MappedData data(configFile.c_str());
 	
 	sf::ContextSettings settings;	
-	settings.depthBits			= data.getData("window", "depthBits").getInt( 24 );
-	settings.stencilBits		= data.getData("window", "stencilBits").getInt( 8 );
-	settings.antialiasingLevel	= data.getData("window", "antialiasing").getInt( 2 );
-	int width = data.getData("window", "width").getInt( 1024 );
-	int height = data.getData("window", "height").getInt( 600 );
-	int bitsPerPixel = data.getData("window", "bitsPerPixel").getInt( 32 );
+	settings.depthBits			= data.getData("window", "depthBits").get<int>( 24 );
+	settings.stencilBits		= data.getData("window", "stencilBits").get<int>( 8 );
+	settings.antialiasingLevel	= data.getData("window", "antialiasing").get<int>( 2 );
+	int width = data.getData("window", "width").get<int>( 1024 );
+	int height = data.getData("window", "height").get<int>( 600 );
+	int bitsPerPixel = data.getData("window", "bitsPerPixel").get<int>( 32 );
 	string title = data.getData("window", "title").getStringData("Playground");
 	window = new sf::RenderWindow(sf::VideoMode(width, height, bitsPerPixel), title.c_str(), sf::Style::Default , settings);	
 

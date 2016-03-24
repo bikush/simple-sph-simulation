@@ -13,6 +13,7 @@
 
 class DataLine
 {
+private:
 	std::vector<std::string> lineData;
 	
 public:
@@ -22,14 +23,45 @@ public:
 	DataLine& operator=( DataLine& in );
 	
 	std::string getStringData(std::string fallback = "", std::string joiner = " ");
-	std::vector< float > getFloatVector();
-	float getFloat( float fallback = 0.0f );
-	int getInt( int fallback = 0 );
-	std::vector< std::string > getStringVector();
 	vec2f getVec2f();
 	vec3f getVec3f();
 
-	void fillFloatArray( float* in, int count );
+	template<class T>
+	T get( T fallback = T() )
+	{
+		return lineData.size() > 0 ? readString<T>(lineData[0]) : fallback;
+	}
+
+	template<class T>
+	std::vector<T> getVector()
+	{
+		std::vector<T> data;
+		for (auto& line : lineData)
+		{
+			data.push_back(readString<T>(line));
+		}
+		return data;
+	}
+
+	template<>
+	std::vector<std::string> getVector()
+	{
+		return lineData;
+	}
+
+	template<class T>
+	void fillArray( T* in, int count )
+	{
+		if (in != nullptr)
+		{
+			count = max(count, (int)lineData.size());
+			for (int i = 0; i<count; i++)
+			{
+				in[i] = readString<T>(lineData[i]);
+			}
+		}		
+	}
+
 };
 
 #endif
