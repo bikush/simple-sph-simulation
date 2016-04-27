@@ -48,7 +48,7 @@ PointDataVisualiser::~PointDataVisualiser()
 
 void PointDataVisualiser::setImage( const char* texturePath )
 {
-	if( texturePath == 0 )
+	if( texturePath == nullptr )
 	{
 		textureID = 0;
 		return;

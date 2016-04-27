@@ -11,7 +11,6 @@ class TextureManager
 {
 private:
 	std::map< std::string, GLuint > loaded;
-	static bool isInitialized;
 	void deleteAllTextures();
 
 public:

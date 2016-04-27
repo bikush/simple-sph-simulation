@@ -1,3 +1,0 @@
-[folders]
-objects objects/
-images images/

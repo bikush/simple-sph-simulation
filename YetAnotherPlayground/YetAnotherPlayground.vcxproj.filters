@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Learning">
       <UniqueIdentifier>{4cdf73cc-27e8-459b-8063-efed89462b7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\LodePNG">
+      <UniqueIdentifier>{c937ca86-7130-49b8-b232-9c771f64bc1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LodePNG">
+      <UniqueIdentifier>{ae5bfaeb-449b-486e-8576-05bc6cbc648b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp">
@@ -161,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="src\Transform.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LodePNG\lodepng.cpp">
+      <Filter>Source Files\LodePNG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="src\Transform.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LodePNG\lodepng.h">
+      <Filter>Header Files\LodePNG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

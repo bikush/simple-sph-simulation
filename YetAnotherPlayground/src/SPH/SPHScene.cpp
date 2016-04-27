@@ -16,10 +16,6 @@ SPHScene::SPHScene(void) : Scene(),
 	sphTimer(3), marchingTimer(3),
 	drawWithMC(false), drawPDVWithShader(true)
 {
-	// TODO: shared global settings
-	MappedData settings("data/settings.txt");
-	string imagesPath = settings.getData("folders", "images").getStringData();
-
 	sph3 = new SPHSystem3d("data/sph3d.txt");
 	cout << "SPH particle size: " << sizeof(SPHParticle3d) << endl;
 
@@ -33,7 +29,7 @@ SPHScene::SPHScene(void) : Scene(),
 	marchingCubes->transform.setPosition({ 0.0f,0.0f,0.0f });
 	marchingCubes->transform.setScale(marchingCubes->getScale());
 
-	pointVisualizer = new PointDataVisualiser((imagesPath + "point.jpg").c_str(), true);
+	pointVisualizer = new PointDataVisualiser("data/images/point.png", true);
 	pointVisualizer->transform.setPosition({ 0.0f,0.5f,0.0f });
 	pointVisualizer->transform.setScale({ 1.0f, 1.0f, -1.0f });
 	pointVisualizer->transform.setAngles({ 0.0, 90.0f, 0.0f });

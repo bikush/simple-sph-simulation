@@ -72,17 +72,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\DevIl\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\DevIl\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\LodePNG;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)LibsWin\SFML-2.3.2\lib;$(SolutionDir)LibsWin\glew-1.13.0\lib;$(SolutionDir)LibsWin\DevIl\lib;$(LibraryPath)</LibraryPath>
-    <SourcePath>$(ProjectDir)src;$(ProjectDir)src\Shaders;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(SourcePath)</SourcePath>
+    <SourcePath>$(ProjectDir)src;$(ProjectDir)src\Shaders;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(ProjectDir)src\LodePNG;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\DevIl\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)LibsWin\SFML-2.3.2\lib;$(SolutionDir)LibsWin\glew-1.13.0\lib;$(SolutionDir)LibsWin\DevIl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)LibsWin\SFML-2.3.2\lib;$(SolutionDir)LibsWin\glew-1.13.0\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(ProjectDir)src;$(ProjectDir)src\Shaders;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,7 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;Release\Win32\glew32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Release\Win32\glew32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,7 +133,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;Release\Win32\glew32.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Release\Win32\glew32.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,6 +161,7 @@
     <ClCompile Include="src\DataLineSet.cpp" />
     <ClCompile Include="src\LearningWindowManager.cpp" />
     <ClCompile Include="src\LineGrid.cpp" />
+    <ClCompile Include="src\LodePNG\lodepng.cpp" />
     <ClCompile Include="src\LyingShapesScene.cpp" />
     <ClCompile Include="src\MappedData.cpp" />
     <ClCompile Include="src\MarchingCubes\MarchingCubes.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="src\IntervalAverageTimer.h" />
     <ClInclude Include="src\LearningWindowManager.h" />
     <ClInclude Include="src\LineGrid.h" />
+    <ClInclude Include="src\LodePNG\lodepng.h" />
     <ClInclude Include="src\LyingShapesScene.h" />
     <ClInclude Include="src\MappedData.h" />
     <ClInclude Include="src\MarchingCubes\MarchingCubes.h" />

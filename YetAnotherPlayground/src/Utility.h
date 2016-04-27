@@ -69,6 +69,16 @@ constexpr size_t offsetFromBytes(size_t desired, size_t owned) {
 	return desired - owned;
 }
 
+template<class C>
+C nextPOT(C value)
+{
+	C pot = 1;
+	while (pot < value)
+	{
+		pot = pot * 2;
+	}
+	return pot;
+}
 
 void print(const glm::mat4& m);
 

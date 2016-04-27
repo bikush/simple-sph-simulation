@@ -1,12 +1,11 @@
 
 #include "TextureManager.h"
-#include "IL/il.h"
-#include "IL/ilut.h"
+#include "lodepng.h"
+#include "Utility.h"
 
 using namespace std;
 
 TextureManager TextureManager::instance;
-bool TextureManager::isInitialized = false;
 
 TextureManager::TextureManager()
 {
@@ -19,33 +18,61 @@ TextureManager::~TextureManager()
 
 GLuint TextureManager::loadTexture( const char* fileName )
 {
-	if (!isInitialized) {
-		ilInit();
-		ilutInit();
-		ilutRenderer(ILUT_OPENGL);
-		isInitialized = true;
+	string sFileName = string(fileName);
+	map<string, GLuint>::iterator found = loaded.find(sFileName);
+
+	if (found != loaded.end())
+	{
+		return found->second;
+	}
+	
+	// Load file and decode image.
+	std::vector<unsigned char> image;
+	unsigned width;
+	unsigned height;
+	unsigned error = lodepng::decode(image, width, height, sFileName);
+	
+	// Ignore png loading errors.
+	if (error != 0)
+	{
+		return 0;
 	}
 
-	string sFileName = string(fileName);
-	map<string, GLuint>::iterator found = loaded.find( sFileName );
+	// Texture size must be power of two for the primitive OpenGL version this is written for. Find next power of two.
+	size_t u2 = nextPOT(width);
+	size_t v2 = nextPOT(height);
+	// Ratio for power of two version compared to actual version, to render the non power of two image with proper size.
+	double u3 = (double)width / u2;
+	double v3 = (double)height / v2;
 
-	if( found != loaded.end() )
-		return found->second;
+	// Make power of two version of the image.
+	std::vector<unsigned char> image_POT(u2 * v2 * 4);
+	for (size_t y = 0; y < height; y++)
+	{
+		for (size_t x = 0; x < width; x++)
+		{
+			for (size_t c = 0; c < 4; c++)
+			{
+				image_POT[4 * u2 * y + 4 * x + c] = image[4 * width * y + 4 * x + c];
+			}
+		}
+	}
 
+	// Enable the texture for OpenGL.
 	glEnable(GL_TEXTURE_2D);
 
-	size_t size = sFileName.length() + 1;
-	wchar_t* wc_imgPath = new wchar_t[size];
-	size_t outSize;
-	mbstowcs_s(&outSize, wc_imgPath, size, sFileName.c_str(), size - 1);
+	GLuint glTextureId;
+	glGenTextures(1, &glTextureId);
+	glBindTexture(GL_TEXTURE_2D, glTextureId);
 
-	// TODO: unhack this wc crap
-	GLuint tex =  ilutGLLoadImage(wc_imgPath);
-	
-	loaded[ sFileName ] = tex;
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); //GL_NEAREST = no smoothing
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, 4, u2, v2, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image_POT[0]);
+		
+	loaded[ sFileName ] = glTextureId;
 
 	glDisable(GL_TEXTURE_2D);
-	return tex;
+	return glTextureId;
 }
 
 void TextureManager::deleteAllTextures()
