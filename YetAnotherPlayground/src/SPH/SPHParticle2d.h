@@ -2,26 +2,26 @@
 #ifndef SPHPARTICLE2D_H
 #define SPHPARTICLE2D_H
 
-#include "Vector2D.h"
+#include "GlmVec.h"
 #include <vector>
 
 struct SPHParticle2d
 {
 	SPHParticle2d();
-	SPHParticle2d( vec2f pos, vec2f v, float m, float density );
+	SPHParticle2d( glm::vec2 pos, glm::vec2 v, float m, float density );
 
 	void reset();
 
-	vec2f position;
-	vec2f velocity;
-	vec2f oldAcceleration;
+	glm::vec2 position;
+	glm::vec2 velocity;
+	glm::vec2 oldAcceleration;
 	float mass;
 
 	float density;
 	float pressure;
-	vec2f force;
+	glm::vec2 force;
 
-	vec2f colorGradient;
+	glm::vec2 colorGradient;
 	float colorLaplacian;
 
 	std::vector<SPHParticle2d*> neighbours;

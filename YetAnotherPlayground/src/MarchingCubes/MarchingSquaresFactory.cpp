@@ -1,17 +1,17 @@
 
 #include "MarchingSquaresFactory.h"
 
-void MarchingSquaresFactory::getSquare( bool index, bool up, bool diag, bool right, std::vector<vec2f>& triangles, vec2f offset )
+void MarchingSquaresFactory::getSquare( bool index, bool up, bool diag, bool right, std::vector<glm::vec2>& triangles, glm::vec2 offset )
 {
 	getSquare( (index?8:0)+(up?4:0)+(diag?2:0)+(right?1:0), triangles, offset );
 }
 
-int MarchingSquaresFactory::getSquare( bool index, bool up, bool diag, bool right, vec2f* triangles, int start, vec2f offset )
+int MarchingSquaresFactory::getSquare( bool index, bool up, bool diag, bool right, glm::vec2* triangles, int start, glm::vec2 offset )
 {
 	return getSquare( (index?8:0)+(up?4:0)+(diag?2:0)+(right?1:0), triangles, start, offset );
 }
 	
-void MarchingSquaresFactory::getSquare( int squareIndex, std::vector<vec2f>& triangles, vec2f offset  )
+void MarchingSquaresFactory::getSquare( int squareIndex, std::vector<glm::vec2>& triangles, glm::vec2 offset  )
 {
 	int count = 0;
 
@@ -22,7 +22,7 @@ void MarchingSquaresFactory::getSquare( int squareIndex, std::vector<vec2f>& tri
 	}
 }
 
-int MarchingSquaresFactory::getSquare( int squareIndex, vec2f* triangles, int start, vec2f offset )
+int MarchingSquaresFactory::getSquare( int squareIndex, glm::vec2* triangles, int start, glm::vec2 offset )
 {		
 	int count = 0;
 
@@ -35,7 +35,7 @@ int MarchingSquaresFactory::getSquare( int squareIndex, vec2f* triangles, int st
 	return count;
 }
 
-int MarchingSquaresFactory::getInterpolatedSquare( char indices[4], vec2f* triangles, int start, vec2f offset, char maxValue )
+int MarchingSquaresFactory::getInterpolatedSquare( char indices[4], glm::vec2* triangles, int start, glm::vec2 offset, char maxValue )
 {
 	int squareIndex = 0;
 	for(int i=8, j=0; j<4; i/=2, j++) if( indices[j] != 0 ) squareIndex += i;
@@ -77,27 +77,27 @@ int MarchingSquaresFactory::getInterpolatedSquare( char indices[4], vec2f* trian
 	return count;
 }
 
-vec2f  MarchingSquaresFactory::interpolateOffset[] = {
-	vec2f( 0, -0.5 ),
-	vec2f( 0,  0.5 ),
-	vec2f( -0.5, 0 ),
-	vec2f( 0.5, 0 ),
-	vec2f( 0,  0.5 ),
-	vec2f( 0, -0.5 ),
-	vec2f( 0.5, 0 ),
-	vec2f( -0.5, 0 ),	
-	vec2f( 0,0 )
+glm::vec2  MarchingSquaresFactory::interpolateOffset[] = {
+	glm::vec2( 0, -0.5 ),
+	glm::vec2( 0,  0.5 ),
+	glm::vec2( -0.5, 0 ),
+	glm::vec2( 0.5, 0 ),
+	glm::vec2( 0,  0.5 ),
+	glm::vec2( 0, -0.5 ),
+	glm::vec2( 0.5, 0 ),
+	glm::vec2( -0.5, 0 ),	
+	glm::vec2( 0,0 )
 };
 
-vec2f MarchingSquaresFactory::vertices[] = {
-		vec2f( 0 , 0 ),
-		vec2f( 0, 0.5 ),
-		vec2f( 0, 1 ),
-		vec2f( 0.5, 1 ),
-		vec2f( 1, 1 ),
-		vec2f( 1, 0.5 ),
-		vec2f( 1, 0 ),
-		vec2f( 0.5, 0 )
+glm::vec2 MarchingSquaresFactory::vertices[] = {
+		glm::vec2( 0 , 0 ),
+		glm::vec2( 0, 0.5 ),
+		glm::vec2( 0, 1 ),
+		glm::vec2( 0.5, 1 ),
+		glm::vec2( 1, 1 ),
+		glm::vec2( 1, 0.5 ),
+		glm::vec2( 1, 0 ),
+		glm::vec2( 0.5, 0 )
 };
 
 int MarchingSquaresFactory::squareCases[16][13] = {

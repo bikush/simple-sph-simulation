@@ -2,7 +2,7 @@
 #ifndef POINT_DATA_VISUALISER_H
 #define POINT_DATA_VISUALISER_H
 
-#include "Vector3D.h"
+#include "GlmVec.h"
 #include "Transform.h"
 #include <GL\glew.h>
 
@@ -11,7 +11,7 @@ class Camera;
 
 class PointDataVisualiser
 {
-	vec3f* buffer;
+	glm::vec3* buffer;
 	int bufferElements;
 	int bufferSize;
 
@@ -24,7 +24,7 @@ class PointDataVisualiser
 
 	GLuint textureID;
 
-	vec3f color;
+	glm::vec3 color;
 
 	float pointSize;
 
@@ -39,7 +39,7 @@ public:
 	void setColor( float r, float g, float b );
 
 	void clearBuffer();
-	void pushPoint( vec3f point );
+	void pushPoint( glm::vec3 point );
 	void pushPoint( float x, float y, float z );
 
 	void draw( const Camera& camera, bool forcePipeline = false );

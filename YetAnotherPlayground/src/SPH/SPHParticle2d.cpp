@@ -3,26 +3,26 @@
 
 SPHParticle2d::SPHParticle2d()
 {
-	position = vec2f();
-	velocity = vec2f();
-	oldAcceleration = vec2f();
+	position = glm::vec2();
+	velocity = glm::vec2();
+	oldAcceleration = glm::vec2();
 	mass = 0;
 	density = 0;
 	pressure = 0;
-	force = vec2f();
+	force = glm::vec2();
 }
 
-SPHParticle2d::SPHParticle2d( vec2f pos, vec2f v, float m, float density )
+SPHParticle2d::SPHParticle2d( glm::vec2 pos, glm::vec2 v, float m, float density )
 {
 	position = pos;
 	velocity = v;
-	oldAcceleration = vec2f();
+	oldAcceleration = glm::vec2();
 	mass = m;
 	this->density = 0;
 	pressure = 0;
-	force = vec2f();
+	force = glm::vec2();
 	neighbours = std::vector<SPHParticle2d*>();
-	colorGradient = vec2f();
+	colorGradient = glm::vec2();
 	colorLaplacian = 0;
 }
 

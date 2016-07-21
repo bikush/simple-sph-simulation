@@ -2,7 +2,7 @@
 #ifndef _MARCHING_CUBES_BASIC_H
 #define _MARCHING_CUBES_BASIC_H
 
-#include "Vector3D.h"
+#include "GlmVec.h"
 #include <gl\glew.h>
 class MappedData;
 class ShaderProgram;
@@ -29,12 +29,12 @@ class MarchingCubesBasic
 	int dataSize;
 	bool dataChanged;
 	
-	vec3f position;
-	vec3f span;
-	vec3f dSpan;
+	glm::vec3 position;
+	glm::vec3 span;
+	glm::vec3 dSpan;
 	
-	vec3f* triangles;
-	vec3f* normals;
+	glm::vec3* triangles;
+	glm::vec3* normals;
 	int trianglesCount;
 	int trianglesSize;
 		
@@ -47,21 +47,21 @@ public:
 	MarchingCubesBasic( );
 	MarchingCubesBasic( const char* filePath );
 	MarchingCubesBasic( int w, int h, int d, float treshold = 0.0f, 
-						float dataMax = 1.0f, vec3f position = vec3f(0,0,0), vec3f span = vec3f(1,1,1) );
+						float dataMax = 1.0f, glm::vec3 position = glm::vec3(0,0,0), glm::vec3 span = glm::vec3(1,1,1) );
 	~MarchingCubesBasic( );
 	
 	void set( int x, int y, int z, float value );
 	void set( int position, float value );
 	void clear( );
 
-	void drawGrid( vec3f colorBelow = vec3f(1,0,0), vec3f colorAbove = vec3f(0,1,0) );	
-	void drawColoredCubes( vec3f color );
+	void drawGrid( glm::vec3 colorBelow = glm::vec3(1,0,0), glm::vec3 colorAbove = glm::vec3(0,1,0) );	
+	void drawColoredCubes( glm::vec3 color );
 	void drawLightedCubes( GLfloat material[4] );
 	
 	void putSphere( float x, float y, float z, float r );
 
-	vec3f getScale();
-	vec3f getPosition();	
+	glm::vec3 getScale();
+	glm::vec3 getPosition();	
 };
 
 

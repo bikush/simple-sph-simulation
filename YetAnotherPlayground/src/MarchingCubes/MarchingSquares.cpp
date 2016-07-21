@@ -11,7 +11,7 @@ MarchingSquares::MarchingSquares( ) : MarchingSquaresBase( )
 	dataField = NULL;
 }
 
-MarchingSquares::MarchingSquares(int w, int h, vec3f p, vec3f s ) :
+MarchingSquares::MarchingSquares(int w, int h, glm::vec3 p, glm::vec3 s ) :
 					MarchingSquaresBase( w, h, p, s )
 {
 	dataField = new bool[ dataWidth * dataHeight ];
@@ -52,7 +52,7 @@ void MarchingSquares::clear()
 	trianglesCount = 0;
 }
 
-void MarchingSquares::drawGrid(vec3f colorFalse, vec3f colorTrue)
+void MarchingSquares::drawGrid(glm::vec3 colorFalse, glm::vec3 colorTrue)
 {
 	glMatrixMode(GL_MODELVIEW);	
 	glPushMatrix();
@@ -103,7 +103,7 @@ int MarchingSquares::generateTrianglesInField( int x, int y, int startIndex )
 				dataField[(x+1)*dataWidth + y], 
 				triangles, 
 				startIndex,
-				vec2f( x, y ));
+				glm::vec2( x, y ));
 }
 
 void MarchingSquares::putRectangle( int x1, int y1, int x2, int y2, bool value )

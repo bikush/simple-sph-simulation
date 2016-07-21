@@ -13,7 +13,7 @@ MarchingSquaresBase::MarchingSquaresBase(void)
 	trianglesSize = 0;
 }
 
-MarchingSquaresBase::MarchingSquaresBase(int w, int h, vec3f p, vec3f s)
+MarchingSquaresBase::MarchingSquaresBase(int w, int h, glm::vec3 p, glm::vec3 s)
 {
 	position = p;	
 	scale = s;
@@ -22,21 +22,21 @@ MarchingSquaresBase::MarchingSquaresBase(int w, int h, vec3f p, vec3f s)
 	dataHeight = h;
 	dataChanged = false;
 	
-	triangles = new vec2f[ TRIANGLE_COUNT_INCREASE ];
+	triangles = new glm::vec2[ TRIANGLE_COUNT_INCREASE ];
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
 }
 
 MarchingSquaresBase::MarchingSquaresBase( MappedData& paramFile )
 {
-	position = paramFile.getData("base","position").getVec3f();	
-	scale = paramFile.getData("base","scale").getVec3f();	
+	position = paramFile.getData("base","position").getVec3();	
+	scale = paramFile.getData("base","scale").getVec3();	
 		
 	dataWidth = paramFile.getData("base","dataWidth").get<int>();
 	dataHeight = paramFile.getData("base","dataHeight").get<int>();
 	dataChanged = false;
 	
-	triangles = new vec2f[ TRIANGLE_COUNT_INCREASE ];
+	triangles = new glm::vec2[ TRIANGLE_COUNT_INCREASE ];
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
 }
@@ -62,7 +62,7 @@ int MarchingSquaresBase::getWidth()
  *
  * Param: color of the drawn triangles.
  **/
-void MarchingSquaresBase::drawSquares( vec3f color )
+void MarchingSquaresBase::drawSquares( glm::vec3 color )
 {	
 	if(dataChanged) generateTriangles();	
 	if( trianglesCount == 0 ) return;
@@ -108,9 +108,9 @@ void MarchingSquaresBase::generateTriangles()
 			if( start > trianglesSize - MarchingSquaresFactory::MAX_VERTICES )
 			{
 				int newSize = trianglesSize + TRIANGLE_COUNT_INCREASE;				
-				vec2f* newTriangles = new vec2f[ newSize ];
+				glm::vec2* newTriangles = new glm::vec2[ newSize ];
 
-				memcpy( newTriangles, triangles, trianglesSize * sizeof(vec2f) );
+				memcpy( newTriangles, triangles, trianglesSize * sizeof(glm::vec2) );
 
 				trianglesSize = newSize;
 				delete [] triangles;

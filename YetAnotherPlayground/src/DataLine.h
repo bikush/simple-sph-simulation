@@ -6,10 +6,7 @@
 #include <string>
 
 #include "Utility.h"
-#include "Vector2D.h"
-#include "Vector3D.h"
-#include <glm\vec2.hpp>
-#include <glm\vec3.hpp>
+#include "GlmVec.h"
 
 class DataLine
 {
@@ -23,8 +20,8 @@ public:
 	DataLine& operator=( DataLine& in );
 	
 	std::string getStringData(std::string fallback = "", std::string joiner = " ") const;
-	vec2f getVec2f() const;
-	vec3f getVec3f() const;
+	glm::vec2 getVec2() const;
+	glm::vec3 getVec3() const;
 
 	template<class T>
 	T get( T fallback = T() ) const

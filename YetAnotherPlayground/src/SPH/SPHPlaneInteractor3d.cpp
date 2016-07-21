@@ -5,7 +5,7 @@
 #include <glm\geometric.hpp>
 #include <GL\glew.h>
 
-SPHPlaneInteractor3d::SPHPlaneInteractor3d( vec3f start, vec3f upNormal, float distance )
+SPHPlaneInteractor3d::SPHPlaneInteractor3d( glm::vec3 start, glm::vec3 upNormal, float distance )
 {
 	this->start = start;	
 	up = glm::normalize( upNormal );
@@ -13,24 +13,24 @@ SPHPlaneInteractor3d::SPHPlaneInteractor3d( vec3f start, vec3f upNormal, float d
 	distanceSquared = distance*distance;
 }
 
-void SPHPlaneInteractor3d::applyDensity( SPHParticle3d& other, vec3f rvec )
+void SPHPlaneInteractor3d::applyDensity( SPHParticle3d& other, glm::vec3 rvec )
 {
 	
 }
 
-void SPHPlaneInteractor3d::applyForce( SPHParticle3d& other, vec3f rvec )
+void SPHPlaneInteractor3d::applyForce( SPHParticle3d& other, glm::vec3 rvec )
 {
 
 }
 
-void SPHPlaneInteractor3d::enforceInteractor( SPHParticle3d& other, vec3f rvec )
+void SPHPlaneInteractor3d::enforceInteractor( SPHParticle3d& other, glm::vec3 rvec )
 {	
 	if(!turnedOn) return;
 	rvec *= -1;
 	if( glm::dot( rvec, up ) < 0 )
 	{
 		other.position -= rvec;
-		rvec = vec3f( 0,0,0 );
+		rvec = glm::vec3( 0,0,0 );
 	}
 	
 	float r = glm::length2( rvec );
@@ -44,25 +44,25 @@ void SPHPlaneInteractor3d::enforceInteractor( SPHParticle3d& other, vec3f rvec )
 		other.position += up*(distance-sqrtf(r));
 		
 		// else, change the direction of the velocity vector (mirror it around the plane axis)
-		vec3f axis = up;
-		vec3f v = other.velocity;//.normalized();
+		glm::vec3 axis = up;
+		glm::vec3 v = other.velocity;//.normalized();
 		float cosine = glm::dot( up, v ); 
 	/*	if( cosine < 0 )
 		{
 			axis = -up;
 			cosine = -cosine;
 		}/**/
-		vec3f newVelocity = v - up * ( 1.8f * cosine );
+		glm::vec3 newVelocity = v - up * ( 1.8f * cosine );
 		other.velocity = newVelocity;// * other.velocity.norm();	
 		//other.force += up*other.mass;//*other.velocity.norm();
 	}
 }
 
-vec3f SPHPlaneInteractor3d::directionTo( SPHParticle3d& other )
+glm::vec3 SPHPlaneInteractor3d::directionTo( SPHParticle3d& other )
 {/*
-	vec3f toStart = other.position - start;		
+	glm::vec3 toStart = other.position - start;		
 	float t = toStart.dotProduct( up );
-	vec3f projected = start + direction * t;
+	glm::vec3 projected = start + direction * t;
 
 	return other.position - projected;*/
 
@@ -72,7 +72,7 @@ vec3f SPHPlaneInteractor3d::directionTo( SPHParticle3d& other )
 
 void SPHPlaneInteractor3d::draw()
 {
-	/*vec3f ns, ne;
+	/*glm::vec3 ns, ne;
 	ns = start + direction*0.5;
 	ne = ns + up;*/
 	

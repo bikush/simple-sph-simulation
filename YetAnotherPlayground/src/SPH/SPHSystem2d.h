@@ -13,7 +13,7 @@ class SPHInteractor2d;
 class SPHSystem2d
 {
 	std::vector<SPHParticle2d> particles;
-//	vec2f *positions;
+//	glm::vec2 *positions;
 //	int positionsSize;
 	
 	std::vector< std::vector< int > > grid;
@@ -38,7 +38,7 @@ class SPHSystem2d
 	float particleMass;
 
 	bool useGravity;
-	vec2f gravityAcc;
+	glm::vec2 gravityAcc;
 
 	iKernel* kernel;
 	iKernel* pressureKernel;
@@ -86,8 +86,8 @@ public:
 
 	void setKernel( SPHKernelUse kernelUse, KernelType type );
 
-	void addParticle( vec2f position, vec2f velocity );
-	void addDistributedParticles( vec2f start, vec2f direction, vec2f step );
+	void addParticle( glm::vec2 position, glm::vec2 velocity );
+	void addDistributedParticles( glm::vec2 start, glm::vec2 direction, glm::vec2 step );
 
 	void addSurface( SPHInteractor2d* surface );
 

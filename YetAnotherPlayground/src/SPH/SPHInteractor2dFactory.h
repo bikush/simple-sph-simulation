@@ -16,9 +16,9 @@ public:
 		std::string type = map->getData( name, "type" ).getStringData();
 		if( type.compare( "plane" ) == 0 )
 		{
-			vec2f start = map->getData( name, "start" ).getVec2f();
-			vec2f direction = map->getData( name, "direction" ).getVec2f();
-			vec2f up = map->getData( name, "up" ).getVec2f();
+			glm::vec2 start = map->getData( name, "start" ).getVec2();
+			glm::vec2 direction = map->getData( name, "direction" ).getVec2();
+			glm::vec2 up = map->getData( name, "up" ).getVec2();
 			out = new SPHPlaneInteractor2d( start, direction, up );	
 		}
 		return out;

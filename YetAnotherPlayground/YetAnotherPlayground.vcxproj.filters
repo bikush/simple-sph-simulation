@@ -66,12 +66,6 @@
     <ClCompile Include="src\Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vector2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Vector3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -171,6 +165,9 @@
     <ClCompile Include="src\LodePNG\lodepng.cpp">
       <Filter>Source Files\LodePNG</Filter>
     </ClCompile>
+    <ClCompile Include="src\GlmVec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AverageValue.h">
@@ -192,12 +189,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WindowManager.h">
@@ -313,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="src\LodePNG\lodepng.h">
       <Filter>Header Files\LodePNG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GlmVec.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

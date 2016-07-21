@@ -2,8 +2,7 @@
 #ifndef SMOOTHING_KERNELS_H
 #define SMOOTHING_KERNELS_H
 
-#include "Vector2D.h"
-#include "Vector3D.h"
+#include "GlmVec.h"
 #include <string>
 
 enum KernelType
@@ -31,8 +30,8 @@ protected:
 
 public:
 	virtual float base( float r )=0;
-	virtual vec2f gradient( vec2f r )=0;
-	virtual vec3f gradient( vec3f r )=0;
+	virtual glm::vec2 gradient( glm::vec2 r )=0;
+	virtual glm::vec3 gradient( glm::vec3 r )=0;
 	virtual float laplacian( float r )=0;
 	virtual void  adjustSmoothingLength( float h )=0;
 };
@@ -45,8 +44,8 @@ public:
 	KernelPoly6( float smoothingLength );
 
 	float base( float r );
-	vec2f gradient( vec2f r );
-	vec3f gradient( vec3f r );
+	glm::vec2 gradient( glm::vec2 r );
+	glm::vec3 gradient( glm::vec3 r );
 	float laplacian( float r );
 	void  adjustSmoothingLength( float h );
 };
@@ -57,8 +56,8 @@ public:
 	KernelSpiky( float smoothingLength );
 
 	float base( float r );
-	vec2f gradient( vec2f r );
-	vec3f gradient( vec3f r );
+	glm::vec2 gradient( glm::vec2 r );
+	glm::vec3 gradient( glm::vec3 r );
 	float laplacian( float r );
 	void  adjustSmoothingLength( float h );
 };
@@ -69,8 +68,8 @@ public:
 	KernelViscosity( float smoothingLength );
 
 	float base( float r );
-	vec2f gradient( vec2f r );
-	vec3f gradient( vec3f r );
+	glm::vec2 gradient( glm::vec2 r );
+	glm::vec3 gradient( glm::vec3 r );
 	float laplacian( float r );
 	void  adjustSmoothingLength( float h );
 };
@@ -79,8 +78,8 @@ class KernelSplineGaussian : public iKernel
 {
 public:
 	float base( float h, float r );
-	vec2f gradient( float h, vec2f r );
-	vec3f gradient( float h, vec3f r );
+	glm::vec2 gradient( float h, glm::vec2 r );
+	glm::vec3 gradient( float h, glm::vec3 r );
 	float laplacian( float h, float r );
 	//void  adjustSmoothingLength( float h );
 };
@@ -89,8 +88,8 @@ class KernelDesburn : public iKernel
 {
 public:
 	float base( float h, float r );
-	vec2f gradient( float h, vec2f r );
-	vec3f gradient( float h, vec3f r );
+	glm::vec2 gradient( float h, glm::vec2 r );
+	glm::vec3 gradient( float h, glm::vec3 r );
 	float laplacian( float h, float r );
 	//void  adjustSmoothingLength( float h );
 };*/

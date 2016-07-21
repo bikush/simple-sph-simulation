@@ -5,7 +5,7 @@
 #include <glm\gtx\norm.hpp>
 #include <GL\glew.h>
 
-SPHPlaneInteractor2d::SPHPlaneInteractor2d( vec2f start, vec2f dir, vec2f upDir, float distance )
+SPHPlaneInteractor2d::SPHPlaneInteractor2d( glm::vec2 start, glm::vec2 dir, glm::vec2 upDir, float distance )
 {
 	this->start = start;
 	direction = glm::normalize( dir );
@@ -14,12 +14,12 @@ SPHPlaneInteractor2d::SPHPlaneInteractor2d( vec2f start, vec2f dir, vec2f upDir,
 	distanceSquared = distance*distance;
 }
 
-SPHPlaneInteractor2d::SPHPlaneInteractor2d( vec2f start, vec2f dir, float distance )
+SPHPlaneInteractor2d::SPHPlaneInteractor2d( glm::vec2 start, glm::vec2 dir, float distance )
 {
-	vec2f upDir1 = vec2f( dir.x, -dir.y );
-	vec2f upDir2 = vec2f( -dir.x, dir.y );
-	vec2f upDir;
-	if( glm::dot( upDir1, vec2f(0,1) ) > glm::dot( upDir2, vec2f( 0,1 ) ) )
+	glm::vec2 upDir1 = glm::vec2( dir.x, -dir.y );
+	glm::vec2 upDir2 = glm::vec2( -dir.x, dir.y );
+	glm::vec2 upDir;
+	if( glm::dot( upDir1, glm::vec2(0,1) ) > glm::dot( upDir2, glm::vec2( 0,1 ) ) )
 	{
 		upDir = upDir1;
 	}else
@@ -34,22 +34,22 @@ SPHPlaneInteractor2d::SPHPlaneInteractor2d( vec2f start, vec2f dir, float distan
 	distanceSquared = distance*distance;
 }
 
-void SPHPlaneInteractor2d::applyDensity( SPHParticle2d& other, vec2f rvec )
+void SPHPlaneInteractor2d::applyDensity( SPHParticle2d& other, glm::vec2 rvec )
 {
 	
 }
 
-void SPHPlaneInteractor2d::applyForce( SPHParticle2d& other, vec2f rvec )
+void SPHPlaneInteractor2d::applyForce( SPHParticle2d& other, glm::vec2 rvec )
 {
 
 }
 
-void SPHPlaneInteractor2d::enforceInteractor( SPHParticle2d& other, vec2f rvec )
+void SPHPlaneInteractor2d::enforceInteractor( SPHParticle2d& other, glm::vec2 rvec )
 {	
 	if( glm::dot( rvec, up ) < 0 )
 	{
 		other.position -= rvec;
-		rvec = vec2f( 0,0 );
+		rvec = glm::vec2( 0,0 );
 	}
 	
 	float r = glm::length2( rvec );
@@ -62,25 +62,25 @@ void SPHPlaneInteractor2d::enforceInteractor( SPHParticle2d& other, vec2f rvec )
 		if( glm::dot( other.velocity, up ) > 0 ) return;
 
 		// else, change the direction of the velocity vector (mirror it around the plane axis)
-		vec2f axis = direction;
-		vec2f v = other.velocity;//.normalized();
+		glm::vec2 axis = direction;
+		glm::vec2 v = other.velocity;//.normalized();
 		float cosine = glm::dot( axis, v ); 
 		if( cosine < 0 )
 		{
 			axis = -direction;
 			cosine = -cosine;
 		}
-		vec2f newVelocity = axis *( 2*cosine ) - v;
+		glm::vec2 newVelocity = axis *( 2*cosine ) - v;
 		other.velocity = newVelocity*0.8f;// * other.velocity.norm();	
 		other.force -= newVelocity*other.mass;
 	}
 }
 
-vec2f SPHPlaneInteractor2d::directionTo( SPHParticle2d& other )
+glm::vec2 SPHPlaneInteractor2d::directionTo( SPHParticle2d& other )
 {
-	vec2f toStart = other.position - start;		
+	glm::vec2 toStart = other.position - start;		
 	float t = glm::dot( toStart, direction );
-	vec2f projected = start + direction * t;
+	glm::vec2 projected = start + direction * t;
 
 	return other.position - projected;
 }
@@ -88,7 +88,7 @@ vec2f SPHPlaneInteractor2d::directionTo( SPHParticle2d& other )
 // TODO: remove this drawing style
 void SPHPlaneInteractor2d::draw()
 {
-	vec2f ns, ne;
+	glm::vec2 ns, ne;
 	ns = start + direction  *0.5f;
 	ne = ns + up;
 	

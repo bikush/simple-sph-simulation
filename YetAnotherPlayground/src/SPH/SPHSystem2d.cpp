@@ -20,7 +20,7 @@ SPHSystem2d::SPHSystem2d( float w, float h, float density, float constantK, floa
 {
 	particles = vector<SPHParticle2d>();
 	particleCount = 0;
-	//positions = new vec2f[200];
+	//positions = new glm::vec2[200];
 	//positionsSize = 200;
 
 	dWidth = w;
@@ -36,7 +36,7 @@ SPHSystem2d::SPHSystem2d( float w, float h, float density, float constantK, floa
 	unitRadius = sqrt( particleMass / (restDensity*PI) );
 
 	useGravity = true;
-	gravityAcc =  vec2f( 0, -0.981*10 );	
+	gravityAcc =  glm::vec2( 0, -0.981*10 );	
 
 	smoothingLength = smLen;
 	kernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
@@ -79,7 +79,7 @@ SPHSystem2d::SPHSystem2d( const char* file )
 	colorFieldTreshold *= colorFieldTreshold;
 	surfaceTension = map.getData( "fluid", "surfaceTension" ).get<float>();
 	particleMass = map.getData( "fluid", "unitMass" ).get<float>();
-	gravityAcc =  map.getData( "fluid", "gravity" ).getVec2f() * particleMass;
+	gravityAcc =  map.getData( "fluid", "gravity" ).getVec2() * particleMass;
 
 	smoothingLength = map.getData( "kernel", "smoothingLength" ).get<float>();
 	kernel = KernelBuilder::getKernel( map.getData("kernel", "base").getStringData(), smoothingLength );
@@ -145,7 +145,7 @@ void SPHSystem2d::fillGrid( )
 void SPHSystem2d::putParticleIntoGrid( int particleIndex )
 {
 	// Calculate grid index
-	vec2f position = (particles[ particleIndex ]).position;
+	glm::vec2 position = (particles[ particleIndex ]).position;
 	int x = int( position.x * gridWidth / dWidth );
 	int y = int( position.y * gridHeight / dHeight );
 	if( x >= gridWidth ) x=gridWidth-1;
@@ -177,9 +177,9 @@ void SPHSystem2d::setKernel( SPHKernelUse kernelUse, KernelType type )
 	(*old) =  KernelBuilder::getKernel( type, smoothingLength );
 }
 
-void SPHSystem2d::addParticle( vec2f position, vec2f velocity )
+void SPHSystem2d::addParticle( glm::vec2 position, glm::vec2 velocity )
 {
-	position = glm::clamp( position, vec2f(0,0), vec2f( dWidth, dHeight ) );
+	position = glm::clamp( position, glm::vec2(0,0), glm::vec2( dWidth, dHeight ) );
 	particles.push_back( SPHParticle2d( position, velocity, particleMass, restDensity ) );
 	putParticleIntoGrid( particleCount );
 	particleCount++;	
@@ -188,7 +188,7 @@ void SPHSystem2d::addParticle( vec2f position, vec2f velocity )
 	{
 		positionsSize *= 1.5;
 		delete [] positions;
-		positions = new vec2f[positionsSize];
+		positions = new glm::vec2[positionsSize];
 	}*/
 }
 
@@ -199,7 +199,7 @@ void SPHSystem2d::addSurface( SPHInteractor2d* surface )
 
 void SPHSystem2d::applyDensity( SPHParticle2d& first, SPHParticle2d& second )
 {
-	vec2f rvec = first.position - second.position;
+	glm::vec2 rvec = first.position - second.position;
 	float r = glm::length( rvec );
 	if( r < smoothingLength )
 	{
@@ -213,16 +213,16 @@ void SPHSystem2d::applyDensity( SPHParticle2d& first, SPHParticle2d& second )
 // NOTE: Assume this is called on neighbourhood data. No smoothing check is made.
 void SPHSystem2d::applyForces( SPHParticle2d& first, SPHParticle2d& second )
 {
-	vec2f rvec = (first.position - second.position);
+	glm::vec2 rvec = (first.position - second.position);
 	float r = glm::length( rvec );
 	
 	if( r <= 0.000001 ) 
 	{
-		rvec = vec2f( 0.707, 0.707 );
+		rvec = glm::vec2( 0.707, 0.707 );
 		r = 1;
 	}
 	/*
-	vec2f commonPressureInfluence = 
+	glm::vec2 commonPressureInfluence = 
 		pressureKernel->gradient( rvec ) * 
 		( 
 			particleMass * 
@@ -230,7 +230,7 @@ void SPHSystem2d::applyForces( SPHParticle2d& first, SPHParticle2d& second )
 				second.pressure + first.pressure 
 			) / 2.0
 		); /* unified */
-	vec2f commonPressureInfluence = 
+	glm::vec2 commonPressureInfluence = 
 		pressureKernel->gradient( rvec ) * 
 		( 
 			particleMass * 
@@ -242,9 +242,9 @@ void SPHSystem2d::applyForces( SPHParticle2d& first, SPHParticle2d& second )
 		
 	// viscosity forces
 		
-	/*vec2f commonViscousInfluence = (second.velocity - first.velocity) * 
+	/*glm::vec2 commonViscousInfluence = (second.velocity - first.velocity) * 
 		(viscosityConstant * particleMass * viscousKernel->laplacian( r )); /* unified */
-	vec2f commonViscousInfluence = 
+	glm::vec2 commonViscousInfluence = 
 		(second.velocity - first.velocity) * 
 		(
 			viscosityConstant * particleMass * 
@@ -255,7 +255,7 @@ void SPHSystem2d::applyForces( SPHParticle2d& first, SPHParticle2d& second )
 	first.force += ( commonPressureInfluence + commonViscousInfluence) / second.density;
 	second.force += (-commonPressureInfluence - commonViscousInfluence) / first.density;
 
-	vec2f commonColorGradient = kernel->gradient( rvec ) * particleMass;
+	glm::vec2 commonColorGradient = kernel->gradient( rvec ) * particleMass;
 	first.colorGradient += commonColorGradient / second.density;
 	second.colorGradient += commonColorGradient / first.density;
 
@@ -267,7 +267,7 @@ void SPHSystem2d::applyForces( SPHParticle2d& first, SPHParticle2d& second )
 
 void SPHSystem2d::applySurfaceDensity( SPHParticle2d& particle )
 {
-	vec2f rvec;
+	glm::vec2 rvec;
 	float r;
 	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
@@ -282,7 +282,7 @@ void SPHSystem2d::applySurfaceDensity( SPHParticle2d& particle )
 
 void SPHSystem2d::applySurfaceForces( SPHParticle2d& particle )
 {
-	vec2f rvec;
+	glm::vec2 rvec;
 	float r;
 	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
@@ -390,7 +390,7 @@ void SPHSystem2d::animate( float dt )
 	{
 		particles[i].reset();
 	}
-	vec2f rvec;
+	glm::vec2 rvec;
 	
 	// Calculating densities and pressures for all particles:
 	//  - grid walk
@@ -412,9 +412,9 @@ void SPHSystem2d::animate( float dt )
 
 	// TODO: collisions and user interaction
 	
-	vec2f acceleration;
-	vec2f oldPosition;
-	vec2f moveVector;
+	glm::vec2 acceleration;
+	glm::vec2 oldPosition;
+	glm::vec2 moveVector;
 
 	
 	clearGrid( );	

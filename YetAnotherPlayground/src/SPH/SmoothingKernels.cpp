@@ -72,7 +72,7 @@ inline float KernelPoly6::base( float r )
 	}
 }
 
-inline vec2f KernelPoly6::gradient( vec2f rvec )
+inline glm::vec2 KernelPoly6::gradient( glm::vec2 rvec )
 {
 	
 	float rSq = glm::dot(rvec, rvec);
@@ -81,11 +81,11 @@ inline vec2f KernelPoly6::gradient( vec2f rvec )
 		return rvec*( gradientFactor*pow(hSquared - rSq, 2) );
 	}else
 	{
-		return vec2f(0,0);
+		return glm::vec2(0,0);
 	}
 }
 
-inline vec3f KernelPoly6::gradient( vec3f rvec )
+inline glm::vec3 KernelPoly6::gradient( glm::vec3 rvec )
 {
 	float rSq = glm::dot(rvec, rvec);
 	if( rSq >= 0 && rSq < hSquared )
@@ -93,7 +93,7 @@ inline vec3f KernelPoly6::gradient( vec3f rvec )
 		return rvec*( gradientFactor*pow(hSquared - rSq, 2) );
 	}else
 	{
-		return vec3f(0,0,0);
+		return glm::vec3(0,0,0);
 	}
 }
 
@@ -138,7 +138,7 @@ inline float KernelSpiky::base( float r )
 	}
 }
 
-inline vec2f KernelSpiky::gradient( vec2f rvec )
+inline glm::vec2 KernelSpiky::gradient( glm::vec2 rvec )
 {
 	float rSq = glm::dot(rvec, rvec);
 	if( rSq < h*h )
@@ -147,11 +147,11 @@ inline vec2f KernelSpiky::gradient( vec2f rvec )
 		return rvec *( gradientFactor * pow(h-rSq, 2) / rSq );
 	}else
 	{
-		return vec2f();
+		return glm::vec2();
 	}
 }
 
-inline vec3f KernelSpiky::gradient( vec3f rvec )
+inline glm::vec3 KernelSpiky::gradient( glm::vec3 rvec )
 {
 	float rSq = glm::dot(rvec, rvec);
 	if( rSq < h*h )
@@ -160,7 +160,7 @@ inline vec3f KernelSpiky::gradient( vec3f rvec )
 		return rvec *( gradientFactor * pow(h-rSq, 2) / rSq );
 	}else
 	{
-		return vec3f();
+		return glm::vec3();
 	}
 }
 
@@ -206,7 +206,7 @@ inline float KernelViscosity::base( float r )
 	}
 }
 
-inline vec2f KernelViscosity::gradient( vec2f rvec )
+inline glm::vec2 KernelViscosity::gradient( glm::vec2 rvec )
 {
 	float r = glm::length(rvec);
 	if( r > -h && r < h )
@@ -214,11 +214,11 @@ inline vec2f KernelViscosity::gradient( vec2f rvec )
 		return  rvec*(( gradientFactor * ( -(3*r*r/(2*h*h*h)) + 2*r/(h*h) - h/(2*r*r)  ) )/r);
 	}else
 	{
-		return vec2f();
+		return glm::vec2();
 	}
 }
 
-inline vec3f KernelViscosity::gradient( vec3f rvec )
+inline glm::vec3 KernelViscosity::gradient( glm::vec3 rvec )
 {
 	float r = glm::length(rvec);
 	if( r > -h && r < h )
@@ -226,7 +226,7 @@ inline vec3f KernelViscosity::gradient( vec3f rvec )
 		return  rvec*(( gradientFactor * ( -(3*r*r/(2*h*h*h)) + 2*r/(h*h) - h/(2*r*r)  ) )/r);
 	}else
 	{
-		return vec3f();
+		return glm::vec3();
 	}
 }
 
@@ -256,7 +256,7 @@ float KernelSplineGaussian::base( float h, float r )
 	}
 }
 
-vec2f KernelSplineGaussian::gradient( float h, vec2f rvec )
+glm::vec2 KernelSplineGaussian::gradient( float h, glm::vec2 rvec )
 {
 	float r = rvec.norm();
 	if( r > 0 && r < h )
@@ -267,11 +267,11 @@ vec2f KernelSplineGaussian::gradient( float h, vec2f rvec )
 		return rvec*(((-3*pow( 2-r/h, 2)/(4*h))/(PI * h))/r);
 	}else
 	{
-		return vec2f();
+		return glm::vec2();
 	}
 }
 
-vec3f KernelSplineGaussian::gradient( float h, vec3f rvec )
+glm::vec3 KernelSplineGaussian::gradient( float h, glm::vec3 rvec )
 {
 	float r = rvec.norm();
 	if( r > 0 && r < h )
@@ -282,7 +282,7 @@ vec3f KernelSplineGaussian::gradient( float h, vec3f rvec )
 		return rvec*(((-3*pow( 2-r/h, 2)/(4*h))/(PI * h))/r);
 	}else
 	{
-		return vec3f();
+		return glm::vec3();
 	}
 }
 
@@ -311,7 +311,7 @@ float KernelDesburn::base( float h, float r )
 	}
 }
 
-vec2f KernelDesburn::gradient( float h, vec2f rvec )
+glm::vec2 KernelDesburn::gradient( float h, glm::vec2 rvec )
 {
 	float r = rvec.norm();
 	if( r > 0 && r < 2*h )
@@ -319,11 +319,11 @@ vec2f KernelDesburn::gradient( float h, vec2f rvec )
 		return rvec*(( 15 * ( -3*pow( 2-r/h, 2 )/h  ) / ( PI * pow( 4*h, 3 ) ))/r);
 	}else
 	{
-		return vec2f();
+		return glm::vec2();
 	}
 }
 
-vec3f KernelDesburn::gradient( float h, vec3f rvec )
+glm::vec3 KernelDesburn::gradient( float h, glm::vec3 rvec )
 {
 	float r = rvec.norm();
 	if( r > 0 && r < 2*h )
@@ -331,7 +331,7 @@ vec3f KernelDesburn::gradient( float h, vec3f rvec )
 		return rvec*(( 15 * ( -3*pow( 2-r/h, 2 )/h  ) / ( PI * pow( 4*h, 3 ) ))/r);
 	}else
 	{
-		return vec3f();
+		return glm::vec3();
 	}
 }
 

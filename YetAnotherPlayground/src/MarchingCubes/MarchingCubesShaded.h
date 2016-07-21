@@ -2,7 +2,7 @@
 #ifndef MARCHING_CUBES_SHADED_H
 #define MARCHING_CUBES_SHADED_H
 
-#include "Vector3D.h"
+#include "GlmVec.h"
 #include "Transform.h"
 #include <GL\glew.h>
 
@@ -27,9 +27,9 @@ private:
 	GLuint dataTexID;
 	bool dataChanged;
 	
-	vec3f vPosition;	// Origin of the virtual space where MarchingCubes are generated.
-	vec3f vSpan;		// Dimensions of the virtual space where MarchingCubes are generated.
-	vec3f deltaSpan;	// Per data virtual grid size.
+	glm::vec3 vPosition;	// Origin of the virtual space where MarchingCubes are generated.
+	glm::vec3 vSpan;		// Dimensions of the virtual space where MarchingCubes are generated.
+	glm::vec3 deltaSpan;	// Per data virtual grid size.
 	
 	void initGridBuffer();
 	void initDataField();
@@ -38,7 +38,7 @@ private:
 
 	GLuint gridVao;
 	GLuint gridHandle;
-	vec3f gridStep;
+	glm::vec3 gridStep;
 	GLint gridElementCount;
 
 		
@@ -58,8 +58,8 @@ public:
 	
 	void putSphere( float x, float y, float z, float r );
 
-	vec3f getScale();
-	vec3f getPosition();	
+	glm::vec3 getScale();
+	glm::vec3 getPosition();	
 
 	float getTreshold();
 	void setTreshold(float);

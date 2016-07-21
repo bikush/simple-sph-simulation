@@ -38,7 +38,7 @@ SPHSystem3dClean::SPHSystem3dClean( float w, float h, float d, float density, fl
 	unitRadius = sqrt( particleMass / (restDensity*PI) );
 
 	useGravity = true;
-	gravityAcc =  vec3f( 0, 0, -9.81 );	
+	gravityAcc =  glm::vec3( 0, 0, -9.81 );	
 
 	smoothingLength = smLen;
 	kernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
@@ -77,7 +77,7 @@ SPHSystem3dClean::SPHSystem3dClean( const char* file )
 	colorFieldTreshold *= colorFieldTreshold;
 	surfaceTension = map.getData( "fluid", "surfaceTension" ).get<float>();
 	particleMass = map.getData( "fluid", "unitMass" ).get<float>();
-	gravityAcc =  map.getData( "fluid", "gravity" ).getVec3f() * particleMass;
+	gravityAcc =  map.getData( "fluid", "gravity" ).getVec3() * particleMass;
 
 	smoothingLength = map.getData( "kernel", "smoothingLength" ).get<float>();
 	kernel = KernelBuilder::getKernel( map.getData("kernel", "base").getStringData(), smoothingLength );
@@ -119,9 +119,9 @@ void SPHSystem3dClean::setKernel( SPHKernelUse kernelUse, KernelType type )
 	(*old) =  KernelBuilder::getKernel( type, smoothingLength );
 }
 
-void SPHSystem3dClean::addParticle( vec3f position, vec3f velocity )
+void SPHSystem3dClean::addParticle( glm::vec3 position, glm::vec3 velocity )
 {
-	position = glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
+	position = glm::clamp( position, glm::vec3(0,0,0), glm::vec3( dWidth, dHeight, dDepth ) );
 	particles.push_back(SPHParticleNeighbour3d( position, velocity, particleMass, restDensity ) );
 	particleCount++;
 }
@@ -142,7 +142,7 @@ void SPHSystem3dClean::toggleSurface(int index)
 
 void SPHSystem3dClean::applyDensity(SPHParticleNeighbour3d& first, SPHParticleNeighbour3d& second )
 {
-	vec3f rvec = first.position - second.position;
+	glm::vec3 rvec = first.position - second.position;
 	float r = glm::length( rvec );
 	if( r < smoothingLength )
 	{
@@ -156,16 +156,16 @@ void SPHSystem3dClean::applyDensity(SPHParticleNeighbour3d& first, SPHParticleNe
 // NOTE: Assume this is called on neighbourhood data. No smoothing check is made.
 void SPHSystem3dClean::applyForces( SPHParticle3d& first, SPHParticle3d& second )
 {
-	vec3f rvec = (first.position - second.position);
+	glm::vec3 rvec = (first.position - second.position);
 	float r = glm::length( rvec );
 	
 	if( r <= 0.000001 ) 
 	{
-		rvec = vec3f( 0.707, 0.707, 0 );
+		rvec = glm::vec3( 0.707, 0.707, 0 );
 		r = 1;
 	}
 	/*
-	vec3f commonPressureInfluence = 
+	glm::vec3 commonPressureInfluence = 
 		pressureKernel->gradient( rvec ) * 
 		( 
 			particleMass * 
@@ -173,7 +173,7 @@ void SPHSystem3dClean::applyForces( SPHParticle3d& first, SPHParticle3d& second 
 				second.pressure + first.pressure 
 			) / 2.0
 		); /* unified */
-	vec3f commonPressureInfluence = 
+	glm::vec3 commonPressureInfluence = 
 		pressureKernel->gradient( rvec ) * 
 		( 
 			particleMass * 
@@ -185,9 +185,9 @@ void SPHSystem3dClean::applyForces( SPHParticle3d& first, SPHParticle3d& second 
 		
 	// viscosity forces
 		
-	/*vec3f commonViscousInfluence = (second.velocity - first.velocity) * 
+	/*glm::vec3 commonViscousInfluence = (second.velocity - first.velocity) * 
 		(viscosityConstant * particleMass * viscousKernel->laplacian( r )); /* unified */
-	vec3f commonViscousInfluence = 
+	glm::vec3 commonViscousInfluence = 
 		(second.velocity - first.velocity) * 
 		(
 			viscosityConstant * particleMass * 
@@ -198,7 +198,7 @@ void SPHSystem3dClean::applyForces( SPHParticle3d& first, SPHParticle3d& second 
 	first.force += ( commonPressureInfluence + commonViscousInfluence) / second.density;
 	second.force += (-commonPressureInfluence - commonViscousInfluence) / first.density;
 
-	vec3f commonColorGradient = kernel->gradient( rvec ) * particleMass;
+	glm::vec3 commonColorGradient = kernel->gradient( rvec ) * particleMass;
 	first.colorGradient += commonColorGradient / second.density;
 	second.colorGradient += commonColorGradient / first.density;
 
@@ -210,7 +210,7 @@ void SPHSystem3dClean::applyForces( SPHParticle3d& first, SPHParticle3d& second 
 
 void SPHSystem3dClean::applySurfaceDensity( SPHParticle3d& particle )
 {
-	vec3f rvec;
+	glm::vec3 rvec;
 	float r;
 	for( size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++ )
 	{
@@ -225,7 +225,7 @@ void SPHSystem3dClean::applySurfaceDensity( SPHParticle3d& particle )
 
 void SPHSystem3dClean::applySurfaceForces( SPHParticle3d& particle )
 {
-	vec3f rvec;
+	glm::vec3 rvec;
 	float r;
 	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
@@ -280,9 +280,9 @@ void SPHSystem3dClean::animate( float dt )
 
 	// TODO: collisions and user interaction
 	
-	vec3f acceleration;
-	vec3f oldPosition;
-	vec3f moveVector;
+	glm::vec3 acceleration;
+	glm::vec3 oldPosition;
+	glm::vec3 moveVector;
 
 	for(int i=0; i<particleCount; i++)
 	{
@@ -310,7 +310,7 @@ void SPHSystem3dClean::animate( float dt )
 		particle.oldAcceleration = acceleration;
 				
 		// enforce surfaces
-		vec3f rvec;
+		glm::vec3 rvec;
 		float smSquared = smoothingLength*smoothingLength;
 		for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 		{
@@ -320,7 +320,7 @@ void SPHSystem3dClean::animate( float dt )
 				surfaces[surf]->enforceInteractor( particle, rvec );			
 			}
 		}	
-	//	particle.position.containWithin( vec3f( -10, -10, -10 ), vec3f( 10, 10 ,10 ) );
+	//	particle.position.containWithin( glm::vec3( -10, -10, -10 ), glm::vec3( 10, 10 ,10 ) );
 	}	
 }
 

@@ -14,7 +14,7 @@ MarchingSmoothSquares::MarchingSmoothSquares( ) : MarchingSquaresBase( )
 	maxValue = 0;
 }
 
-MarchingSmoothSquares::MarchingSmoothSquares(int w, int h, char max, vec3f p, vec3f s ) :
+MarchingSmoothSquares::MarchingSmoothSquares(int w, int h, char max, glm::vec3 p, glm::vec3 s ) :
 							MarchingSquaresBase( w, h, p, s )
 {
 	dataField = new char[ dataWidth * dataHeight ];
@@ -68,7 +68,7 @@ void MarchingSmoothSquares::clear()
 	trianglesCount = 0;
 }
 
-void MarchingSmoothSquares::drawGrid(vec3f colorFalse, vec3f colorTrue)
+void MarchingSmoothSquares::drawGrid(glm::vec3 colorFalse, glm::vec3 colorTrue)
 {
 	glMatrixMode(GL_MODELVIEW);	
 	glPushMatrix();
@@ -121,6 +121,6 @@ int MarchingSmoothSquares::generateTrianglesInField( int x, int y, int startInde
 	ind[3] = dataField[(x+1)*dataWidth + y];
 			
 	return MarchingSquaresFactory::getInterpolatedSquare( 
-					ind, triangles, startIndex,	vec2f( x, y ), maxValue
+					ind, triangles, startIndex,	glm::vec2( x, y ), maxValue
 			);
 }

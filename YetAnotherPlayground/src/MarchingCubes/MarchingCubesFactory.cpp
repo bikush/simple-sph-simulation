@@ -3,11 +3,11 @@
 #include <glm\common.hpp>
 #include <glm\geometric.hpp>
 
-int MarchingCubesFactory::getCube( int cubeIndex, vec3f* triangles, vec3f* normals, int start, vec3f offset )
+int MarchingCubesFactory::getCube( int cubeIndex, glm::vec3* triangles, glm::vec3* normals, int start, glm::vec3 offset )
 {
 	if(!edgeTable[cubeIndex]) return 0;
 
-	vec3f intVerts[12];
+	glm::vec3 intVerts[12];
 	if(edgeTable[cubeIndex] & 1) intVerts[0] = cubeEdges[0];
 	if(edgeTable[cubeIndex] & 2) intVerts[1] = cubeEdges[1];
 	if(edgeTable[cubeIndex] & 4) intVerts[2] = cubeEdges[2];
@@ -50,7 +50,7 @@ int MarchingCubesFactory::getCubeIndex( char verticeValues[8], char treshold )
 	return cubeIndex;
 }
 
-int MarchingCubesFactory::getFloatInterpolatedCube( float verticeValues[8], vec3f* triangles, vec3f* normals, int start, vec3f offset, float maxValue, float treshold )
+int MarchingCubesFactory::getFloatInterpolatedCube( float verticeValues[8], glm::vec3* triangles, glm::vec3* normals, int start, glm::vec3 offset, float maxValue, float treshold )
 {
 	int cubeIndex = 0;
 	for(int n=0; n<8; n++) if(verticeValues[n]>treshold) cubeIndex |= (1<<n);
@@ -72,7 +72,7 @@ int MarchingCubesFactory::getFloatInterpolatedCube( float verticeValues[8], vec3
 		edgeWeight[i+8]/=maxValue;
 	}
 
-	vec3f intVerts[12];	
+	glm::vec3 intVerts[12];	
 	if(edgeTable[cubeIndex] & 1) intVerts[0] = cubeEdges[0] + cubeEdgesOffset[0]*edgeWeight[0];
 	if(edgeTable[cubeIndex] & 2) intVerts[1] = cubeEdges[1] + cubeEdgesOffset[1]*edgeWeight[1];
 	if(edgeTable[cubeIndex] & 4) intVerts[2] = cubeEdges[2] + cubeEdgesOffset[2]*edgeWeight[2];
@@ -108,7 +108,7 @@ int MarchingCubesFactory::getFloatInterpolatedCube( float verticeValues[8], vec3
 	return trianglesCount-start;
 }
 
-int MarchingCubesFactory::getInterpolatedCube(  char verticeValues[8], char maxValue, vec3f* triangles, vec3f* normals, int start, vec3f offset, char treshold )
+int MarchingCubesFactory::getInterpolatedCube(  char verticeValues[8], char maxValue, glm::vec3* triangles, glm::vec3* normals, int start, glm::vec3 offset, char treshold )
 {
 	int cubeIndex = getCubeIndex( verticeValues, treshold );
 	if(!edgeTable[cubeIndex]) return 0;
@@ -126,7 +126,7 @@ int MarchingCubesFactory::getInterpolatedCube(  char verticeValues[8], char maxV
 	//	edgeWeight[i+8]/=maxValue;
 	}
 
-	vec3f intVerts[12];
+	glm::vec3 intVerts[12];
 	float f = 1.0f/maxValue;
 	if(edgeTable[cubeIndex] & 1) intVerts[0] = cubeEdges[0] + cubeEdgesOffset[0]*edgeWeight[0]*f;
 	if(edgeTable[cubeIndex] & 2) intVerts[1] = cubeEdges[1] + cubeEdgesOffset[1]*edgeWeight[1]*f;
@@ -193,49 +193,49 @@ void MarchingCubesFactory::setTexture( GLenum textureSlot )
 	glBindTexture( GL_TEXTURE_2D, texTriTable );
 }
 
-vec3f MarchingCubesFactory::cubeVertices[] = {
-	vec3f( 0, 0, 0 ),
-	vec3f( 0, 1, 0 ),
-	vec3f( 1, 1, 0 ),
-	vec3f( 1, 0, 0 ),
-	vec3f( 0, 0, 1 ),
-	vec3f( 0, 1, 1 ),
-	vec3f( 1, 1, 1 ),
-	vec3f( 1, 0, 1 )
+glm::vec3 MarchingCubesFactory::cubeVertices[] = {
+	glm::vec3( 0, 0, 0 ),
+	glm::vec3( 0, 1, 0 ),
+	glm::vec3( 1, 1, 0 ),
+	glm::vec3( 1, 0, 0 ),
+	glm::vec3( 0, 0, 1 ),
+	glm::vec3( 0, 1, 1 ),
+	glm::vec3( 1, 1, 1 ),
+	glm::vec3( 1, 0, 1 )
 };
 
-vec3f MarchingCubesFactory::cubeEdges[] = {
-	vec3f(   0, 0.5, 0 ),	// front face
-	vec3f( 0.5,   1, 0 ),
-	vec3f(   1, 0.5, 0 ),
-	vec3f( 0.5,   0, 0 ),
+glm::vec3 MarchingCubesFactory::cubeEdges[] = {
+	glm::vec3(   0, 0.5, 0 ),	// front face
+	glm::vec3( 0.5,   1, 0 ),
+	glm::vec3(   1, 0.5, 0 ),
+	glm::vec3( 0.5,   0, 0 ),
 
-	vec3f(   0, 0.5, 1 ),	// back face
-	vec3f( 0.5,   1, 1 ),
-	vec3f(   1, 0.5, 1 ),
-	vec3f( 0.5,   0, 1 ),
+	glm::vec3(   0, 0.5, 1 ),	// back face
+	glm::vec3( 0.5,   1, 1 ),
+	glm::vec3(   1, 0.5, 1 ),
+	glm::vec3( 0.5,   0, 1 ),
 
-	vec3f( 0, 0, 0.5 ),		// cube middle
-	vec3f( 0, 1, 0.5 ),
-	vec3f( 1, 1, 0.5 ),
-	vec3f( 1, 0, 0.5 )
+	glm::vec3( 0, 0, 0.5 ),		// cube middle
+	glm::vec3( 0, 1, 0.5 ),
+	glm::vec3( 1, 1, 0.5 ),
+	glm::vec3( 1, 0, 0.5 )
 };
 
-vec3f MarchingCubesFactory::cubeEdgesOffset[] = {
-	vec3f(  0, -1, 0 ),	// front face
-	vec3f( -1,  0, 0 ),
-	vec3f(  0,  1, 0 ),
-	vec3f(  1,  0, 0 ),
+glm::vec3 MarchingCubesFactory::cubeEdgesOffset[] = {
+	glm::vec3(  0, -1, 0 ),	// front face
+	glm::vec3( -1,  0, 0 ),
+	glm::vec3(  0,  1, 0 ),
+	glm::vec3(  1,  0, 0 ),
 
-	vec3f(  0, -1, 0 ),	// back face
-	vec3f( -1,  0, 0 ),
-	vec3f(  0,  1, 0 ),
-	vec3f(  1,  0, 0 ),
+	glm::vec3(  0, -1, 0 ),	// back face
+	glm::vec3( -1,  0, 0 ),
+	glm::vec3(  0,  1, 0 ),
+	glm::vec3(  1,  0, 0 ),
 
-	vec3f( 0, 0, -1 ),		// cube middle
-	vec3f( 0, 0, -1 ),
-	vec3f( 0, 0, -1 ),
-	vec3f( 0, 0, -1 )
+	glm::vec3( 0, 0, -1 ),		// cube middle
+	glm::vec3( 0, 0, -1 ),
+	glm::vec3( 0, 0, -1 ),
+	glm::vec3( 0, 0, -1 )
 };
 
 int MarchingCubesFactory::edgeTable[256]={

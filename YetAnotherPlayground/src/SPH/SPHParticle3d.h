@@ -2,7 +2,7 @@
 #ifndef SPHPARTICLE3D_H
 #define SPHPARTICLE3D_H
 
-#include "Vector3D.h"
+#include "GlmVec.h"
 #include "Utility.h"
 #include <vector>
 
@@ -13,7 +13,7 @@ struct SPHParticle3d
 		mass(0), density(0), pressure(0), force(0)
 	{}
 
-	SPHParticle3d(vec3f pos, vec3f v, float m, float density) :
+	SPHParticle3d(glm::vec3 pos, glm::vec3 v, float m, float density) :
 		position(pos), velocity(v), oldAcceleration(0),
 		mass(m), density(density), pressure(0), force(0),
 		colorGradient(0), colorLaplacian(0)
@@ -21,20 +21,20 @@ struct SPHParticle3d
 
 	virtual void reset();
 
-	vec3f position;
-	vec3f velocity;
-	vec3f oldAcceleration;
+	glm::vec3 position;
+	glm::vec3 velocity;
+	glm::vec3 oldAcceleration;
 	float mass;
 
 	float density;
 	float pressure;
-	vec3f force;
+	glm::vec3 force;
 	float volume;
 
-	vec3f colorGradient;
+	glm::vec3 colorGradient;
 	float colorLaplacian;
 	
-	//int padding[offsetFromBytes(128, sizeof_all2<vec3f, vec3f, vec3f, float, float, float, vec3f, float, vec3f, float>()) / 4 - 1];
+	//int padding[offsetFromBytes(128, sizeof_all2<glm::vec3, glm::vec3, glm::vec3, float, float, float, glm::vec3, float, glm::vec3, float>()) / 4 - 1];
 	// Rounding up the structure to 128 bytes
 #ifdef _DEBUG
 	int padding[11];

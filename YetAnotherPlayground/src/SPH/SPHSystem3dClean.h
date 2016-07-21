@@ -39,7 +39,7 @@ class SPHSystem3dClean
 	float particleMass;
 
 	bool useGravity;
-	vec3f gravityAcc;
+	glm::vec3 gravityAcc;
 
 	iKernel* kernel;
 	iKernel* pressureKernel;
@@ -71,8 +71,8 @@ public:
 
 	void setKernel( SPHKernelUse kernelUse, KernelType type );
 
-	void addParticle( vec3f position, vec3f velocity );
-	void addDistributedParticles( vec3f start, vec3f direction, vec3f step );
+	void addParticle( glm::vec3 position, glm::vec3 velocity );
+	void addDistributedParticles( glm::vec3 start, glm::vec3 direction, glm::vec3 step );
 
 	void addSurface( SPHInteractor3d* surface );
 	void toggleSurface(int index);

@@ -5,7 +5,7 @@
 #include <glm\geometric.hpp>
 #include <glm\gtx\norm.hpp>
 
-SPHLineInteractor2d::SPHLineInteractor2d( vec2f start, vec2f end )
+SPHLineInteractor2d::SPHLineInteractor2d( glm::vec2 start, glm::vec2 end )
 {
 	this->start = start;
 	this->end = end;
@@ -14,44 +14,44 @@ SPHLineInteractor2d::SPHLineInteractor2d( vec2f start, vec2f end )
 	lengthSquared = length * length;
 }
 
-void SPHLineInteractor2d::applyDensity( SPHParticle2d& other, vec2f rvec )
+void SPHLineInteractor2d::applyDensity( SPHParticle2d& other, glm::vec2 rvec )
 {
 	
 }
 
-void SPHLineInteractor2d::applyForce( SPHParticle2d& other, vec2f rvec )
+void SPHLineInteractor2d::applyForce( SPHParticle2d& other, glm::vec2 rvec )
 {
 
 }
 
-void SPHLineInteractor2d::enforceInteractor( SPHParticle2d& other, vec2f rvec )
+void SPHLineInteractor2d::enforceInteractor( SPHParticle2d& other, glm::vec2 rvec )
 {
 	if( glm::length2( rvec ) < 0.5 ){
 		other.position -= rvec;
-		other.velocity = vec2f(0,0);
+		other.velocity = glm::vec2(0,0);
 		
 		if( glm::dot(rvec,direction) == 0 )
 		{
-			vec2f v = other.velocity;
-			vec2f n = glm::normalize( direction );
+			glm::vec2 v = other.velocity;
+			glm::vec2 n = glm::normalize( direction );
 			//v.normalize();
-			vec2f newV = n * glm::dot( n, v ) * 2.0f - v;
+			glm::vec2 newV = n * glm::dot( n, v ) * 2.0f - v;
 			//newV = newV * other.velocity.norm();
 			other.velocity = newV;
 		}else{
-			vec2f v = other.velocity;
-			vec2f n = glm::normalize( rvec );
+			glm::vec2 v = other.velocity;
+			glm::vec2 n = glm::normalize( rvec );
 			//v.normalize();
-			vec2f newV = n * glm::dot( n, v ) * 2.0f - v;
+			glm::vec2 newV = n * glm::dot( n, v ) * 2.0f - v;
 			//newV = newV * other.velocity.norm();
 			other.velocity = newV;
 		}
 	/*	
-		vec2f v = -other.velocity;
-		vec2f n = rvec;
+		glm::vec2 v = -other.velocity;
+		glm::vec2 n = rvec;
 		n.normalize();
 		//v.normalize();
-		vec2f newV = n * n.dotProduct(v) * 2 - v;
+		glm::vec2 newV = n * n.dotProduct(v) * 2 - v;
 		//newV = newV * other.velocity.norm();
 		other.velocity = newV;
 		/**/
@@ -59,15 +59,15 @@ void SPHLineInteractor2d::enforceInteractor( SPHParticle2d& other, vec2f rvec )
 		float x = other.velocity.x * other.velocity.x * other.mass / 2;
 		float y = other.velocity.y * other.velocity.y * other.mass / 2;
 		
-		other.force += vec2f( x, y );/**/
+		other.force += glm::vec2( x, y );/**/
 	}		
 }
 
-vec2f SPHLineInteractor2d::directionTo( SPHParticle2d& other )
+glm::vec2 SPHLineInteractor2d::directionTo( SPHParticle2d& other )
 {
 //	last0 = other.position;
 
-	vec2f toStart = other.position - start;
+	glm::vec2 toStart = other.position - start;
 	//last1 = toStart;
 	if( length == 0 ){		
 		return toStart;
@@ -80,16 +80,16 @@ vec2f SPHLineInteractor2d::directionTo( SPHParticle2d& other )
 		return other.position - end;
 	}
 
-	vec2f projected = start + direction * t;
+	glm::vec2 projected = start + direction * t;
 	//last1 = other.position - projected;
 	return other.position - projected;
 }
 
 void SPHLineInteractor2d::draw()
 {
-	vec2f ns, ne;
+	glm::vec2 ns, ne;
 	ns = start + direction * 0.5f;
-	ne = ns + vec2f( direction.y, -direction.x ) * 0.1f;
+	ne = ns + glm::vec2( direction.y, -direction.x ) * 0.1f;
 	
 	glBegin( GL_LINES );
 		glColor3f( 1,0,0 );

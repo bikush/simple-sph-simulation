@@ -15,8 +15,8 @@ MarchingCubesShaded::MarchingCubesShaded( const char* filePath )
 {
 	MappedData paramFile( filePath );
 
-	vPosition = paramFile.getData("base","position").getVec3f();	
-	vSpan = paramFile.getData("base","span").getVec3f();	
+	vPosition = paramFile.getData("base","position").getVec3();	
+	vSpan = paramFile.getData("base","span").getVec3();	
 		
 	dataWidth = paramFile.getData("base","dataWidth").get<int>();
 	dataHeight = paramFile.getData("base","dataHeight").get<int>();
@@ -78,7 +78,7 @@ MarchingCubesShaded::~MarchingCubesShaded( )
 // Actual data that generates the marching cube mesh is sent as a 3D texture
 void MarchingCubesShaded::initGridBuffer( )
 {
-	gridStep = vec3f(1,1,1) / (vec3f(dataWidth, dataHeight, dataDepth)-vec3f(1,1,1));
+	gridStep = glm::vec3(1,1,1) / (glm::vec3(dataWidth, dataHeight, dataDepth)-glm::vec3(1,1,1));
 	gridElementCount = (dataWidth + 1)*(dataHeight + 1)*(dataDepth + 1);
 
 	int gridTotalSize =  gridElementCount*3;
@@ -131,7 +131,7 @@ void MarchingCubesShaded::initDataField( )
 	glDisable(GL_TEXTURE_3D);
 
 	dataSize = dataWidth * dataHeight * dataDepth;
-	deltaSpan = vSpan / vec3f( dataWidth, dataHeight, dataDepth );
+	deltaSpan = vSpan / glm::vec3( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ]();
 	dataChanged = true;
 	// data is updated when changed
@@ -167,12 +167,12 @@ void MarchingCubesShaded::clear()
 	dataChanged = true;
 }
 
-vec3f MarchingCubesShaded::getScale()
+glm::vec3 MarchingCubesShaded::getScale()
 {
 	return vSpan;
 }
 
-vec3f MarchingCubesShaded::getPosition()
+glm::vec3 MarchingCubesShaded::getPosition()
 {
 	return vPosition;
 }
@@ -190,15 +190,15 @@ void MarchingCubesShaded::setTreshold( float t )
 void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 {
 	float value;
-	vec3f start( x-r, y-r, z-r );
+	glm::vec3 start( x-r, y-r, z-r );
 	start -= vPosition;
 	start /= deltaSpan;
 
-	vec3f end( x+r, y+r, z+r );
+	glm::vec3 end( x+r, y+r, z+r );
 	end -= vPosition;
 	end /= deltaSpan;
 
-	vec3f center = (vec3f( x,y,z ) - vPosition) / deltaSpan;
+	glm::vec3 center = (glm::vec3( x,y,z ) - vPosition) / deltaSpan;
 	r /= glm::length( deltaSpan );
 
 	glm::ivec3 iStart( start.x, start.y, start.z );
@@ -209,7 +209,7 @@ void MarchingCubesShaded::putSphere( float x, float y, float z, float r )
 		{
 			for(int k= iStart.z; k<iEnd.z; k++)
 			{
-				value = r-glm::length(center-vec3f(i,j,k))+1;
+				value = r-glm::length(center-glm::vec3(i,j,k))+1;
 				if (value > 0)
 				{
 					set(i, j, k, value);

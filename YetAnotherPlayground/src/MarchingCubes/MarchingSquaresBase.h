@@ -2,8 +2,7 @@
 #ifndef MARCHING_SQUARES_BASE_H
 #define MARCHING_SQUARES_BASE_H
 
-#include "Vector3D.h"
-#include "Vector2D.h"
+#include "GlmVec.h"
 #include "MappedData.h"
 
 /**
@@ -23,7 +22,7 @@ class MarchingSquaresBase
 public:
 	MarchingSquaresBase(void);	
 	// Param: width and height of the data field, position and scale for drawing.
-	MarchingSquaresBase(int w, int h, vec3f p = vec3f(0,0,0), vec3f s = vec3f(1,1,1));	
+	MarchingSquaresBase(int w, int h, glm::vec3 p = glm::vec3(0,0,0), glm::vec3 s = glm::vec3(1,1,1));	
 	MarchingSquaresBase( MappedData& paramFile );
 	virtual ~MarchingSquaresBase(void);
 	
@@ -42,9 +41,9 @@ public:
 	virtual void clear( )=0;
 
 	// Param: colors for 0 valued fields and non-0 valued fields.
-	virtual void drawGrid( vec3f colorFalse = vec3f(1,0,0), vec3f colorTrue = vec3f(0,1,0) )=0;				
+	virtual void drawGrid( glm::vec3 colorFalse = glm::vec3(1,0,0), glm::vec3 colorTrue = glm::vec3(0,1,0) )=0;				
 	// Param: color for the squares.
-	void drawSquares( vec3f color );
+	void drawSquares( glm::vec3 color );
 		
 	int getWidth( );
 	int getHeight( );
@@ -59,12 +58,12 @@ protected:
 	bool dataChanged;
 
 	// Position in 3D space.
-	vec3f position;
+	glm::vec3 position;
 	// Scale in 3D space.
-	vec3f scale;
+	glm::vec3 scale;
 
 	// Triangle mesh used to draw the squares. Multiple occurence of vertices. Non-optimal resizing.
-	vec2f* triangles;
+	glm::vec2* triangles;
 	int trianglesCount;
 	int trianglesSize;
 

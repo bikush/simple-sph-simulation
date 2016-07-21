@@ -19,7 +19,7 @@ SPHSystem3d::SPHSystem3d( float w, float h, float d, float density, float consta
 {
 	particles = vector<SPHParticle3d>();
 	particleCount = 0;
-	//positions = new vec3f[200];
+	//positions = new glm::vec3[200];
 	//positionsSize = 200;
 
 	pairs = vector< SPHPair >();
@@ -42,7 +42,7 @@ SPHSystem3d::SPHSystem3d( float w, float h, float d, float density, float consta
 	unitRadius = sqrt( particleMass / (restDensity*PI) );
 
 	useGravity = true;
-	gravityAcc =  vec3f( 0.0f, 0.0f, -9.81 );	
+	gravityAcc =  glm::vec3( 0.0f, 0.0f, -9.81 );	
 
 	adjustSmoothingLength( smLen );
 	
@@ -81,7 +81,7 @@ SPHSystem3d::SPHSystem3d( const char* file )
 	//colorFieldTreshold *= colorFieldTreshold;
 	surfaceTension = map.getData( "fluid", "surfaceTension" ).get<float>();
 	particleMass = map.getData( "fluid", "unitMass" ).get<float>();
-	gravityAcc =  map.getData( "fluid", "gravity" ).getVec3f();
+	gravityAcc =  map.getData( "fluid", "gravity" ).getVec3();
 		
 	unitRadius = sqrt( particleMass / (restDensity*PI) );
 	useGravity = true;	
@@ -178,7 +178,7 @@ void SPHSystem3d::fillGrid( )
 void SPHSystem3d::putParticleIntoGrid( int particleIndex )
 {
 	// Calculate grid index
-	vec3f position = particles[ particleIndex ].position;
+	glm::vec3 position = particles[ particleIndex ].position;
 	int x = (int) (position.x * gridWidth / dWidth);
 	int y = (int) (position.y * gridHeight / dHeight);
 	int z = (int) (position.z * gridDepth / dDepth);
@@ -215,9 +215,9 @@ void SPHSystem3d::putParticleIntoGrid( int particleIndex )
 	grid[ (z*gridHeight + y)*gridWidth + x ].push_back( particleIndex );
 }
 
-void SPHSystem3d::addParticle( vec3f position, vec3f velocity )
+void SPHSystem3d::addParticle( glm::vec3 position, glm::vec3 velocity )
 {
-	position = glm::clamp( position, vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ) );
+	position = glm::clamp( position, glm::vec3(0,0,0), glm::vec3( dWidth, dHeight, dDepth ) );
 	// density used to be restDensity, not 0
 	particles.push_back( SPHParticle3d( position, velocity, particleMass, 0 ) );
 	putParticleIntoGrid( particleCount );
@@ -241,7 +241,7 @@ void SPHSystem3d::toggleSurface( int index )
 // therefore it can be multiplied into density after all density updates
 void SPHSystem3d::applyDensity( SPHParticle3d& first, SPHParticle3d& second )
 {
-	vec3f rvec = first.position - second.position;
+	glm::vec3 rvec = first.position - second.position;
 	float rSq = glm::length2( rvec );	
 	if( rSq < hSquared )
 	{
@@ -256,22 +256,22 @@ void SPHSystem3d::applyDensity( SPHParticle3d& first, SPHParticle3d& second )
 // NOTE: Assume this is called on neighbourhood data. No smoothing check is made.
 void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second )
 {
-	vec3f rvec = (first.position - second.position);
+	glm::vec3 rvec = (first.position - second.position);
 	applyForces( first, second, rvec );		
 }
 
 // NOTE: Assume this is called on pair data. No smoothing check is made.
-void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second, vec3f rvec )
+void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second, glm::vec3 rvec )
 {
 	float r = glm::length( rvec );
 	
 	if( r <= 0.00173f ) 
 	{
-		rvec = vec3f( 0.001f, 0.001f, 0.001f );
+		rvec = glm::vec3( 0.001f, 0.001f, 0.001f );
 		r = 0.00173f;
 	}
 	
-	vec3f commonPressureInfluence = 
+	glm::vec3 commonPressureInfluence = 
 		ksgradient( rvec ) * 
 		( 
 			//particleMass * 
@@ -279,7 +279,7 @@ void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second, vec3
 				second.pressure + first.pressure 
 			) / 2.0f
 		); /* unified */
-	/*vec3f commonPressureInfluence = 
+	/*glm::vec3 commonPressureInfluence = 
 		ksgradient( rvec )*
 		( 
 			particleMass * 
@@ -291,9 +291,9 @@ void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second, vec3
 		
 	// viscosity forces
 		
-	vec3f commonViscousInfluence = (second.velocity - first.velocity) * 
+	glm::vec3 commonViscousInfluence = (second.velocity - first.velocity) * 
 		(viscosityConstant/* * particleMass/**/ * kvlaplacian( r )); /* unified */
-	/*vec3f commonViscousInfluence = 
+	/*glm::vec3 commonViscousInfluence = 
 		(second.velocity - first.velocity) * 
 		(
 			viscosityConstant * particleMass * 
@@ -304,7 +304,7 @@ void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second, vec3
 	first.force += ( -commonPressureInfluence + commonViscousInfluence) * second.volume; /// second.density;
 	second.force += ( commonPressureInfluence - commonViscousInfluence) * first.volume; /// first.density;
 	
-	vec3f commonColorGradient = kp6gradient( rvec );// * particleMass;
+	glm::vec3 commonColorGradient = kp6gradient( rvec );// * particleMass;
 	first.colorGradient += commonColorGradient * second.volume; /// second.density;
 	second.colorGradient += commonColorGradient * first.volume;/// first.density;
 
@@ -318,7 +318,7 @@ void SPHSystem3d::applyForces( SPHParticle3d& first, SPHParticle3d& second, vec3
 // therefore it can be multiplied into density after all density updates
 void SPHSystem3d::applySurfaceDensity( SPHParticle3d& particle )
 {
-	vec3f rvec;
+	glm::vec3 rvec;
 	float rSq;
 	for( size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
@@ -333,9 +333,9 @@ void SPHSystem3d::applySurfaceDensity( SPHParticle3d& particle )
 
 void SPHSystem3d::applySurfaceForces( SPHParticle3d& particle )
 {
-	vec3f rvec;
+	glm::vec3 rvec;
 	float rSq;
-	vec3f oldForce;
+	glm::vec3 oldForce;
 	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
 	{
 		rvec = surfaces[surf]->directionTo( particle );
@@ -483,7 +483,7 @@ void SPHSystem3d::animate( float dt )
 	{
 		particles[i].reset();
 	}
-	vec3f rvec;
+	glm::vec3 rvec;
 
 	bool useGrid = false;
 	
@@ -514,9 +514,9 @@ void SPHSystem3d::animate( float dt )
 
 	// TODO: collisions and user interaction
 	
-	vec3f acceleration;
-	vec3f oldPosition;
-	vec3f newVelocity;
+	glm::vec3 acceleration;
+	glm::vec3 oldPosition;
+	glm::vec3 newVelocity;
 
 	if(useGrid)
 		clearGrid( );	
@@ -584,7 +584,7 @@ void SPHSystem3d::animate( float dt )
 		particle.velocity = newVelocity /**/ + (acceleration + particle.oldAcceleration) * ( 0.5f*dt );
 		particle.oldAcceleration = acceleration;
 
-		//particle.position.containWithin( vec3f(0,0,0), vec3f( dWidth, dHeight, dDepth ));
+		//particle.position.containWithin( glm::vec3(0,0,0), glm::vec3( dWidth, dHeight, dDepth ));
 
 		if(wasOK != ( _isnan(particle.force.x) == 0 ) )	
 		{

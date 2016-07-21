@@ -33,9 +33,9 @@ string DataLine::getStringData( string fallback, string joiner) const
 	return join( lineData, joiner );
 }
 
-vec2f DataLine::getVec2f() const
+glm::vec2 DataLine::getVec2() const
 {
-	vec2f out;
+	glm::vec2 out;
 	if( lineData.size() >= 2 )
 	{
 		out[0] = readString<float>( lineData[0] );
@@ -44,9 +44,9 @@ vec2f DataLine::getVec2f() const
 	return out;
 }
 
-vec3f DataLine::getVec3f() const
+glm::vec3 DataLine::getVec3() const
 {
-	vec3f out;
+	glm::vec3 out;
 	if( lineData.size() >= 3 )
 	{
 		out[0] = readString<float>( lineData[0] );

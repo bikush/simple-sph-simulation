@@ -16,7 +16,7 @@ class MarchingCubesShaded;
 
 struct SPHPair
 {
-	SPHPair( SPHParticle3d& f, SPHParticle3d& s, vec3f r ) : first(f), second(s), rvec(r)
+	SPHPair( SPHParticle3d& f, SPHParticle3d& s, glm::vec3 r ) : first(f), second(s), rvec(r)
 	{}
 
 	SPHPair& operator=( SPHPair& other )
@@ -29,7 +29,7 @@ struct SPHPair
 
 	SPHParticle3d& first;
 	SPHParticle3d& second;
-	vec3f rvec;	
+	glm::vec3 rvec;	
 };
 
 class SPHSystem3d
@@ -63,7 +63,7 @@ class SPHSystem3d
 	float particleMass;
 
 	bool useGravity;
-	vec3f gravityAcc;
+	glm::vec3 gravityAcc;
 
 	// Updates densities for both particles and generates neighbourhood data,
 	// but only in the first particle (to avoid colisions in later calculations).
@@ -71,7 +71,7 @@ class SPHSystem3d
 	// Updates the forces for a given particle pair. It is asumed that the 
 	// particles are neighbours and therefore proximity check is not made.
 	void applyForces( SPHParticle3d& first, SPHParticle3d& second );
-	void applyForces( SPHParticle3d& first, SPHParticle3d& second, vec3f rvec );
+	void applyForces( SPHParticle3d& first, SPHParticle3d& second, glm::vec3 rvec );
 	// Updates the density against all surfaces (SPHInteractor).
 	void applySurfaceDensity( SPHParticle3d& particle );
 	// Updates the forces against all surfaces (SPHInteractor).
@@ -110,7 +110,7 @@ class SPHSystem3d
 	{
 		return kp6baseFactor * ( pow(hSquared - rSq, 3) );
 	}
-	inline vec3f kp6gradient( vec3f rvec )
+	inline glm::vec3 kp6gradient( glm::vec3 rvec )
 	{
 		return rvec*( kp6gradientFactor*pow(hSquared - glm::length2( rvec ), 2) );		
 	}
@@ -122,7 +122,7 @@ class SPHSystem3d
 	{
 		return ksbaseFactor * pow(smoothingLength-r, 3);		
 	}
-	inline vec3f ksgradient( vec3f rvec )
+	inline glm::vec3 ksgradient( glm::vec3 rvec )
 	{
 		float r = glm::length( rvec );
 		return rvec *( ksgradientFactor * pow(smoothingLength-r, 2) / r );
@@ -137,7 +137,7 @@ class SPHSystem3d
 		float rh = r/smoothingLength;
 		return kvbaseFactor * ( -(rh*rh*rh/2) + rh*rh + 1/(rh*2) - 1  );	
 	}
-	inline vec3f kvgradient( vec3f rvec )
+	inline glm::vec3 kvgradient( glm::vec3 rvec )
 	{
 		float r = glm::length( rvec );
 		float rSq = r*r;
@@ -161,8 +161,8 @@ public:
 	// bounding surface forces, moves the particles with calculated forces, updates the grid.
 	void animate( float dt );
 
-	void addParticle( vec3f position, vec3f velocity );
-	void addDistributedParticles( vec3f start, vec3f direction, vec3f step );
+	void addParticle( glm::vec3 position, glm::vec3 velocity );
+	void addDistributedParticles( glm::vec3 start, glm::vec3 direction, glm::vec3 step );
 
 	void addSurface( SPHInteractor3d* surface );
 	void toggleSurface( int index );

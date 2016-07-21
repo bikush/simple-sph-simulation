@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm\vec3.hpp>
+#include "GlmVec.h"
 #include <glm\mat4x4.hpp>
 
 class Transform

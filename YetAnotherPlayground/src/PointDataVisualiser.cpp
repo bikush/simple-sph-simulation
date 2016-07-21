@@ -10,7 +10,7 @@
 #define BUFFER_SIZE_INC 64
 
 PointDataVisualiser::PointDataVisualiser( const char* texturePath, bool useShader ) :
-	bufferSize(BUFFER_SIZE_INC), buffer(new vec3f[BUFFER_SIZE_INC]), bufferElements(0),
+	bufferSize(BUFFER_SIZE_INC), buffer(new glm::vec3[BUFFER_SIZE_INC]), bufferElements(0),
 	textureID(0), bufferID(0), color({1.f,1.f,1.f}),
 	shader(nullptr), useShader(useShader && GLEW_ARB_geometry_shader4 == GL_TRUE),
 	pointSize(5.0f)
@@ -58,7 +58,7 @@ void PointDataVisualiser::setImage( const char* texturePath )
 
 void PointDataVisualiser::setColor( float r, float g, float b )
 {
-	color = vec3f( r, g, b );
+	color = glm::vec3( r, g, b );
 }
 
 void PointDataVisualiser::clearBuffer()
@@ -66,7 +66,7 @@ void PointDataVisualiser::clearBuffer()
 	bufferElements = 0;
 }
 
-void PointDataVisualiser::pushPoint( vec3f point )
+void PointDataVisualiser::pushPoint( glm::vec3 point )
 {
 	pushPoint( point.x, point.y, point.z );
 }
@@ -77,8 +77,8 @@ void PointDataVisualiser::pushPoint( float x, float y, float z )
 	if( resize )
 	{
 		int newSize = bufferSize + BUFFER_SIZE_INC;
-		vec3f *newBuffer = new vec3f[ newSize ];
-		memcpy_s( newBuffer, newSize*sizeof(vec3f), buffer, bufferElements*sizeof(vec3f) );
+		glm::vec3 *newBuffer = new glm::vec3[ newSize ];
+		memcpy_s( newBuffer, newSize*sizeof(glm::vec3), buffer, bufferElements*sizeof(glm::vec3) );
 		delete [] buffer;
 		buffer = newBuffer;
 		bufferSize = newSize;
@@ -88,7 +88,7 @@ void PointDataVisualiser::pushPoint( float x, float y, float z )
 		glBufferData(GL_ARRAY_BUFFER, bufferSize * sizeof(float) * 3, NULL, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-	buffer[ bufferElements ] = vec3f( x, y, z );
+	buffer[ bufferElements ] = glm::vec3( x, y, z );
 	bufferElements++;
 }
 

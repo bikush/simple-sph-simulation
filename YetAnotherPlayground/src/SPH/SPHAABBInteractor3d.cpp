@@ -5,22 +5,22 @@
 #include <glm\common.hpp>
 #include <gl\glew.h>
 
-SPHAABBInteractor3d::SPHAABBInteractor3d( vec3f min, vec3f max, float dampen, float distance ):
+SPHAABBInteractor3d::SPHAABBInteractor3d( glm::vec3 min, glm::vec3 max, float dampen, float distance ):
 	min( min ), max( max), dampening( dampen ), distance( distance ), distanceSquared( distance*distance )
 {	
 }
 
-void SPHAABBInteractor3d::applyDensity( SPHParticle3d& other, vec3f rvec )
+void SPHAABBInteractor3d::applyDensity( SPHParticle3d& other, glm::vec3 rvec )
 {
 	
 }
 
-void SPHAABBInteractor3d::applyForce( SPHParticle3d& other, vec3f rvec )
+void SPHAABBInteractor3d::applyForce( SPHParticle3d& other, glm::vec3 rvec )
 {
 
 }
 
-void SPHAABBInteractor3d::enforceInteractor( SPHParticle3d& other, vec3f rvec )
+void SPHAABBInteractor3d::enforceInteractor( SPHParticle3d& other, glm::vec3 rvec )
 {	
 	
 	if( !isWithin( other.position, min, max ) )
@@ -50,7 +50,7 @@ void SPHAABBInteractor3d::enforceInteractor( SPHParticle3d& other, vec3f rvec )
 	// inside - reflect speed
 	float r = rvec.norm();
 	float depth = distance - r;	
-	//vec3f dir = rvec.normalized();
+	//glm::vec3 dir = rvec.normalized();
 	float cosine = rvec.dotProduct( other.velocity );
 	if( depth == 0 && cosine >= 0 )
 	{		
@@ -71,7 +71,7 @@ void SPHAABBInteractor3d::enforceInteractor( SPHParticle3d& other, vec3f rvec )
 		}
 		/*
 		other.position -= rvec*(depth);
-		vec3f newVelocity = other.velocity-rvec*2*cosine/(r*r);
+		glm::vec3 newVelocity = other.velocity-rvec*2*cosine/(r*r);
 		//cosine = abs(cosine);
 		//newVelocity *= dir*(1.7);
 		if( rvec.maxPart() != 0 ) 
@@ -82,11 +82,11 @@ void SPHAABBInteractor3d::enforceInteractor( SPHParticle3d& other, vec3f rvec )
 	//}
 }
 
-vec3f SPHAABBInteractor3d::directionTo( SPHParticle3d& other )
+glm::vec3 SPHAABBInteractor3d::directionTo( SPHParticle3d& other )
 {
-	vec3f position = other.position;
-	vec3f toMin = position - min;
-	vec3f toMax = max - position;
+	glm::vec3 position = other.position;
+	glm::vec3 toMin = position - min;
+	glm::vec3 toMax = max - position;
 	float minMin = minPart(toMin);
 	float minMax = minPart(toMax);
 	//if(position.x-0.036558483<=0.0000001 && position.y-0.074678488<=0.0000001 )

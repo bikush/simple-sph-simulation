@@ -77,16 +77,18 @@ GLuint TextureManager::loadTexture( const char* fileName )
 
 void TextureManager::deleteAllTextures()
 {	
-	GLuint *textureNames = new GLuint[ loaded.size() ];	
+	int texCount = loaded.size();
+	GLuint *textureNames = new GLuint[ texCount ];	
 	unsigned int index = 0;
 
-	map<string, GLuint>::iterator pair = loaded.begin();
-	while( pair != loaded.end() && index < loaded.size() )
-	{
-		textureNames[index] = (*pair).second;	
+	for (auto pair : loaded) {
+		textureNames[index] = pair.second;
 		index++;
-		pair++;
+		if (index >= texCount) {
+			break;
+		}
 	}
+
 	glDeleteTextures( index, textureNames );
 	delete [] textureNames;
 	loaded.clear();

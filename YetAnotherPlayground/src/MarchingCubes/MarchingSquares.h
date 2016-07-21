@@ -23,7 +23,7 @@ class MarchingSquares : public MarchingSquaresBase
 	
 public:
 	MarchingSquares( );
-	MarchingSquares(int w, int h, vec3f p = vec3f(0,0,0), vec3f s = vec3f(1,1,1));
+	MarchingSquares(int w, int h, glm::vec3 p = glm::vec3(0,0,0), glm::vec3 s = glm::vec3(1,1,1));
 	~MarchingSquares();
 
 	void set( int x, int y, float value = 1 );
@@ -32,7 +32,7 @@ public:
 	void putRectangle( int x1, int y1, int x2, int y2, bool value = true );
 	void clear( );
 
-	void drawGrid( vec3f colorFalse = vec3f(1,0,0), vec3f colorTrue = vec3f(0,1,0) );	
+	void drawGrid( glm::vec3 colorFalse = glm::vec3(1,0,0), glm::vec3 colorTrue = glm::vec3(0,1,0) );	
 		
 private:
 	bool* dataField;

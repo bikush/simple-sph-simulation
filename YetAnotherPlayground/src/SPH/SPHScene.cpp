@@ -77,7 +77,7 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 					{
 						float o = 0.0f;
 						float d = 1.0f;
-						sph3->addParticle( vec3f( 2, 5, 2 ), vec3f( 2,0,2 ) );
+						sph3->addParticle( glm::vec3( 2, 5, 2 ), glm::vec3( 2,0,2 ) );
 					}
 					break;
 							
@@ -85,14 +85,14 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 					{
 						float o =0;
 						float d = 1;
-						sph3->addParticle( vec3f( 3, 5, 2 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 3, 6, 2 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 2, 6, 2 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 2, 5, 2 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 3, 5, 3 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 3, 6, 3 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 2, 6, 3 ), vec3f( 0,-2,-2 ) );
-						sph3->addParticle( vec3f( 2, 5, 3 ), vec3f( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 3, 5, 2 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 3, 6, 2 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 2, 6, 2 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 2, 5, 2 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 3, 5, 3 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 3, 6, 3 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 2, 6, 3 ), glm::vec3( 0,-2,-2 ) );
+						sph3->addParticle( glm::vec3( 2, 5, 3 ), glm::vec3( 0,-2,-2 ) );
 					}
 					break;
 

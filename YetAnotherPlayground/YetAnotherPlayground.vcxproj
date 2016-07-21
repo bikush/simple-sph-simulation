@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)LibsWin\SFML-2.3.2\include;$(SolutionDir)LibsWin\glew-1.13.0\include;$(SolutionDir)LibsShared\GLM;$(ProjectDir)src\Shaders;$(ProjectDir)src;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(ProjectDir)src\LodePNG;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)LibsWin\SFML-2.3.2\lib;$(SolutionDir)LibsWin\glew-1.13.0\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(ProjectDir)src;$(ProjectDir)src\Shaders;$(ProjectDir)src\SPH;$(ProjectDir)src\MarchingCubes;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -159,6 +159,7 @@
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DataLine.cpp" />
     <ClCompile Include="src\DataLineSet.cpp" />
+    <ClCompile Include="src\GlmVec.cpp" />
     <ClCompile Include="src\LearningWindowManager.cpp" />
     <ClCompile Include="src\LineGrid.cpp" />
     <ClCompile Include="src\LodePNG\lodepng.cpp" />
@@ -193,8 +194,6 @@
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Utility.cpp" />
-    <ClCompile Include="src\Vector2D.cpp" />
-    <ClCompile Include="src\Vector3D.cpp" />
     <ClCompile Include="src\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +202,7 @@
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\DataLine.h" />
     <ClInclude Include="src\DataLineSet.h" />
+    <ClInclude Include="src\GlmVec.h" />
     <ClInclude Include="src\IntervalAverageTimer.h" />
     <ClInclude Include="src\LearningWindowManager.h" />
     <ClInclude Include="src\LineGrid.h" />
@@ -242,8 +242,6 @@
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Utility.h" />
-    <ClInclude Include="src\Vector2D.h" />
-    <ClInclude Include="src\Vector3D.h" />
     <ClInclude Include="src\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>

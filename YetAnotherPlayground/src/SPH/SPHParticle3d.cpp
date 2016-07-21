@@ -5,9 +5,9 @@ void SPHParticle3d::reset()
 {
 	density = 0;
 	pressure = 0;
-	force = vec3f( 0, 0, 0);
+	force = glm::vec3( 0, 0, 0);
 
-	colorGradient = vec3f( 0, 0, 0 );
+	colorGradient = glm::vec3( 0, 0, 0 );
 	colorLaplacian = 0;
 }
 

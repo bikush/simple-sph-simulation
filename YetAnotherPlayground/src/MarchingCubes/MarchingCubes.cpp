@@ -14,8 +14,8 @@ MarchingCubes::MarchingCubes( )
 	dataDepth = 0;
 	dataChanged = new bool[ DATA_CHANGE_SIZE ];
 	dataChangedGlobal = false;
-	position = vec3f(0,0,0);
-	scale = vec3f(1,1,1);
+	position = glm::vec3(0,0,0);
+	scale = glm::vec3(1,1,1);
 	triangles = NULL;
 	normals = 0;
 	trianglesCount = 0;
@@ -25,7 +25,7 @@ MarchingCubes::MarchingCubes( )
 	pointGrid = 0;
 }
 
-MarchingCubes::MarchingCubes( int w, int h, int d, char maxValue, vec3f pos, vec3f scl )
+MarchingCubes::MarchingCubes( int w, int h, int d, char maxValue, glm::vec3 pos, glm::vec3 scl )
 {
 	dataWidth = w<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : w;
 	dataHeight = h<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : h;
@@ -48,8 +48,8 @@ MarchingCubes::MarchingCubes( int w, int h, int d, char maxValue, vec3f pos, vec
 
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
-	triangles = new vec3f[ trianglesSize ];
-	normals = new vec3f[trianglesSize];
+	triangles = new glm::vec3[ trianglesSize ];
+	normals = new glm::vec3[trianglesSize];
 
 	pointGrid = 0;
 
@@ -60,8 +60,8 @@ MarchingCubes::MarchingCubes( const char* filePath )
 {
 	MappedData paramFile( filePath );
 
-	position = paramFile.getData("base","position").getVec3f();	
-	scale = paramFile.getData("base","scale").getVec3f();	
+	position = paramFile.getData("base","position").getVec3();	
+	scale = paramFile.getData("base","scale").getVec3();	
 		
 	dataWidth = paramFile.getData("base","dataWidth").get<int>();
 	dataHeight = paramFile.getData("base","dataHeight").get<int>();
@@ -84,8 +84,8 @@ MarchingCubes::MarchingCubes( const char* filePath )
 
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
-	triangles = new vec3f[ trianglesSize ];
-	normals = new vec3f[trianglesSize];
+	triangles = new glm::vec3[ trianglesSize ];
+	normals = new glm::vec3[trianglesSize];
 
 	pointGrid = 0;
 
@@ -157,7 +157,7 @@ void MarchingCubes::clear()
 	trianglesCount = 0;
 }
 
-void MarchingCubes::drawGrid( vec3f colorFalse, vec3f colorTrue )
+void MarchingCubes::drawGrid( glm::vec3 colorFalse, glm::vec3 colorTrue )
 {	
 	glMatrixMode(GL_MODELVIEW);	
 	glPushMatrix();
@@ -237,21 +237,21 @@ void MarchingCubes::generateTriangles( int x, int countX, int y, int countY, int
 
 				if(useInterpolated)
 				{
-					trianglesCount += MarchingCubesFactory::getInterpolatedCube( cube, dataMax, triangles, normals, trianglesCount, vec3f(i,j,k), treshold);
+					trianglesCount += MarchingCubesFactory::getInterpolatedCube( cube, dataMax, triangles, normals, trianglesCount, glm::vec3(i,j,k), treshold);
 				}else
 				{
 					cubeIndex = MarchingCubesFactory::getCubeIndex( cube );				
-					trianglesCount += MarchingCubesFactory::getCube( cubeIndex, triangles, normals, trianglesCount, vec3f(i,j,k));
+					trianglesCount += MarchingCubesFactory::getCube( cubeIndex, triangles, normals, trianglesCount, glm::vec3(i,j,k));
 				}
 
 				if( trianglesCount > trianglesSize - MarchingCubesFactory::MAX_VERTICES )
 				{
 					int newSize = trianglesSize + TRIANGLE_COUNT_INCREASE;				
-					vec3f* newTriangles = new vec3f[ newSize ];
-					vec3f* newNormals = new vec3f[ newSize ];
+					glm::vec3* newTriangles = new glm::vec3[ newSize ];
+					glm::vec3* newNormals = new glm::vec3[ newSize ];
 
-					memcpy( newTriangles, triangles, trianglesSize * sizeof(vec3f) );
-					memcpy( newNormals, normals, trianglesSize * sizeof(vec3f) );
+					memcpy( newTriangles, triangles, trianglesSize * sizeof(glm::vec3) );
+					memcpy( newNormals, normals, trianglesSize * sizeof(glm::vec3) );
 
 					trianglesSize = newSize;
 					delete [] triangles;
@@ -299,21 +299,21 @@ void MarchingCubes::generateTriangles()
 
 				if(useInterpolated)
 				{
-					trianglesCount += MarchingCubesFactory::getInterpolatedCube( cube, dataMax, triangles, normals, trianglesCount, vec3f(i,j,k), treshold);
+					trianglesCount += MarchingCubesFactory::getInterpolatedCube( cube, dataMax, triangles, normals, trianglesCount, glm::vec3(i,j,k), treshold);
 				}else
 				{
 					cubeIndex = MarchingCubesFactory::getCubeIndex( cube );				
-					trianglesCount += MarchingCubesFactory::getCube( cubeIndex, triangles, normals, trianglesCount, vec3f(i,j,k));
+					trianglesCount += MarchingCubesFactory::getCube( cubeIndex, triangles, normals, trianglesCount, glm::vec3(i,j,k));
 				}
 
 				if( trianglesCount > trianglesSize - MarchingCubesFactory::MAX_VERTICES )
 				{
 					int newSize = trianglesSize + TRIANGLE_COUNT_INCREASE;				
-					vec3f* newTriangles = new vec3f[ newSize ];
-					vec3f* newNormals = new vec3f[ newSize ];
+					glm::vec3* newTriangles = new glm::vec3[ newSize ];
+					glm::vec3* newNormals = new glm::vec3[ newSize ];
 
-					memcpy( newTriangles, triangles, trianglesSize * sizeof(vec3f) );
-					memcpy( newNormals, normals, trianglesSize * sizeof(vec3f) );
+					memcpy( newTriangles, triangles, trianglesSize * sizeof(glm::vec3) );
+					memcpy( newNormals, normals, trianglesSize * sizeof(glm::vec3) );
 
 					trianglesSize = newSize;
 					delete [] triangles;
@@ -328,7 +328,7 @@ void MarchingCubes::generateTriangles()
 }
 
 
-void MarchingCubes::drawColoredCubes( vec3f color )
+void MarchingCubes::drawColoredCubes( glm::vec3 color )
 {
 	glDisable( GL_LIGHTING );
 	glColor3f( color.x, color.y, color.z );
@@ -421,9 +421,9 @@ void MarchingCubes::putSphere( float x, float y, float z, float r )
 	}
 }
 
-vec3f MarchingCubes::getDataDimensions()
+glm::vec3 MarchingCubes::getDataDimensions()
 {
-	return vec3f( dataWidth, dataHeight, dataDepth );
+	return glm::vec3( dataWidth, dataHeight, dataDepth );
 }
 
 char* MarchingCubes::getData()
@@ -465,7 +465,7 @@ void MarchingCubes::drawWithShader( ShaderProgram* shader )
 
 void MarchingCubes::initPointGrid()
 {
-	pointGrid = new vec3f[ dataSize ];
+	pointGrid = new glm::vec3[ dataSize ];
 	int index = 0;
 	for(float x = -1; x<1.0f; x += 2.0f/dataWidth)
 	{
@@ -473,7 +473,7 @@ void MarchingCubes::initPointGrid()
 		{
 			for(float z = -1; z<1.0f; z += 2.0f/dataWidth)
 			{
-				pointGrid[ index ] = vec3f( x, y, z );
+				pointGrid[ index ] = glm::vec3( x, y, z );
 				index++;
 			}
 		}

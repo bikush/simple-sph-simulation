@@ -13,30 +13,30 @@ MarchingCubesBasic::MarchingCubesBasic( )
 	dataWidth = 0;
 	dataHeight = 0;
 	dataDepth = 0;
-	position = vec3f(0,0,0);
-	span = vec3f(1,1,1);
-	dSpan = vec3f(0,0,0);
+	position = glm::vec3(0,0,0);
+	span = glm::vec3(1,1,1);
+	dSpan = glm::vec3(0,0,0);
 	triangles = NULL;
 	normals = 0;
 	trianglesCount = 0;
 	trianglesSize = 0;
 }
 
-MarchingCubesBasic::MarchingCubesBasic( int w, int h, int d, float treshold, float dataMax, vec3f position, vec3f span ) :
+MarchingCubesBasic::MarchingCubesBasic( int w, int h, int d, float treshold, float dataMax, glm::vec3 position, glm::vec3 span ) :
 	position( position ), span( span ), dataMax( dataMax ), treshold( treshold )
 {
 	dataWidth = w<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : w;
 	dataHeight = h<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : h;
 	dataDepth = d<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : d;
 	dataSize = dataWidth * dataHeight * dataDepth;
-	dSpan = span / vec3f( dataWidth, dataHeight, dataDepth );
+	dSpan = span / glm::vec3( dataWidth, dataHeight, dataDepth );
 
 	dataField = new float[ dataSize ];
 				
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
-	triangles = new vec3f[ trianglesSize ];
-	normals = new vec3f[trianglesSize];
+	triangles = new glm::vec3[ trianglesSize ];
+	normals = new glm::vec3[trianglesSize];
 
 	clear();
 }
@@ -45,8 +45,8 @@ MarchingCubesBasic::MarchingCubesBasic( const char* filePath )
 {
 	MappedData paramFile( filePath );
 
-	position = paramFile.getData("base","position").getVec3f();	
-	span = paramFile.getData("base","span").getVec3f();	
+	position = paramFile.getData("base","position").getVec3();	
+	span = paramFile.getData("base","span").getVec3();	
 		
 	dataWidth = paramFile.getData("base","dataWidth").get<int>();
 	dataHeight = paramFile.getData("base","dataHeight").get<int>();
@@ -55,7 +55,7 @@ MarchingCubesBasic::MarchingCubesBasic( const char* filePath )
 	dataHeight = dataHeight<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataHeight;
 	dataDepth = dataDepth<DATA_CHANGE_DIV ? DATA_CHANGE_DIV : dataDepth;
 	dataSize = dataWidth * dataHeight * dataDepth;
-	dSpan = span / vec3f( dataWidth, dataHeight, dataDepth );
+	dSpan = span / glm::vec3( dataWidth, dataHeight, dataDepth );
 	dataField = new float[ dataSize ];
 
 	dataMax = paramFile.getData("base","maxValue").get<float>();
@@ -63,8 +63,8 @@ MarchingCubesBasic::MarchingCubesBasic( const char* filePath )
 
 	trianglesCount = 0;
 	trianglesSize = TRIANGLE_COUNT_INCREASE;
-	triangles = new vec3f[ trianglesSize ];
-	normals = new vec3f[trianglesSize];
+	triangles = new glm::vec3[ trianglesSize ];
+	normals = new glm::vec3[trianglesSize];
 
 	clear();
 }
@@ -104,7 +104,7 @@ void MarchingCubesBasic::clear()
 	trianglesCount = 0;
 }
 
-void MarchingCubesBasic::drawGrid( vec3f colorFalse, vec3f colorTrue )
+void MarchingCubesBasic::drawGrid( glm::vec3 colorFalse, glm::vec3 colorTrue )
 {	
 	glMatrixMode(GL_MODELVIEW);	
 	glPushMatrix();
@@ -113,7 +113,7 @@ void MarchingCubesBasic::drawGrid( vec3f colorFalse, vec3f colorTrue )
 		
 	glBegin(GL_POINTS);	
 	float value;
-	vec3f color;
+	glm::vec3 color;
 	float x=0;
 	float y=0;
 	float z=0;
@@ -197,16 +197,16 @@ void MarchingCubesBasic::generateTriangles()
 				cube[6] = dataField[index2 + 1 ];
 				cube[7] = dataField[index3 + 1 ];
 
-				trianglesCount += MarchingCubesFactory::getFloatInterpolatedCube( cube, triangles, normals, trianglesCount, vec3f(i,j,k), dataMax, treshold);
+				trianglesCount += MarchingCubesFactory::getFloatInterpolatedCube( cube, triangles, normals, trianglesCount, glm::vec3(i,j,k), dataMax, treshold);
 			
 				if( trianglesCount > trianglesSize - MarchingCubesFactory::MAX_VERTICES )
 				{
 					int newSize = trianglesSize + TRIANGLE_COUNT_INCREASE;				
-					vec3f* newTriangles = new vec3f[ newSize ];
-					vec3f* newNormals = new vec3f[ newSize ];
+					glm::vec3* newTriangles = new glm::vec3[ newSize ];
+					glm::vec3* newNormals = new glm::vec3[ newSize ];
 
-					memcpy( newTriangles, triangles, trianglesSize * sizeof(vec3f) );
-					memcpy( newNormals, normals, trianglesSize * sizeof(vec3f) );
+					memcpy( newTriangles, triangles, trianglesSize * sizeof(glm::vec3) );
+					memcpy( newNormals, normals, trianglesSize * sizeof(glm::vec3) );
 
 					trianglesSize = newSize;
 					delete [] triangles;
@@ -221,7 +221,7 @@ void MarchingCubesBasic::generateTriangles()
 }
 
 
-void MarchingCubesBasic::drawColoredCubes( vec3f color )
+void MarchingCubesBasic::drawColoredCubes( glm::vec3 color )
 {
 	glDisable( GL_LIGHTING );
 	glColor3f( color.x, color.y, color.z );
@@ -267,17 +267,17 @@ void MarchingCubesBasic::drawTriangleBuffer()
 void MarchingCubesBasic::putSphere( float x, float y, float z, float r )
 {
 	float value;
-	vec3f start = vec3f( x-r, y-r, z-r );
+	glm::vec3 start = glm::vec3( x-r, y-r, z-r );
 	start = glm::clamp( start, position, position+span );
 	start -= position;
 	start /= dSpan;
 
-	vec3f end = vec3f( x+r, y+r, z+r );
+	glm::vec3 end = glm::vec3( x+r, y+r, z+r );
 	start = glm::clamp( end, position, position+span );
 	end -= position;
 	end /= dSpan;
 
-	vec3f center = (vec3f( x,y,z ) - position) / dSpan;
+	glm::vec3 center = (glm::vec3( x,y,z ) - position) / dSpan;
 	r /= glm::length( dSpan );
 
 	for(int i= (int)start.x; i<(int)end.x; i++)
@@ -286,7 +286,7 @@ void MarchingCubesBasic::putSphere( float x, float y, float z, float r )
 		{
 			for(int k= (int)start.z; k<(int)end.z; k++)
 			{
-				value = r-glm::length(center-vec3f(i,j,k))+1;
+				value = r-glm::length(center-glm::vec3(i,j,k))+1;
 				if( value > 0 )
 					set( i, j, k, value );
 				
@@ -298,12 +298,12 @@ void MarchingCubesBasic::putSphere( float x, float y, float z, float r )
 }
 
 
-vec3f MarchingCubesBasic::getScale()
+glm::vec3 MarchingCubesBasic::getScale()
 {
 	return span;
 }
 
-vec3f MarchingCubesBasic::getPosition()
+glm::vec3 MarchingCubesBasic::getPosition()
 {
 	return position;
 }
