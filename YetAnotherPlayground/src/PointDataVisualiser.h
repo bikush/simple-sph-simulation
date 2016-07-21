@@ -28,7 +28,6 @@ class PointDataVisualiser
 
 	float pointSize;
 
-	void drawPipeline(const Camera& camera);
 	void drawShaded(const Camera& camera);
 	
 public:
@@ -42,7 +41,7 @@ public:
 	void pushPoint( glm::vec3 point );
 	void pushPoint( float x, float y, float z );
 
-	void draw( const Camera& camera, bool forcePipeline = false );
+	void draw( const Camera& camera );
 	void drawPoints();	
 	void drawArray();
 

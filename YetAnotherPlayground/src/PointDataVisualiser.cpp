@@ -128,31 +128,7 @@ void PointDataVisualiser::drawShaded(const Camera& camera)
 	glEnable(GL_CULL_FACE);	
 }
 
-// TODO: remove or fix pipeline draw
-void PointDataVisualiser::drawPipeline(const Camera& camera)
-{
-	float quadratic[] =  { 0.4f, 0.01f, 0.0f };
-	glPointParameterfv( GL_POINT_DISTANCE_ATTENUATION, quadratic );
-
-	float maxSize = 0.0f;
-	glGetFloatv( GL_POINT_SIZE_MAX, &maxSize );
-	if( maxSize > 100 )
-		maxSize = 100;
-	glPointSize( fmaxf( pointSize * 10 , maxSize ) );
-
-	glPointParameterf( GL_POINT_FADE_THRESHOLD_SIZE, 60.0f );
-	glPointParameterf( GL_POINT_SIZE_MIN, 1.0f );
-	glPointParameterf( GL_POINT_SIZE_MAX, maxSize );
-
-	glColor3f( color.x, color.y, color.z );
-	glTexEnvf( GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE );
-	
-	glEnable( GL_POINT_SPRITE );		
-		drawArray();
-	glDisable( GL_POINT_SPRITE );
-}
-
-void PointDataVisualiser::draw(const Camera& camera, bool forcePipeline )
+void PointDataVisualiser::draw( const Camera& camera )
 {	
 	ShaderProgram::turnOff();
 	glEnable(GL_TEXTURE_2D);
@@ -164,10 +140,7 @@ void PointDataVisualiser::draw(const Camera& camera, bool forcePipeline )
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(GL_FALSE);
 			
-			if( useShader && !forcePipeline )
-				drawShaded(camera);
-			else
-				drawPipeline(camera);
+			drawShaded(camera);
 
 		glDepthMask(GL_TRUE);
 		if( !blendEnabled ) glDisable( GL_BLEND );

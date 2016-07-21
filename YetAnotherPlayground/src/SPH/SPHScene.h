@@ -31,7 +31,6 @@ private:
 	IntervalAverageTimer sphTimer;
 	IntervalAverageTimer marchingTimer;
 	bool drawWithMC;
-	bool drawPDVWithShader;
 	float treshold;
 
 	bool paused;

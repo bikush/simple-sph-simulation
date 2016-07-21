@@ -14,7 +14,7 @@ using namespace std;
 SPHScene::SPHScene(void) : Scene(),
 	paused(false),
 	sphTimer(3), marchingTimer(3),
-	drawWithMC(false), drawPDVWithShader(true)
+	drawWithMC(false)
 {
 	sph3 = new SPHSystem3d("data/sph3d.txt");
 	cout << "SPH particle size: " << sizeof(SPHParticle3d) << endl;
@@ -132,16 +132,11 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 
 		case sf::Keyboard::K:	sph3->setSurfaceTension(sph3->getSurfaceTension()-0.01f);
 					break;
-	
 
 		case sf::Keyboard::M:
-					drawPDVWithShader = !drawPDVWithShader;
-					break;
-
-		case sf::Keyboard::N:
 					drawWithMC = !drawWithMC;
 					break;
-
+					
 		case sf::Keyboard::Multiply:
 					sph3->toggleSurface(1);
 					break;
@@ -198,7 +193,11 @@ void SPHScene::update(float dt)
 	infoText << "  Gravity (1): " << (sph3->usesGravity() ? "ON" : "OFF") << endl;
 	if (drawWithMC)
 	{
-		infoText << "[MarchingCubes]" << endl << "  Treshold (+/-): " << marchingCubes->getTreshold() << endl;
+		infoText << "[MarchingCubes (M)]" << endl << "  Treshold (+/-): " << marchingCubes->getTreshold() << endl;
+	}
+	else
+	{ 
+		infoText << "[PointCloud (M)]" << endl;
 	}
 	
 	status.setString( infoText.str() );	
@@ -221,14 +220,7 @@ void SPHScene::draw(const Camera & camera)
 	}else
 	{	
 		sph3->draw( pointVisualizer );			
-		if( drawPDVWithShader )
-		{
-			pointVisualizer->draw( camera );
-		}else{
-			ShaderProgram::turnOff();
-			pointVisualizer->draw( camera, true );
-		}	
-		
+		pointVisualizer->draw( camera );		
 	}
 	marchingTimer.pause();
 }
