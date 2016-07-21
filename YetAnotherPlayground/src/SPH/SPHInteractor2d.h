@@ -9,6 +9,8 @@ struct SPHParticle2d;
 class SPHInteractor2d
 {
 public:
+	virtual ~SPHInteractor2d() {};
+
 	virtual void applyDensity( SPHParticle2d& other, glm::vec2 rvec )=0;
 	virtual void applyForce( SPHParticle2d& other, glm::vec2 rvec )=0;
 	virtual void enforceInteractor( SPHParticle2d& other, glm::vec2 rvec )=0;

@@ -43,8 +43,6 @@ SPHSystem2d::SPHSystem2d( float w, float h, float density, float constantK, floa
 	pressureKernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
 	viscousKernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
 	
-	surfaces = vector<SPHInteractor2d*>();
-	
 	grid = vector< vector< int > >();
 	gridWidth = -1;
 	gridHeight = -1;
@@ -63,7 +61,6 @@ SPHSystem2d::SPHSystem2d( const char* file )
 	particles = vector<SPHParticle2d>();	
 	particleCount = 0;
 
-	surfaces = vector<SPHInteractor2d*>();
 	dWidth = map.getData( "grid", "width" ).get<float>();
 	dHeight = map.getData( "grid", "height" ).get<float>();
 	vector<string> surfaceNames = map.getData( "grid", "surfaces" ).getVector<string>();
@@ -192,9 +189,9 @@ void SPHSystem2d::addParticle( glm::vec2 position, glm::vec2 velocity )
 	}*/
 }
 
-void SPHSystem2d::addSurface( SPHInteractor2d* surface )
+void SPHSystem2d::addSurface(std::unique_ptr<SPHInteractor2d>& surface )
 {
-	surfaces.push_back( surface );
+	surfaces.push_back( std::move(surface) );
 }
 
 void SPHSystem2d::applyDensity( SPHParticle2d& first, SPHParticle2d& second )

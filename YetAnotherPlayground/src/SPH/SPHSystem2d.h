@@ -5,10 +5,11 @@
 #include "SPHParticle2d.h"
 #include "SmoothingKernels.h"
 #include <vector>
+#include <memory>
+#include "SPHInteractor2d.h"
 
 //class iKernel;
 class MarchingSquaresBase;
-class SPHInteractor2d;
 
 class SPHSystem2d
 {
@@ -20,7 +21,7 @@ class SPHSystem2d
 	int gridWidth;
 	int gridHeight;
 
-	std::vector<SPHInteractor2d*> surfaces;
+	std::vector< std::unique_ptr<SPHInteractor2d> > surfaces;
 	int particleCount;
 
 	float dWidth;
@@ -89,7 +90,7 @@ public:
 	void addParticle( glm::vec2 position, glm::vec2 velocity );
 	void addDistributedParticles( glm::vec2 start, glm::vec2 direction, glm::vec2 step );
 
-	void addSurface( SPHInteractor2d* surface );
+	void addSurface( std::unique_ptr<SPHInteractor2d>& surface );
 
 	void draw( MarchingSquaresBase* ms );
 	void drawPoints();

@@ -12,6 +12,7 @@ protected:
 	bool turnedOn;
 public:
 	SPHInteractor3d() : turnedOn(true) {};
+	virtual ~SPHInteractor3d() {};
 
 	virtual void applyDensity( SPHParticle3d& other, glm::vec3 rvec )=0;
 	virtual void applyForce( SPHParticle3d& other, glm::vec3 rvec )=0;
