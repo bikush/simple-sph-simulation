@@ -2,6 +2,7 @@
 #include "ShaderProgram.h"
 #include "ShaderBase.h"
 #include "ShaderUtility.h"
+#include <stdexcept>
 
 
 using namespace std;
@@ -94,9 +95,7 @@ void ShaderProgram::initMembers( const string& vertex, const string& geometry, c
 	programID = glCreateProgram();
 	if( programID == 0 )
 	{
-		cerr << "Shader Program not created!" << endl;
-		// TODO: throw exception?
-		return;
+		throw runtime_error("OpenGL could not create shader program.");
 	}
 	linkedOk = false;
 	//uniformLocations = map< string, GLint >();
@@ -149,7 +148,7 @@ bool ShaderProgram::addShader( const string& shaderPath )
 {
 	if( !linkedOk && shaderPath.length() > 0 )
 	{
-		// TODO: handle shader base creation failure, currently it just does exit(-1)
+		// Propagate exceptions thrown from ShaderBase constructor
 		attachedShaders.push_back( new ShaderBase( shaderPath ) );
 		return true;
 	}
@@ -255,10 +254,13 @@ GLint ShaderProgram::getUniform( const string& uniformName )
 	if( found == uniformLocations.end() )
 	{
 		GLint location = glGetUniformLocation(programID, uniformName.c_str());
-		if( location < 0 )
-			cout << "Unknown uniform: " << uniformName << endl;
-		// TODO: logging and catching such errors as these
-		uniformLocations[ uniformName ] = location;
+		if (location < 0)
+		{
+			cerr << "Unknown uniform: " << uniformName << endl;
+			return -1;
+		}
+		
+		uniformLocations[uniformName] = location;
 		return location;
 	}
 	else

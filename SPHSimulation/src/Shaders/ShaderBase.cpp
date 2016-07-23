@@ -4,6 +4,7 @@
 #include "Utility.h"
 #include <GL\glew.h>
 #include <string>
+#include <stdexcept>
 
 using namespace std;
 
@@ -13,8 +14,7 @@ ShaderBase::ShaderBase(const std::string& filePath)
 	shaderID = glCreateShader(type);
 	if( shaderID == 0 )
 	{
-		cerr << "Error creating shader type: " << getShaderNameFromType( type ) << endl;
-		exit(-1);
+		throw runtime_error("Error creating shader type: " + getShaderNameFromType(type) );
 	}
 
 	std::string source = "";
