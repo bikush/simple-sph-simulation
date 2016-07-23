@@ -90,9 +90,6 @@
     <ClCompile Include="src\SPH\SPHParticle2d.cpp">
       <Filter>Source Files\SPH</Filter>
     </ClCompile>
-    <ClCompile Include="src\SPH\SPHParticle3d.cpp">
-      <Filter>Source Files\SPH</Filter>
-    </ClCompile>
     <ClCompile Include="src\SPH\SPHPlaneInteractor2d.cpp">
       <Filter>Source Files\SPH</Filter>
     </ClCompile>

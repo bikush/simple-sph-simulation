@@ -4,7 +4,6 @@
 #include <gl\glew.h>
 
 class SPHSystem3d;
-class SPHSystem3dClean;
 class PointDataVisualiser;
 class MarchingCubesShaded;
 class LineGrid;

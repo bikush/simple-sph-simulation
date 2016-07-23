@@ -15,35 +15,14 @@ using namespace std;
 // Creates a SPH System 3d from base parameters. Default kernels are set and 
 // no bounding surfaces are defined, to do so, appropriate methods should be called.
 SPHSystem3d::SPHSystem3d( float w, float h, float d, float density, float constantK, float constantMi, 
-							float cfTreshold, float surfTension,  float mass, float smLen )
+							float cfTreshold, float surfTension,  float mass, float smLen ):
+	particleCount(0),
+	dWidth(w), dHeight(h), dDepth(d),
+	gridWidth(-1), gridHeight(-1),
+	restDensity(density), fluidConstantK(constantK), viscosityConstant(constantMi),
+	colorFieldTreshold(0.075f * cfTreshold), surfaceTension(surfTension), particleMass(mass),
+	unitRadius(mass/(density*PI)), useGravity(true), gravityAcc(0.0f, 0.0f, -9.81f)
 {
-	particles = vector<SPHParticle3d>();
-	particleCount = 0;
-	//positions = new glm::vec3[200];
-	//positionsSize = 200;
-
-	pairs = vector< SPHPair >();
-
-	dWidth = w;
-	dHeight = h;
-	dDepth = d;
-
-	grid = vector< vector< int > >();
-	gridWidth = -1;
-	gridHeight = -1;
-
-	restDensity = density;
-	fluidConstantK = constantK;
-	viscosityConstant = constantMi;
-	colorFieldTreshold = 0.075f;
-	colorFieldTreshold *= cfTreshold;
-	surfaceTension = surfTension;	
-	particleMass = mass;
-	unitRadius = sqrt( particleMass / (restDensity*PI) );
-
-	useGravity = true;
-	gravityAcc =  glm::vec3( 0.0f, 0.0f, -9.81 );	
-
 	adjustSmoothingLength( smLen );
 }
 
@@ -53,13 +32,12 @@ SPHSystem3d::SPHSystem3d( float w, float h, float d, float density, float consta
 //  - fluid: density, k, viscosity, colorFieldTreshold, surfaceTension, unitMass (all floats), gravity (two floats)
 //  - kernel: smoothingLength (float), base (string), pressure (string), viscous (string)
 //  - additional groups describing bounding surfaces provided by SPHInteractor3dFactory
-SPHSystem3d::SPHSystem3d( const char* file )
+SPHSystem3d::SPHSystem3d( const char* file ):
+	particleCount(0),
+	useGravity(true),
+	gridWidth(-1), gridHeight(-1), gridDepth(-1)
 {
 	MappedData map( file );
-	particles = vector<SPHParticle3d>();	
-	particleCount = 0;
-
-	pairs = vector< SPHPair >();
 
 	dWidth = map.getData( "grid", "width" ).get<float>();
 	dHeight = map.getData( "grid", "height" ).get<float>();
@@ -80,20 +58,18 @@ SPHSystem3d::SPHSystem3d( const char* file )
 	gravityAcc =  map.getData( "fluid", "gravity" ).getVec3();
 		
 	unitRadius = sqrt( particleMass / (restDensity*PI) );
-	useGravity = true;	
-
-	grid = vector< vector< int > >();
-	gridWidth = -1;
-	gridHeight = -1;
-	gridDepth = -1;
+	
 	adjustSmoothingLength( map.getData( "kernel", "smoothingLength" ).get<float>() );
 }
 
 
 SPHSystem3d::~SPHSystem3d()
 {
-	particles.clear();	
+	// No special cleanup needed
+	/*particles.clear();	
 	grid.clear();	
+	surfaces.clear();
+	pairs.clear();*/
 }
 
 void SPHSystem3d::clearGrid()
@@ -789,66 +765,3 @@ void SPHSystem3d::adjustSmoothingLength( float h )
 	hSquared = h*h;
 	createGrid();
 }
-
-/*
-	old grid neighbourhood calculations
-		neighbourIndices.clear();
-			
-		// forward grid - cells marked F
-		int xForward = x+1;
-		if( xForward < gridWidth )
-		{
-			for( int yf = y-1; yf<y+2; yf++)
-			{	
-				if( yf >= gridHeight ) break;
-				if( yf < 0 ) continue;
-				for( int zf = z-1; zf<z+2; zf++)
-				{
-					if( zf >= gridDepth ) break;
-					if( zf < 0 ) continue;
-					neighbourIndices.push_back( (zf*gridHeight + yf)*gridWidth+xForward );					
-				}
-			}
-		}
-		// row above - cells marked A
-		int za = z+1;
-		if( za < gridDepth )
-		{
-			for( int ya = y-1; ya<y+2; ya++)
-			{	
-				if( ya >= gridHeight ) break;
-				if( ya < 0 ) continue;
-				neighbourIndices.push_back( (za*gridHeight + ya)*gridWidth+x );								
-			}
-		}	
-		// right cell - cell marked R
-		if( y+1 < gridHeight )
-		{
-			neighbourIndices.push_back( (z*gridHeight + (y+1))*gridWidth+x );								
-		}
-
-		if(index==16)
-		{
-			cout << index << " -> ";
-			for(int ni = 0; ni< neighbourIndices.size(); ni++)
-				cout << neighbourIndices[ni] << " ";
-			cout << "-> ";
-			for( int gi=0; gi<13; gi++)			
-			{
-				bool flag = false;
-				for(int ni = 0; ni< neighbourIndices.size(); ni++)
-					if( neighbourIndices[ni]-index == gridOffsets[gi] )
-						flag = true;
-				if(flag) cout << "1"; else cout<<"0";
-			}
-			cout << endl;
-		}*/
-/*	old neighborhood traversal
-for( neighbours = neighbourIndices.begin(); neighbours != neighbourIndices.end(); neighbours++ )
-			{
-				nCell = grid[ (*neighbours) ];
-				for( int k=0; k<nCell.size(); k++ )
-				{
-					applyDensity( particle, particles[ nCell[k] ] );
-				}
-			}*/

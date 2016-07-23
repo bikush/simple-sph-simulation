@@ -14,9 +14,22 @@ enum SPHKernelUse;
 enum KernelType;
 class PointDataVisualiser;
 
+
+struct SPHParticleNeighbour3d : SPHParticle3d
+{
+	using SPHParticle3d::SPHParticle3d;
+
+	std::vector<SPHParticleNeighbour3d*> neighbours;
+
+	void reset() 
+	{
+		SPHParticle3d::reset();
+		neighbours.clear();
+	}
+};
+
 // This is the first and basic implementation. It has many weak and slow points.
 // Replaced by SPHSystem3d.
-// At least I hope so.
 class SPHSystem3dClean
 {
 	std::vector<SPHParticleNeighbour3d> particles;

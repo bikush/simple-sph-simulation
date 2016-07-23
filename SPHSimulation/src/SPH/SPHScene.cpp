@@ -3,7 +3,6 @@
 
 #include "PointDataVisualiser.h"
 #include "SPHSystem3d.h"
-#include "SPHSystem3dClean.h"
 #include "MarchingCubesShaded.h"
 #include "ShaderProgram.h"
 #include "Camera.h"

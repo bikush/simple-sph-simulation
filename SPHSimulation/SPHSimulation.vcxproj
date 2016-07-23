@@ -183,7 +183,6 @@
     <ClCompile Include="src\SPH\SPHAABBInteractor3d.cpp" />
     <ClCompile Include="src\SPH\SPHLineInteractor2d.cpp" />
     <ClCompile Include="src\SPH\SPHParticle2d.cpp" />
-    <ClCompile Include="src\SPH\SPHParticle3d.cpp" />
     <ClCompile Include="src\SPH\SPHPlaneInteractor2d.cpp" />
     <ClCompile Include="src\SPH\SPHPlaneInteractor3d.cpp" />
     <ClCompile Include="src\SPH\SPHSystem2d.cpp" />

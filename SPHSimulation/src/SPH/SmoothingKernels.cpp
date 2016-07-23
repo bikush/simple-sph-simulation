@@ -24,6 +24,7 @@ iKernel* KernelBuilder::getKernel( std::string name, float smoothingLength )
 	return getKernel( type, smoothingLength );
 }
 
+// TODO: unique ptr
 iKernel* KernelBuilder::getKernel( KernelType type, float smoothingLength )
 {
 	iKernel* out=0;

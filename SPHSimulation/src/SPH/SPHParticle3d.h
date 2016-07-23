@@ -19,7 +19,16 @@ struct SPHParticle3d
 		colorGradient(0), colorLaplacian(0)
 	{}
 
-	virtual void reset();
+	virtual void reset() 
+	{
+		density = 0;
+		pressure = 0;
+		force = glm::vec3(0, 0, 0);
+
+		colorGradient = glm::vec3(0, 0, 0);
+		colorLaplacian = 0;
+	}
+
 
 	glm::vec3 position;
 	glm::vec3 velocity;
@@ -43,13 +52,5 @@ struct SPHParticle3d
 #endif
 };
 
-struct SPHParticleNeighbour3d : SPHParticle3d
-{
-	using SPHParticle3d::SPHParticle3d;
-
-	std::vector<SPHParticleNeighbour3d*> neighbours;
-
-	void reset();
-};
 
 #endif
