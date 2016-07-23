@@ -44,8 +44,6 @@ SPHSystem3dClean::SPHSystem3dClean( float w, float h, float d, float density, fl
 	kernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
 	pressureKernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
 	viscousKernel = KernelBuilder::getKernel( "KernelPoly6", smoothingLength );
-	
-	surfaces = vector<SPHInteractor3d*>();
 }
 
 // Creates a SPH System 3d from a mapped data file. The file must contain the following
@@ -60,7 +58,6 @@ SPHSystem3dClean::SPHSystem3dClean( const char* file )
 	particles = vector<SPHParticleNeighbour3d>();
 	particleCount = 0;
 
-	surfaces = vector<SPHInteractor3d*>();
 	dWidth = map.getData( "grid", "width" ).get<float>();
 	dHeight = map.getData( "grid", "height" ).get<float>();
 	dDepth = map.getData( "grid", "depth" ).get<float>();
@@ -126,9 +123,9 @@ void SPHSystem3dClean::addParticle( glm::vec3 position, glm::vec3 velocity )
 	particleCount++;
 }
 
-void SPHSystem3dClean::addSurface( SPHInteractor3d* surface )
+void SPHSystem3dClean::addSurface(std::unique_ptr<SPHInteractor3d>& surface)
 {
-	surfaces.push_back( surface );
+	surfaces.push_back(std::move(surface));
 }
 
 void SPHSystem3dClean::toggleSurface(int index)

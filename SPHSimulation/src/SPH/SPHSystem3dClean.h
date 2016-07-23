@@ -4,6 +4,7 @@
 
 #include "SPHParticle3d.h"
 #include <vector>
+#include <memory>
 
 class iKernel;
 class MarchingCubes;
@@ -21,7 +22,7 @@ class SPHSystem3dClean
 	std::vector<SPHParticleNeighbour3d> particles;
 	int particleCount;
 
-	std::vector<SPHInteractor3d*> surfaces;
+	std::vector<std::unique_ptr<SPHInteractor3d>> surfaces;
 
 	float dWidth;
 	float dHeight;
@@ -74,7 +75,7 @@ public:
 	void addParticle( glm::vec3 position, glm::vec3 velocity );
 	void addDistributedParticles( glm::vec3 start, glm::vec3 direction, glm::vec3 step );
 
-	void addSurface( SPHInteractor3d* surface );
+	void addSurface( std::unique_ptr<SPHInteractor3d>& surface );
 	void toggleSurface(int index);
 
 	void draw( MarchingCubes* ms );

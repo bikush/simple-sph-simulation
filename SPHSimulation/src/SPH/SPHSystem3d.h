@@ -5,6 +5,7 @@
 #include "SPHParticle3d.h"
 #include "SmoothingKernels.h"
 #include <vector>
+#include <memory>
 #include <glm\gtx\norm.hpp>
 
 //class iKernel;
@@ -44,7 +45,7 @@ class SPHSystem3d
 
 	std::vector< SPHPair > pairs;
 
-	std::vector<SPHInteractor3d*> surfaces;
+	std::vector<std::unique_ptr<SPHInteractor3d>> surfaces;
 	int particleCount;
 
 	float dWidth;
@@ -164,7 +165,7 @@ public:
 	void addParticle( glm::vec3 position, glm::vec3 velocity );
 	void addDistributedParticles( glm::vec3 start, glm::vec3 direction, glm::vec3 step );
 
-	void addSurface( SPHInteractor3d* surface );
+	void addSurface(std::unique_ptr<SPHInteractor3d>& surface );
 	void toggleSurface( int index );
 
 	void draw( MarchingCubes* ms );

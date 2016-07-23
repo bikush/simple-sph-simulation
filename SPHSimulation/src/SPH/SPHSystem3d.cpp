@@ -45,8 +45,6 @@ SPHSystem3d::SPHSystem3d( float w, float h, float d, float density, float consta
 	gravityAcc =  glm::vec3( 0.0f, 0.0f, -9.81 );	
 
 	adjustSmoothingLength( smLen );
-	
-	surfaces = vector<SPHInteractor3d*>();	
 }
 
 // Creates a SPH System 3d from a mapped data file. The file must contain the following
@@ -63,8 +61,6 @@ SPHSystem3d::SPHSystem3d( const char* file )
 
 	pairs = vector< SPHPair >();
 
-	// TODO: this is a wrong
-	surfaces = vector<SPHInteractor3d*>();
 	dWidth = map.getData( "grid", "width" ).get<float>();
 	dHeight = map.getData( "grid", "height" ).get<float>();
 	dDepth = map.getData( "grid", "depth" ).get<float>();
@@ -224,9 +220,9 @@ void SPHSystem3d::addParticle( glm::vec3 position, glm::vec3 velocity )
 	particleCount++;	
 }
 
-void SPHSystem3d::addSurface( SPHInteractor3d* surface )
+void SPHSystem3d::addSurface(std::unique_ptr<SPHInteractor3d>& surface )
 {
-	surfaces.push_back( surface );
+	surfaces.push_back( std::move(surface) );
 }
 
 void SPHSystem3d::toggleSurface( int index )
