@@ -107,44 +107,5 @@ glm::vec3 SPHAABBInteractor3d::directionTo( SPHParticle3d& other )
 
 void SPHAABBInteractor3d::draw()
 {	
-	glDisable( GL_LIGHTING );
-	glBegin( GL_LINES );
-		glColor3f( 1,0,0 );
-		glVertex3f( min.x, min.y, min.z );
-		glVertex3f( max.x, min.y, min.z );
-
-		glVertex3f( min.x, min.y, min.z );
-		glVertex3f( min.x, max.y, min.z );
-
-		glVertex3f( min.x, min.y, min.z );
-		glVertex3f( min.x, min.y, max.z );
-
-		glVertex3f( max.x, max.y, max.z );
-		glVertex3f( min.x, max.y, max.z );
-
-		glVertex3f( max.x, max.y, max.z );
-		glVertex3f( max.x, min.y, max.z );
-
-		glVertex3f( max.x, max.y, max.z );
-		glVertex3f( max.x, max.y, min.z );
-
-		glVertex3f( max.x, min.y, min.z );
-		glVertex3f( max.x, min.y, max.z );
-
-		glVertex3f( max.x, min.y, min.z );
-		glVertex3f( max.x, max.y, min.z );
-
-		glVertex3f( min.x, max.y, min.z );
-		glVertex3f( min.x, max.y, max.z );
-
-		glVertex3f( min.x, max.y, min.z );
-		glVertex3f( max.x, max.y, min.z );
-
-		glVertex3f( min.x, min.y, max.z );
-		glVertex3f( min.x, max.y, max.z );
-
-		glVertex3f( min.x, min.y, max.z );
-		glVertex3f( max.x, min.y, max.z );
-
-	glEnd();
+	// TODO: draw interactors
 }

@@ -85,21 +85,7 @@ glm::vec2 SPHPlaneInteractor2d::directionTo( SPHParticle2d& other )
 	return other.position - projected;
 }
 
-// TODO: remove this drawing style
 void SPHPlaneInteractor2d::draw()
 {
-	glm::vec2 ns, ne;
-	ns = start + direction  *0.5f;
-	ne = ns + up;
-	
-	glBegin( GL_LINES );
-		glColor3f( 1,0,0 );
-		glVertex2f( start.x, start.y );
-		glVertex2f( ns.x + direction.x*0.5f, ns.y+direction.y*0.5f );
-
-		glColor3f( 0,1,0 );
-		glVertex2f( ns.x, ns.y );
-		glVertex2f( ne.x, ne.y );
-
-	glEnd();
+	// TODO: draw interactors
 }

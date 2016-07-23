@@ -353,15 +353,6 @@ void SPHSystem3dClean::draw( PointDataVisualiser* pdv )
 	}
 }
 
-void SPHSystem3dClean::drawPoints()
-{
-	glColor3f( 1,1,1 );
-	glBegin( GL_POINTS );
-	for(int i=0; i<particleCount; i++)
-		glVertex3f( particles[i].position.x, particles[i].position.y, particles[i].position.z );
-	glEnd();
-}
-
 void SPHSystem3dClean::setUseGravity( bool value )
 {
 	useGravity = value;

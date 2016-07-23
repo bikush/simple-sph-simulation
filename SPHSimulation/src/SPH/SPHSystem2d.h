@@ -93,7 +93,7 @@ public:
 	void addSurface( std::unique_ptr<SPHInteractor2d>& surface );
 
 	void draw( MarchingSquaresBase* ms );
-	void drawPoints();
+	// TODO: alternative drawing methods
 
 	void setUseGravity( bool value );
 	bool usesGravity();

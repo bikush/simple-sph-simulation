@@ -87,18 +87,5 @@ glm::vec2 SPHLineInteractor2d::directionTo( SPHParticle2d& other )
 
 void SPHLineInteractor2d::draw()
 {
-	glm::vec2 ns, ne;
-	ns = start + direction * 0.5f;
-	ne = ns + glm::vec2( direction.y, -direction.x ) * 0.1f;
-	
-	glBegin( GL_LINES );
-		glColor3f( 1,0,0 );
-		glVertex2f( start.x, start.y );
-		glVertex2f( end.x, end.y );
-
-		glColor3f( 0,1,0 );
-		glVertex2f( ns.x, ns.y );
-		glVertex2f( ne.x, ne.y );
-
-	glEnd();
+	// TODO: draw interactors
 }

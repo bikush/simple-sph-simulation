@@ -72,13 +72,5 @@ glm::vec3 SPHPlaneInteractor3d::directionTo( SPHParticle3d& other )
 
 void SPHPlaneInteractor3d::draw()
 {
-	/*glm::vec3 ns, ne;
-	ns = start + direction*0.5;
-	ne = ns + up;*/
-	
-	glBegin( GL_LINES );
-		glColor3f( 1,0,0 );
-		glVertex3f( start.x, start.y, start.z );
-		glVertex3f( start.x + up.x, start.y+up.y, start.z+up.z);
-	glEnd();
+	// TODO: draw interactors
 }

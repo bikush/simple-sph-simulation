@@ -459,37 +459,6 @@ void SPHSystem2d::draw( MarchingSquaresBase* ms )
 	}
 }
 
-void SPHSystem2d::drawPoints()
-{
-	glColor3f( 1,1,1 );
-	glBegin( GL_POINTS );
-	for(int i=0; i<particleCount; i++)
-		glVertex2f( particles[i].position.x, particles[i].position.y );
-	glEnd();
-
-	glColor3f( 0.3f, 0.9f, 0.3f );
-	glBegin( GL_LINES );
-	for( int i=1; i<gridWidth; i++)
-	{
-		glVertex2f( i*smoothingLength, 0 );
-		glVertex2f( i*smoothingLength, dHeight );
-	}
-	glEnd();
-
-	glBegin( GL_LINES );
-	for( int i=1; i<gridHeight; i++)
-	{
-		glVertex2f( 0, i*smoothingLength );
-		glVertex2f( dWidth, i*smoothingLength );
-	}
-	glEnd();
-
-	for (size_t surf = 0, surfLen = surfaces.size(); surf < surfLen; surf++)
-	{
-		surfaces[surf]->draw();
-	}
-}
-
 void SPHSystem2d::setUseGravity( bool value )
 {
 	useGravity = value;

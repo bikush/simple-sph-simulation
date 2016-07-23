@@ -92,8 +92,7 @@ public:
 	void draw( MarchingCubes* ms );
 	void draw( MarchingCubesShaded* ms);
 	void draw( PointDataVisualiser* pdv );
-	void drawPoints();
-
+	
 	void setUseGravity( bool value );
 	bool usesGravity();
 
