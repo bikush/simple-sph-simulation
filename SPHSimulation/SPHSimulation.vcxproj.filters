@@ -313,9 +313,6 @@
     <Text Include="data\mCubesShaded.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="data\settings.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="data\sph3d.txt">
       <Filter>Resource Files</Filter>
     </Text>

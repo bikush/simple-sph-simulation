@@ -245,7 +245,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="data\mCubesShaded.txt" />
-    <Text Include="data\settings.txt" />
     <Text Include="data\sph3d.txt" />
     <Text Include="data\windowSettings.txt" />
   </ItemGroup>
