@@ -95,11 +95,9 @@ SPHSystem2d::SPHSystem2d( const char* file )
 
 SPHSystem2d::~SPHSystem2d()
 {
-	particles.clear();	
-	grid.clear();
-	if( kernel ) delete kernel;
-	if( pressureKernel ) delete pressureKernel;
-	if( viscousKernel ) delete viscousKernel;
+	// No special cleanup needed
+	/*particles.clear();	
+	grid.clear();*/
 }
 
 void SPHSystem2d::clearGrid()
@@ -154,7 +152,7 @@ void SPHSystem2d::putParticleIntoGrid( int particleIndex )
 
 void SPHSystem2d::setKernel( SPHKernelUse kernelUse, KernelType type )
 {
-	iKernel** old;
+	iKernel::unique* old;
 	switch( kernelUse )
 	{	
 	case PRESSURE_KERNEL:
@@ -167,9 +165,6 @@ void SPHSystem2d::setKernel( SPHKernelUse kernelUse, KernelType type )
 	default:	// Assumed base kernel setting if wrong kernel type
 		old = &kernel;
 		break;
-	}
-	if( (*old) ){ 
-		delete (*old);
 	}
 	(*old) =  KernelBuilder::getKernel( type, smoothingLength );
 }

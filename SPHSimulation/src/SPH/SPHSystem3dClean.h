@@ -3,15 +3,13 @@
 #define SPHSYSTEM3D_CLEAN_H
 
 #include "SPHParticle3d.h"
+#include "SmoothingKernels.h"
 #include <vector>
 #include <memory>
 
-class iKernel;
 class MarchingCubes;
 class MarchingCubesShaded;
 class SPHInteractor3d;
-enum SPHKernelUse;
-enum KernelType;
 class PointDataVisualiser;
 
 
@@ -55,9 +53,9 @@ class SPHSystem3dClean
 	bool useGravity;
 	glm::vec3 gravityAcc;
 
-	iKernel* kernel;
-	iKernel* pressureKernel;
-	iKernel* viscousKernel;	
+	iKernel::unique kernel;
+	iKernel::unique pressureKernel;
+	iKernel::unique viscousKernel;	
 
 	// Updates densities for both particles and generates neighbourhood data,
 	// but only in the first particle (to avoid colisions in later calculations).

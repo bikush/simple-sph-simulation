@@ -88,15 +88,13 @@ SPHSystem3dClean::SPHSystem3dClean( const char* file )
 
 SPHSystem3dClean::~SPHSystem3dClean()
 {
-	particles.clear();	
-	if( kernel ) delete kernel;
-	if( pressureKernel ) delete pressureKernel;
-	if( viscousKernel ) delete viscousKernel;
+	// No special cleanup needed
+	//particles.clear();	
 }
 
 void SPHSystem3dClean::setKernel( SPHKernelUse kernelUse, KernelType type )
 {
-	iKernel** old;
+	iKernel::unique* old;
 	switch( kernelUse )
 	{	
 	case PRESSURE_KERNEL:
@@ -109,9 +107,6 @@ void SPHSystem3dClean::setKernel( SPHKernelUse kernelUse, KernelType type )
 	default:	// Assumed base kernel setting if wrong kernel type
 		old = &kernel;
 		break;
-	}
-	if( (*old) ){ 
-		delete (*old);
 	}
 	(*old) =  KernelBuilder::getKernel( type, smoothingLength );
 }

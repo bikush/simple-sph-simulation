@@ -5,7 +5,7 @@
 
 #define PI 3.1415926f
 
-iKernel* KernelBuilder::getKernel( std::string name, float smoothingLength )
+iKernel::unique KernelBuilder::getKernel( std::string name, float smoothingLength )
 {
 	KernelType type = KernelType::DEFAULT;
 	if( name.compare( "KernelPoly6" ) == 0 )
@@ -24,25 +24,21 @@ iKernel* KernelBuilder::getKernel( std::string name, float smoothingLength )
 	return getKernel( type, smoothingLength );
 }
 
-// TODO: unique ptr
-iKernel* KernelBuilder::getKernel( KernelType type, float smoothingLength )
+iKernel::unique KernelBuilder::getKernel( KernelType type, float smoothingLength )
 {
-	iKernel* out=0;
 	switch( type )
 	{
 		case POLY6: 
-			out = new KernelPoly6( smoothingLength );
-			break;
+			return iKernel::unique(new KernelPoly6( smoothingLength ));
 		case SPIKY: 
-			out = new KernelSpiky( smoothingLength );
-			break;
+			return iKernel::unique(new KernelSpiky( smoothingLength ));
 		case VISCOSITY: 
-			out = new KernelViscosity( smoothingLength );
-			break;
+			return iKernel::unique(new KernelViscosity( smoothingLength ));
 		default:
-			out = new KernelPoly6( smoothingLength );
+			// return default
+			break;
 	}
-	return out;
+	return iKernel::unique(new KernelPoly6(smoothingLength));
 }
 
 KernelPoly6::KernelPoly6( float h )

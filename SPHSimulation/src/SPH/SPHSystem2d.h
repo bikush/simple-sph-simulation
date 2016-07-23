@@ -41,9 +41,9 @@ class SPHSystem2d
 	bool useGravity;
 	glm::vec2 gravityAcc;
 
-	iKernel* kernel;
-	iKernel* pressureKernel;
-	iKernel* viscousKernel;	
+	iKernel::unique kernel;
+	iKernel::unique pressureKernel;
+	iKernel::unique viscousKernel;
 
 	// Updates densities for both particles and generates neighbourhood data,
 	// but only in the first particle (to avoid colisions in later calculations).

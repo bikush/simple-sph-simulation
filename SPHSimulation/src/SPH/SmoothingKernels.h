@@ -4,6 +4,7 @@
 
 #include "GlmVec.h"
 #include <string>
+#include <memory>
 
 enum KernelType
 {
@@ -29,6 +30,8 @@ protected:
 	float h;
 
 public:
+	typedef std::unique_ptr<iKernel> unique;
+
 	virtual float base( float r )=0;
 	virtual glm::vec2 gradient( glm::vec2 r )=0;
 	virtual glm::vec3 gradient( glm::vec3 r )=0;
@@ -73,32 +76,12 @@ public:
 	float laplacian( float r );
 	void  adjustSmoothingLength( float h );
 };
-/*
-class KernelSplineGaussian : public iKernel
-{
-public:
-	float base( float h, float r );
-	glm::vec2 gradient( float h, glm::vec2 r );
-	glm::vec3 gradient( float h, glm::vec3 r );
-	float laplacian( float h, float r );
-	//void  adjustSmoothingLength( float h );
-};
-
-class KernelDesburn : public iKernel
-{
-public:
-	float base( float h, float r );
-	glm::vec2 gradient( float h, glm::vec2 r );
-	glm::vec3 gradient( float h, glm::vec3 r );
-	float laplacian( float h, float r );
-	//void  adjustSmoothingLength( float h );
-};*/
 
 class KernelBuilder
 {
 public:
-	static iKernel* getKernel( std::string name, float smoothingLength );
-	static iKernel* getKernel( KernelType type, float smoothingLength );
+	static iKernel::unique getKernel( std::string name, float smoothingLength );
+	static iKernel::unique getKernel( KernelType type, float smoothingLength );
 };
 
 #endif
