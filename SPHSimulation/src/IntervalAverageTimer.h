@@ -2,52 +2,72 @@
 #ifndef INTERVAL_AVERAGE_TIMER_H
 #define INTERVAL_AVERAGE_TIMER_H
 
-#include "Timer.h"
-#include <time.h>
+#include <chrono>
 
+/*
+ * Calculates durations over a certain interval given in seconds.
+ * Durations are accumulated between calls to pause/resume.
+ * Average is given depending on the number of pause/resume calls during the interval.
+ */
 class IntervalAverageTimer
 {
-	time_t timeAccumulator;
+	typedef std::chrono::high_resolution_clock::time_point time_point;
+
+	time_point start;
+	time_point intervalStart;
+	long long accumulator;	// microseconds
+	bool paused;
+
 	double tickCounter;
-	long lastSeconds;
 	double lastAverage;
-	int timerID;
-	long intervalLength;
+	long long intervalLength;
 
 public:
-	IntervalAverageTimer( long interval = 1 )
+	IntervalAverageTimer( long interval = 1 ) :
+		start( std::chrono::high_resolution_clock::now() ), intervalStart(start),
+		paused(false), tickCounter(0), lastAverage(0), intervalLength(interval)
 	{
-		lastSeconds = Timer::getSeconds();
-		timeAccumulator = 0;
-		tickCounter = 0;
-		lastAverage = 0;
-		intervalLength = interval;
-		timerID = -1;
 	}
 
 	void pause()
 	{
-		if( timerID == -1 ) return;
-		timeAccumulator += Timer::stopTimerT( timerID );
+		if (paused) {
+			return;
+		}
+		paused = true;
+		time_point now = std::chrono::high_resolution_clock::now();
+
+		accumulator += std::chrono::duration_cast<std::chrono::microseconds>(now-start).count();
 		tickCounter++;
-		timerID = -1;
 	}
 
 	void resume()
 	{
-		timerID = Timer::createTimer();
+		if (!paused) {
+			return;
+		}
+		paused = false;
+		start = std::chrono::high_resolution_clock::now();
 	}
 
 	double getAverage()
 	{
-		long newSeconds = Timer::getSeconds();
-		long passedSeconds = newSeconds - lastSeconds;
+		time_point now = std::chrono::high_resolution_clock::now();
+		auto passedSeconds = std::chrono::duration_cast<std::chrono::seconds>(now - intervalStart).count();
 		if( passedSeconds >= intervalLength )
 		{
-			lastAverage = timeAccumulator /( CLOCKS_PER_SEC * (tickCounter==0?1:tickCounter) );
-			timeAccumulator = 0;
+			bool wasPaused = paused;
+			pause();
+
+			lastAverage = accumulator /( 1e6 * (tickCounter==0?1:tickCounter) );
+			accumulator = 0;
 			tickCounter = 0;
-			lastSeconds = newSeconds;
+			intervalStart += std::chrono::seconds(intervalLength);
+
+			// Mid interval average calculations need to pause and resume to keep average correct
+			if (!wasPaused) {
+				resume();
+			}
 		}
 		return lastAverage;
 	}

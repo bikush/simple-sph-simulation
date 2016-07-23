@@ -1,6 +1,6 @@
 #include "SPHScene.h"
 #include "MappedData.h"
-
+#include "Timer.h"
 #include "PointDataVisualiser.h"
 #include "SPHSystem3d.h"
 #include "MarchingCubesShaded.h"
