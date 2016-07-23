@@ -78,7 +78,7 @@ private:
 	ResizePolicy resizePolicy;
 
 public:
-	void windowDidResize(int width, int height);
+	void windowDidResize(float width, float height);
 	void setupViewport(float x, float y, float widthm, float height);
 	void loadViewport();
 	void setResizePolicy(ResizePolicy policy);

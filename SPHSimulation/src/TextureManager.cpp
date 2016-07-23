@@ -79,7 +79,7 @@ void TextureManager::deleteAllTextures()
 {	
 	int texCount = loaded.size();
 	GLuint *textureNames = new GLuint[ texCount ];	
-	unsigned int index = 0;
+	int index = 0;
 
 	for (auto pair : loaded) {
 		textureNames[index] = pair.second;

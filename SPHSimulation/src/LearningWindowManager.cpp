@@ -52,7 +52,7 @@ void LearningWindowManager::windowWillRun()
 
 void LearningWindowManager::eventReshape( int width, int height)
 {
-	camera.windowDidResize( width, height );
+	camera.windowDidResize( (float)width, (float)height );
 	for( unsigned int i = 0; i<scenes.size(); i++)
 	{
 		scenes[i]->eventReshape(width, height);

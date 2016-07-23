@@ -1,3 +1,4 @@
+#define GLM_FORCE_RADIANS
 #include "Camera.h"
 #include "Utility.h"
 #include <GL\glew.h>
@@ -53,8 +54,8 @@ void Camera::setMoveRight(bool movement) {
 
 void Camera::rotate(int idx, int idy)
 {
-	float dx = -100.f * idx / viewportSize.x;
-	float dy = -100.f * idy / viewportSize.y;
+	float dx = angleToRadians( -100.f * idx / viewportSize.x );
+	float dy = angleToRadians( -100.f * idy / viewportSize.y );
 
 	auto pitch = glm::angleAxis(dy, axis);
 	auto heading = glm::angleAxis(dx, up);
@@ -93,7 +94,7 @@ const glm::mat4 & Camera::getView() const
 void Camera::refreshProjection()
 {
 	if (projectionType == PERSPECTIVE) {
-		setupPerspectiveProjection( 45.0f, viewportSize.x/viewportSize.y, projectionZLimit.x, projectionZLimit.y);
+		setupPerspectiveProjection( 55.0f, viewportSize.x/viewportSize.y, projectionZLimit.x, projectionZLimit.y);
 	}
 	else {
 		// TODO: projection start and size are dependant on the world and cameras relative eye offset
@@ -117,7 +118,7 @@ void Camera::setupOtrhographicProjection(glm::vec2 projectionStart, glm::vec2 pr
 void Camera::setupPerspectiveProjection(float fovy, float aspectRatio, float zNear, float zFar)
 {
 	projectionType = ProjectionType::PERSPECTIVE;
-	projection = glm::perspective(fovy, aspectRatio, zNear, zFar);
+	projection = glm::perspective( angleToRadians(fovy), aspectRatio, zNear, zFar);
 	refreshViewProjection();
 }
 
@@ -139,12 +140,12 @@ const glm::mat4& Camera::getViewProjection() const
 
 
 // VIEWPORT
-void Camera::windowDidResize(int width, int height)
+void Camera::windowDidResize(float width, float height)
 {
 	if (resizePolicy == ResizePolicy::DynamicRatio) 
 	{
-		windowSize.x = (float)width;
-		windowSize.y = (float)height;
+		windowSize.x = width;
+		windowSize.y = height;
 		setupViewport(0.f, 0.f, windowSize.x, windowSize.y);
 	}
 	else if (resizePolicy == ResizePolicy::FixedRatio)
