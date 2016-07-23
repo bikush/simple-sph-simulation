@@ -9,6 +9,9 @@ public:
 	enum ProjectionType {
 		OTRHOGRAPHIC, PERSPECTIVE
 	};
+	enum ResizePolicy {
+		FixedRatio, DynamicRatio
+	};
 
 // CONSTRUCTION
 public:
@@ -71,10 +74,14 @@ private:
 	glm::vec2 windowSize;
 	glm::vec2 viewportPos;
 	glm::vec2 viewportSize;
+	float viewportRatio;
+	ResizePolicy resizePolicy;
 
 public:
 	void windowDidResize(int width, int height);
 	void setupViewport(float x, float y, float widthm, float height);
 	void loadViewport();
+	void setResizePolicy(ResizePolicy policy);
+	void setViewportRatio(float ratio);
 };
 

@@ -8,7 +8,9 @@
 
 Camera::Camera( glm::vec2 windowSize, ProjectionType type, glm::vec2 zLimits) :
 	windowSize( windowSize ), projectionType( type ), projectionZLimit( zLimits ),
-	position({ 15.0f, 10.0f, 15.0f }), forward({ -0.577f, -0.577f, -0.577f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up))
+	position({ 15.0f, 10.0f, 15.0f }), forward({ -0.577f, -0.577f, -0.577f }), up({ 0.0f, 1.0f, 0.0f }), axis(glm::cross(forward, up)),
+	resizePolicy(ResizePolicy::DynamicRatio), viewportPos(0.0f, 0.0f), viewportSize( windowSize ), 
+	viewportRatio( windowSize.x/windowSize.y )
 {
 	setupView();
 	refreshProjection();
@@ -51,8 +53,8 @@ void Camera::setMoveRight(bool movement) {
 
 void Camera::rotate(int idx, int idy)
 {
-	float dx = -100.f * idx / windowSize.x;
-	float dy = -100.f * idy / windowSize.y;
+	float dx = -100.f * idx / viewportSize.x;
+	float dy = -100.f * idy / viewportSize.y;
 
 	auto pitch = glm::angleAxis(dy, axis);
 	auto heading = glm::angleAxis(dx, up);
@@ -91,12 +93,12 @@ const glm::mat4 & Camera::getView() const
 void Camera::refreshProjection()
 {
 	if (projectionType == PERSPECTIVE) {
-		setupPerspectiveProjection( 45.0f, windowSize.x/windowSize.y, projectionZLimit.x, projectionZLimit.y);
+		setupPerspectiveProjection( 45.0f, viewportSize.x/viewportSize.y, projectionZLimit.x, projectionZLimit.y);
 	}
 	else {
 		// TODO: projection start and size are dependant on the world and cameras relative eye offset
 		// Ortho size could and should be open to outside interpretations, for now it is fixed
-		setupOtrhographicProjection({ 0.0f,0.0f }, { windowSize.x,windowSize.y }, projectionZLimit.x, projectionZLimit.y);
+		setupOtrhographicProjection({ 0.0f,0.0f }, { viewportSize.x,viewportSize.y }, projectionZLimit.x, projectionZLimit.y);
 	}
 }
 
@@ -139,10 +141,28 @@ const glm::mat4& Camera::getViewProjection() const
 // VIEWPORT
 void Camera::windowDidResize(int width, int height)
 {
-	// TODO: viewport could stretch to fit, or it could be static
-	windowSize.x = (float)width;
-	windowSize.y = (float)height;
-	setupViewport(0.f,0.f, windowSize.x, windowSize.y);
+	if (resizePolicy == ResizePolicy::DynamicRatio) 
+	{
+		windowSize.x = (float)width;
+		windowSize.y = (float)height;
+		setupViewport(0.f, 0.f, windowSize.x, windowSize.y);
+	}
+	else if (resizePolicy == ResizePolicy::FixedRatio)
+	{
+		float newWidth = viewportRatio * height;
+		float newHeight = height;
+		float vX = 0.0f;
+		float vY = 0.0f;
+		if (newWidth > width) {
+			newHeight = height * width / newWidth;
+			newWidth = width;
+			vY = (height - newHeight) / 2.0f;
+		}
+		else {
+			vX = (width - newWidth) / 2.0f;
+		}
+		setupViewport(vX, vY, newWidth, newHeight);
+	}
 	refreshProjection();
 }
 
@@ -157,4 +177,15 @@ void Camera::setupViewport(float x, float y, float width, float height)
 void Camera::loadViewport()
 {
 	glViewport((int)viewportPos.x, (int)viewportPos.y, (int)viewportSize.x, (int)viewportSize.y);
+}
+
+void Camera::setResizePolicy(ResizePolicy policy)
+{
+	resizePolicy = policy;
+	windowDidResize(windowSize.x, windowSize.y);
+}
+
+void Camera::setViewportRatio(float ratio)
+{
+	viewportRatio = ratio;
 }
