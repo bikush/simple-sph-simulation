@@ -26,8 +26,6 @@ protected:
 	void eventKeyboardUp( sf::Keyboard::Key keyPressed );
 	void eventMouseMotion(sf::Event::MouseMoveEvent mEvent);
 
-	void setProjection( double width, double height );
-	
 	void handleCameraMove(sf::Keyboard::Key key, bool pressed);
 
 private:	

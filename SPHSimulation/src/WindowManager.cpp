@@ -68,12 +68,6 @@ WindowManager::WindowManager(const std::string& configFile) :
 	window = new sf::RenderWindow(sf::VideoMode(width, height, bitsPerPixel), title.c_str(), sf::Style::Default , settings);	
 
 	loadGLEW();
-/*
-	// TODO: can have multiple cameras, should make more camera types
-	camera = CameraFocused();
-	// TODO: is frustum extraction necessary
-	camera.getFrustum().setWidthHeight( width, height );
-	f = &camera.getFrustum();*/
 }
 
 
@@ -160,16 +154,6 @@ void WindowManager::windowReshaped( int width, int height )
 
 void WindowManager::eventReshape(int width, int height)
 {
-	
-/*	camera.getFrustum().setWidthHeight( width, height );
-	
-	glViewport(0, 0, camera.getFrustum().width, camera.getFrustum().height);
-		
-	glColor3ub (0, 0, 255);
-	float boja[] = {1,1,1,1};
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, boja);
-	glMatrixMode (GL_MODELVIEW);
-	glLoadIdentity();*/
 }
 
 void WindowManager::eventMousePressed( sf::Event::MouseButtonEvent mEvent )
@@ -178,58 +162,35 @@ void WindowManager::eventMousePressed( sf::Event::MouseButtonEvent mEvent )
 	bool left  = mEvent.button == sf::Mouse::Left;
 	bool right = mEvent.button == sf::Mouse::Right;
 
-	if (left && pressed)
-	{
-		mouseLeft = true;	
-	}else if (left && !pressed)
-	{
-		mouseLeft = false;	
-	}
-
-	if (right && pressed)
-	{
-		mouseRight = true;			
-	}else if (right && !pressed)
-	{
-		mouseRight = false;			
-	}		
+	// If left btn pressed, update left state, else stays the same
+	mouseLeft = left ? pressed : mouseLeft;
+	mouseRight = right ? pressed : mouseRight;		
 }
 
-void WindowManager::eventMouseMotion( sf::Event::MouseMoveEvent mEvent ){
-	int x = mEvent.x;
-	int y = mEvent.y;
-	//int dx = x - mouseLastX;
-	//int dy = y - mouseLastY;
-	
-	if(mouseLeft){
-//		camera.rotateY( 0.87266f*dx );
-//		camera.rotateX( 0.87266f*dy );
-	}else if(mouseRight){
-		;
-	}
-
-	mouseLastX = x;
-	mouseLastY = y;	
+void WindowManager::eventMouseMotion( sf::Event::MouseMoveEvent mEvent )
+{
+	mouseLastX = mEvent.x;
+	mouseLastY = mEvent.y;
 }
 
 void WindowManager::eventMouseWheel( sf::Event::MouseWheelEvent mEvent )
 {
-//	camera.changeDistance( mEvent.delta * -0.8 );
+	// Incomplete implementation, unused
 }
 
 void WindowManager::eventKeyboardDown( sf::Keyboard::Key keyPressed )
 {
-
 }
 
 void WindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 {
-
+	if (keyPressed == sf::Keyboard::Escape) {
+		shouldClose = true;
+	}
 }
 
 void WindowManager::updateScene( float dt )
 {
-
 }
 
 void WindowManager::drawGLScene()
@@ -238,7 +199,6 @@ void WindowManager::drawGLScene()
 
 void WindowManager::drawSFMLScene(sf::RenderWindow& window)
 {
-
 }
 
 void WindowManager::drawCycle()

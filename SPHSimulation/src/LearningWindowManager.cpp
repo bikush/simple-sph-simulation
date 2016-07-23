@@ -52,7 +52,6 @@ void LearningWindowManager::windowWillRun()
 
 void LearningWindowManager::eventReshape( int width, int height)
 {
-	setProjection( width, height );
 	camera.windowDidResize( width, height );
 	for( unsigned int i = 0; i<scenes.size(); i++)
 	{
@@ -95,22 +94,25 @@ void LearningWindowManager::eventKeyboardUp( sf::Keyboard::Key keyPressed )
 		}
 	}
 	handleCameraMove(keyPressed, false);
+
+	WindowManager::eventKeyboardUp(keyPressed);
 }
 
 void LearningWindowManager::eventMouseMotion(sf::Event::MouseMoveEvent mEvent)
 {
 	int dx = mEvent.x - mouseLastX;
 	int dy = mEvent.y - mouseLastY;
-	//std::cout << dx << "  " << dy << std::endl;
 
-	if (mouseLeft) {
+	if (mouseLeft) 
+	{
 		camera.rotate(dx, dy);
 	}
 
 	WindowManager::eventMouseMotion(mEvent);
 }
 
-void LearningWindowManager::handleCameraMove(sf::Keyboard::Key key, bool pressed) {
+void LearningWindowManager::handleCameraMove(sf::Keyboard::Key key, bool pressed) 
+{
 	if (key == sf::Keyboard::Left) {
 		camera.setMoveLeft(pressed);
 	}
@@ -125,25 +127,8 @@ void LearningWindowManager::handleCameraMove(sf::Keyboard::Key key, bool pressed
 	}
 }
 
-void LearningWindowManager::setProjection( double width, double height )
-{
-	std::cout << "Reshape projection: " << width << ", " << height << std::endl;
-	//camera.setupOtrhographicProjection({ 0.0f, 0.0f }, { (float)width, (float)height }, 0.0f, 100.0f);
-	//
-	//double orthoHeight = height / 3;
-	//double orthoWidth = orthoHeight * width / height;
-	//
-	////projection = glm::ortho( orthoWidth*-0.5, orthoWidth*0.5, orthoHeight*-0.5, orthoHeight*0.5 );
-	//projection = glm::ortho(0.0, width, 0.0, height,0.0,100.0 );
-	////projection = glm::ortho(-100.0, 100.0, -100.0, 100.0 );
-
-	////view = glm::translate( glm::mat4(), glm::vec3(-orthoWidth * 0.5, -orthoHeight * 0.5,0.0) );
-}
-
 void LearningWindowManager::drawGLScene()
 {
-	//auto viewProjection = camera.getViewProjection(); // projection * view;
-	
 	camera.loadViewport();
 	for( unsigned int i = 0; i<scenes.size(); i++ )
 	{

@@ -12,14 +12,12 @@
 #include <string>
 
 #include <GL/glew.h>
-//#include "CameraFocused.h"
 
 class WindowManager
 {
-// Window and camera management
+// Window management
 protected:
 	sf::RenderWindow* window;
-	//CameraFocused camera;
 
 public:
 	sf::Window* getWindow();
