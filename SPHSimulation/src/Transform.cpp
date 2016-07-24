@@ -1,4 +1,4 @@
-
+#define GLM_FORCE_RADIANS
 #include "Transform.h"
 #include <glm\gtc\matrix_transform.hpp>
 
@@ -60,14 +60,16 @@ glm::vec3 Transform::getAxisAngles() const
 const glm::mat4& Transform::getTransformMatrix()
 {
 	if (recalculate) {
+		glm::vec3 radAngles = glm::radians(axisAngles);
+
 		modelMatrix =
 			glm::rotate(
 				glm::rotate(
 					glm::rotate(
 						glm::scale(glm::translate(glm::mat4(1.0f), position), scale),
-						axisAngles.x, { 1.0f,0.0f,0.0f }),
-					axisAngles.y, { 0.0f,1.0f,0.0f }),
-				axisAngles.z, { 0.0f,0.0f,1.0f });
+						radAngles.x, { 1.0f,0.0f,0.0f }),
+					radAngles.y, { 0.0f,1.0f,0.0f }),
+				radAngles.z, { 0.0f,0.0f,1.0f });
 		recalculate = false;
 	}
 	return modelMatrix;
