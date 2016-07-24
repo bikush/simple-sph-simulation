@@ -13,7 +13,8 @@ using namespace std;
 SPHScene::SPHScene(void) : Scene(),
 	paused(false),
 	sphTimer(3), marchingTimer(3),
-	drawWithMC(false)
+	drawWithMC(false),
+	fpsTimer(1.0)
 {
 	sph3 = new SPHSystem3d("data/sph3d.txt");
 	cout << "SPH particle size: " << sizeof(SPHParticle3d) << endl;
@@ -68,8 +69,7 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 					break;
 
 		case sf::Keyboard::P:
-					Timer::pauseToggle();	// TODO: Timer class is wtf?
-					paused = Timer::isPaused();
+					paused = !paused;
 					break;
 
 		case sf::Keyboard::O:
@@ -160,8 +160,7 @@ void SPHScene::eventKeyboardUp(sf::Keyboard::Key keyPressed)
 
 void SPHScene::update(float dt)
 {
-	// TODO: refactor timer, it is horrible
-	Timer::calcTimeFlow();
+	fpsTimer.tick();
 
 	if (!paused)
 	{
@@ -173,10 +172,10 @@ void SPHScene::update(float dt)
 	stringstream infoText;
 
 	infoText.precision(2);
-	infoText << "Time: " << fixed << Timer::getTime();
+	infoText << "Time: " << fixed << clock.elapsed();
 
 	infoText.precision(8);
-	infoText << ", Fps: " << Timer::getFPS() <<	", Draw time: " << marchingTimer.getAverage() << endl;
+	infoText << ", Fps: " << fpsTimer.fps() <<	", Draw time: " << marchingTimer.getAverage() << endl;
 
 	infoText << "[SPH]" << endl;
 	infoText.precision(8);

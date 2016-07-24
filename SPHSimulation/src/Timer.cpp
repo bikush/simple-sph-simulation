@@ -1,140 +1,41 @@
 
 #include "Timer.h"
 
-Timer *Timer::instance = 0;
+using namespace std::chrono;
 
-// PUBLIC METHODS
+const double MSEC_PER_SEC = 1e6;
 
-Timer* Timer::getInstance()
+FPSTimer::FPSTimer(double interval) :
+	start(high_resolution_clock::now()),
+	clockInterval( long(interval * MSEC_PER_SEC) ), ticks(0), lastFPS(0)
 {
-	if( !instance )
-		instance = new Timer();
-	return instance;
+
 }
 
-void Timer::calcTimeFlow()
+void FPSTimer::tick() 
 {
-	getInstance()->_calcTimeFlow();
-}
-
-bool Timer::isPaused()
-{
-	return getInstance()->paused;
-}
-
-double Timer::pauseToggle()
-{
-	return getInstance()->_pauseToggle();
-}
-
-int Timer::getFPS()
-{
-	return getInstance()->lastFPS;
-}
-
-double Timer::getDT()
-{
-	return getInstance()->dT;
-}
-
-long Timer::getSeconds()
-{
-	return getInstance()->totalSeconds;
-}
-
-double Timer::getTime()
-{
-	return getInstance()->totalTime;
-}
-
-// Creates and starts a timer. Returns timer ID.
-int Timer::createTimer()
-{
-	Timer* t = getInstance();
-	int index = t->nextTimerIndex;
-	t->nextTimerIndex++;
-	t->timerMap[ index ] = clock();
-	return index;
-}
-
-// Stops timerID timer and returns time passed.
-double Timer::stopTimerD( int timerID )
-{
-	return double(Timer::stopTimerT( timerID )/CLOCKS_PER_SEC);
-}
-
-time_t Timer::stopTimerT( int timerID )
-{
-	Timer* t = getInstance();
-	std::map< int, time_t >::iterator time = t->timerMap.find( timerID );
-	time_t out = 0;
-	if( time != t->timerMap.end() )
-	{
-		out = clock() - time->second;
-		t->timerMap.erase( time );
+	time_point now = high_resolution_clock::now();
+	auto passedTicks = duration_cast<microseconds>(now - start).count();
+	if (passedTicks > clockInterval) {
+		start += microseconds(clockInterval);
+		lastFPS = int(ticks * MSEC_PER_SEC / clockInterval);
+		ticks = 0;
 	}
-	return out;
+	ticks++;
 }
 
-// PRIVATE METHODS
-
-Timer::Timer()
+int FPSTimer::fps() 
 {
-	time = 0.0025f;		
-	dT = 0.05f;	
-	totalTime = 0;
-	start = clock();
-
-	paused = false;
-	timePaused = 0.0f;
-	
-	FPS = 0;
-	lastFPS = 0;
-	
-	secondCounter = 1.0f;
-	totalSeconds = 0;
-
-	timerMap = std::map<int, time_t>();
-	nextTimerIndex = 0;
+	return lastFPS;
 }
 
-void Timer::_calcTimeFlow()
+Timer::Timer() : 
+	start(high_resolution_clock::now())
 {
-	time_t now = clock();
-	double difference = double (now - start)/CLOCKS_PER_SEC;
-	if(difference > time){
-		secondCounter -= difference;
-		if(secondCounter < 0)
-		{
-			secondCounter = 1.0f;
-			totalSeconds++;
-			lastFPS = FPS;
-			FPS = 0;
-		}else
-		{
-			FPS++;
-		}
-		start = now;
-		dT = difference;	
-		if( paused )
-		{
-			timePaused += difference;
-			dT = 0.0f;
-		}
-		totalTime += difference;
-	}			
 }
 
-
-double Timer::_pauseToggle()
+double Timer::elapsed()
 {
-	paused = !paused;
-	if( paused )
-	{
-		timePaused = 0.0f;
-	}
-	return timePaused;
+	auto passedTicks = ticks<microseconds>();
+	return passedTicks / MSEC_PER_SEC;
 }
-
-
-

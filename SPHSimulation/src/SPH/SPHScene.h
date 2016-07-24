@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "IntervalAverageTimer.h"
+#include "Timer.h"
 #include <gl\glew.h>
 
 class SPHSystem3d;
@@ -29,6 +30,8 @@ private:
 	
 	IntervalAverageTimer sphTimer;
 	IntervalAverageTimer marchingTimer;
+	FPSTimer fpsTimer;
+	Timer clock;
 	bool drawWithMC;
 	float treshold;
 
