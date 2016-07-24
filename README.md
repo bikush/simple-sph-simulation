@@ -26,6 +26,10 @@ MC shader gets a grid of values (0,2) and for every cell in that grid outputs th
 
 For 1k particles in a stable, calm state the average per frame drawing time for PC is 0.12 milliseconds and for MC 2.86 milliseconds.
 
+Video (youtube, click on image):
+
+[![SPH simulation video](https://img.youtube.com/vi/7GkNf6Wjx9I/0.jpg)](https://www.youtube.com/watch?v=7GkNf6Wjx9I)
+
 ## Running
 
 Currently this is a Windows/VS2015 only project.
